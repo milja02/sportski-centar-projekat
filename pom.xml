@@ -3,11 +3,17 @@
   <groupId>rs.ac.bg.fon</groupId>
   <artifactId>sportski-centar-projekat</artifactId>
   <version>0.1.0</version>
+  <packaging>pom</packaging> 
   
-   <properties>
+  <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
   </properties>
 
+  <modules>
+  	<module>sc-zajednicki</module>
+  	<module>sc-klijent</module>
+  	<module>sc-server</module>
+  </modules>
 </project>
