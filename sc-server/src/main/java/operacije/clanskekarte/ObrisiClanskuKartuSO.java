@@ -1,24 +1,20 @@
-/*
- * Brisanje Älanske kartice (i njenih stavki).
- */
 package operacije.clanskekarte;
 
 import domen.ClanskaKarta;
 import domen.StavkaClanskeKarte;
 import java.util.List;
 import operacije.ApstraktnaGenerickaOperacija;
-import operacije.stavke.UcitajStavkeClanskeKarteSO;
 
 public class ObrisiClanskuKartuSO extends ApstraktnaGenerickaOperacija {
 
     @Override
     protected void preduslovi(Object param) throws Exception {
         if (param == null || !(param instanceof ClanskaKarta)) {
-            throw new Exception("Sistem nije mogao da obriÅ¡e Älansku kartu.");
+            throw new Exception("Sistem nije mogao da obrise clansku kartu.");
         }
         ClanskaKarta ck = (ClanskaKarta) param;
         if (ck.getIdClanskaKarta() <= 0) {
-            throw new Exception("Neispravan ID Älanske kartice.");
+            throw new Exception("Neispravan ID clanske kartice.");
         }
     }
 
