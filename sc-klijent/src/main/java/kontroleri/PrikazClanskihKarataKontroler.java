@@ -48,23 +48,33 @@ public class PrikazClanskihKarataKontroler {
                     "Greška", JOptionPane.ERROR_MESSAGE);
         }
 
-        List<Instruktor> instruktori = Komunikacija.getInstance().ucitajInstruktore();
-        pckf.getjComboBoxInstruktor().removeAllItems();
-        pckf.getjComboBoxInstruktor().addItem(null);
-        for (Instruktor i : instruktori) {
-            pckf.getjComboBoxInstruktor().addItem(i);
-        }
+        try {
+            List<Instruktor> instruktori = Komunikacija.getInstance().ucitajInstruktore();
+            pckf.getjComboBoxInstruktor().removeAllItems();
+            pckf.getjComboBoxInstruktor().addItem(null);
+            if (instruktori != null) {
+                for (Instruktor i : instruktori) {
+                    pckf.getjComboBoxInstruktor().addItem(i);
+                }
+            }
 
-        List<Sport> sportovi = Komunikacija.getInstance().ucitajSportove();
-        pckf.getjComboBoxSport().removeAllItems();
-        pckf.getjComboBoxSport().addItem(null);
-        for (Sport s : sportovi) {
-            pckf.getjComboBoxSport().addItem(s);
-        }
+            List<Sport> sportovi = Komunikacija.getInstance().ucitajSportove();
+            pckf.getjComboBoxSport().removeAllItems();
+            pckf.getjComboBoxSport().addItem(null);
+            if (sportovi != null) {
+                for (Sport s : sportovi) {
+                    pckf.getjComboBoxSport().addItem(s);
+                }
+            }
 
-        List<ClanskaKarta> clanskeKarte = Komunikacija.getInstance().ucitajClanskeKarte();
-        pckf.getjTable1().setModel(new ModelTabeleClanskeKarte(clanskeKarte));
-        pckf.getjTable2().setModel(new ModelTabeleStavkaClanskeKarte(new ArrayList<>()));
+            List<ClanskaKarta> clanskeKarte = Komunikacija.getInstance().ucitajClanskeKarte();
+            pckf.getjTable1().setModel(new ModelTabeleClanskeKarte(clanskeKarte));
+            pckf.getjTable2().setModel(new ModelTabeleStavkaClanskeKarte(new ArrayList<>()));
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(pckf,
+                    "Sistem ne može da učita podatke za članske karte.",
+                    "Greška", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private ClanskaKarta selektovanaKarta() {
@@ -111,17 +121,17 @@ public class PrikazClanskihKarataKontroler {
     private ClanskaKarta napraviKriterijum() {
         ClanskaKarta kriterijum = new ClanskaKarta();
 
-        Polaznik polaznik = pckf.getjComboBoxPolaznik().getSelectedItem();
+        Polaznik polaznik = (Polaznik) pckf.getjComboBoxPolaznik().getSelectedItem();
         if (polaznik != null) {
             kriterijum.setPolaznik(polaznik);
         }
 
-        Instruktor instruktor = pckf.getjComboBoxInstruktor().getSelectedItem();
+        Instruktor instruktor = (Instruktor) pckf.getjComboBoxInstruktor().getSelectedItem();
         if (instruktor != null) {
             kriterijum.setInstruktor(instruktor);
         }
 
-        Sport sport = pckf.getjComboBoxSport().getSelectedItem();
+        Sport sport = (Sport) pckf.getjComboBoxSport().getSelectedItem();
         if (sport != null) {
             StavkaClanskeKarte st = new StavkaClanskeKarte();
             st.setSport(sport);

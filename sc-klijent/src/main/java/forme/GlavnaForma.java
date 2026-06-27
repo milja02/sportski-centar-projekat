@@ -102,6 +102,11 @@ public class GlavnaForma extends javax.swing.JFrame {
         jMenu3.add(jMenuItem5);
 
         jMenuItem6.setText("Pregled");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem6);
 
         jMenuBar1.add(jMenu3);

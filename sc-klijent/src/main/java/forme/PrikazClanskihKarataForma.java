@@ -157,14 +157,12 @@ public class PrikazClanskihKarataForma extends javax.swing.JFrame {
     public JButton getjButtonAzuriraj() { return jButtonAzuriraj; }
     public JButton getjButtonObrisi() { return jButtonObrisi; }
 
-    @SuppressWarnings("unchecked")
     public JComboBox<Polaznik> getjComboBoxPolaznik() {
-        return (JComboBox<Polaznik>) (JComboBox<?>) jComboBoxPolaznik;
+        return jComboBoxPolaznik;
     }
 
-    @SuppressWarnings("unchecked")
     public JComboBox<Instruktor> getjComboBoxInstruktor() {
-        return (JComboBox<Instruktor>) (JComboBox<?>) jComboBoxInstruktor;
+        return jComboBoxInstruktor;
     }
 
     public JButton getjButtonPretrazi() { return jButtonPretrazi; }
@@ -178,9 +176,8 @@ public class PrikazClanskihKarataForma extends javax.swing.JFrame {
     public void addBtnNadjiActionListener(ActionListener l) { jButtonNadji.addActionListener(l); }
     public void addBtnNazadActionListener(ActionListener l) { jButtonNazad.addActionListener(l); }
 
-    @SuppressWarnings("unchecked")
     public JComboBox<Sport> getjComboBoxSport() {
-        return (JComboBox<Sport>) (JComboBox<?>) jComboBoxSport;
+        return jComboBoxSport;
     }
 
     private javax.swing.JButton jButtonAzuriraj;
@@ -190,9 +187,9 @@ public class PrikazClanskihKarataForma extends javax.swing.JFrame {
     private javax.swing.JButton jButtonResetuj;
     private javax.swing.JButton jButtonNadji;
     private javax.swing.JButton jButtonNazad;
-    private javax.swing.JComboBox jComboBoxSport;
-    private javax.swing.JComboBox jComboBoxPolaznik;
-    private javax.swing.JComboBox jComboBoxInstruktor;
+    private javax.swing.JComboBox<Sport> jComboBoxSport;
+    private javax.swing.JComboBox<Polaznik> jComboBoxPolaznik;
+    private javax.swing.JComboBox<Instruktor> jComboBoxInstruktor;
     private javax.swing.JLabel jLabelSport;
     private javax.swing.JLabel jLabelInstruktor;
     private javax.swing.JLabel jLabelPolaznik;
