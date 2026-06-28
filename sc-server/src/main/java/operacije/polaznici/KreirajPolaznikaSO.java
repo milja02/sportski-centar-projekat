@@ -6,14 +6,27 @@ import domen.Polaznik;
 import java.util.List;
 import operacije.ApstraktnaGenerickaOperacija;
 
+/**
+ * Sistemska operacija za kreiranje praznog zapisa polaznika u bazi.
+ * Ubacuje polaznika sa podrazumevanim vrednostima i vraća generisani identifikator.
+ */
 public class KreirajPolaznikaSO extends ApstraktnaGenerickaOperacija {
 
+    /** Novokreirani polaznik sa generisanim id-jem. */
     private Polaznik polaznik;
 
     @Override
     protected void preduslovi(Object param) throws Exception {
     }
 
+    /**
+     * Ubacuje prazan zapis polaznika u bazu koristeći prvo mesto iz baze,
+     * zatim čuva generisani id.
+     *
+     * @param param parametar operacije (nije korišćen)
+     * @param kljuc dodatni ključ operacije
+     * @throws Exception ako u bazi nema mesta ili insert ne uspe
+     */
     @Override
     protected void izvrsiOperaciju(Object param, String kljuc) throws Exception {
         List<ApstraktniDomenskiObjekat> mesta = broker.getAll(new Mesto(), null);
@@ -37,6 +50,11 @@ public class KreirajPolaznikaSO extends ApstraktnaGenerickaOperacija {
         polaznik.setIdPolaznik(id);
     }
 
+    /**
+     * Vraća novokreiranog polaznika sa generisanim id-jem.
+     *
+     * @return polaznik sa id-jem
+     */
     public Polaznik getPolaznik() {
         return polaznik;
     }

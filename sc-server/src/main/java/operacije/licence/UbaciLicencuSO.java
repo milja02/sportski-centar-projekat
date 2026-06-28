@@ -3,8 +3,18 @@ package operacije.licence;
 import domen.InstruktorLicenca;
 import operacije.ApstraktnaGenerickaOperacija;
 
+/**
+ * Sistemska operacija za dodelu licence instruktoru.
+ * Ubacuje zapis o izdatoj licenci u bazu podataka.
+ */
 public class UbaciLicencuSO extends ApstraktnaGenerickaOperacija {
 
+    /**
+     * Proverava da li su prosleđeni ispravni podaci o dodeli licence.
+     *
+     * @param param veza između instruktora i licence
+     * @throws Exception ako parametar nije ispravan ili datumi nisu validni
+     */
     @Override
     protected void preduslovi(Object param) throws Exception {
         if (param == null || !(param instanceof InstruktorLicenca)) {
@@ -25,6 +35,13 @@ public class UbaciLicencuSO extends ApstraktnaGenerickaOperacija {
         }
     }
 
+    /**
+     * Ubacuje dodelu licence instruktoru u bazu podataka.
+     *
+     * @param param veza između instruktora i licence
+     * @param kljuc dodatni ključ operacije
+     * @throws Exception ako dođe do greške pri radu sa bazom
+     */
     @Override
     protected void izvrsiOperaciju(Object param, String kljuc) throws Exception {
         broker.add((InstruktorLicenca) param);

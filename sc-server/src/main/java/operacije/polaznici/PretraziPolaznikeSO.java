@@ -4,10 +4,21 @@ import domen.Polaznik;
 import java.util.List;
 import operacije.ApstraktnaGenerickaOperacija;
 
+/**
+ * Sistemska operacija za pretragu polaznika po zadatim kriterijumima.
+ * Pretraga može obuhvatiti ime, prezime, broj telefona i mesto.
+ */
 public class PretraziPolaznikeSO extends ApstraktnaGenerickaOperacija {
 
+    /** Lista pronađenih polaznika. */
     private List<Polaznik> polaznici;
 
+    /**
+     * Proverava da li je prosleđen ispravan kriterijum pretrage.
+     *
+     * @param param kriterijum pretrage u obliku polaznika
+     * @throws Exception ako parametar nije ispravan
+     */
     @Override
     protected void preduslovi(Object param) throws Exception {
         if (param == null || !(param instanceof Polaznik)) {
@@ -15,6 +26,13 @@ public class PretraziPolaznikeSO extends ApstraktnaGenerickaOperacija {
         }
     }
 
+    /**
+     * Formira SQL uslov na osnovu kriterijuma i učitava pronađene polaznike.
+     *
+     * @param param kriterijum pretrage
+     * @param kljuc dodatni ključ operacije
+     * @throws Exception ako dođe do greške pri radu sa bazom
+     */
     @Override
     protected void izvrsiOperaciju(Object param, String kljuc) throws Exception {
         Polaznik kriterijum = (Polaznik) param;
@@ -41,6 +59,11 @@ public class PretraziPolaznikeSO extends ApstraktnaGenerickaOperacija {
         polaznici = (List<Polaznik>) (List<?>) broker.getAll(new Polaznik(), uslov.toString());
     }
 
+    /**
+     * Vraća listu pronađenih polaznika.
+     *
+     * @return lista polaznika
+     */
     public List<Polaznik> getPolaznici() {
         return polaznici;
     }

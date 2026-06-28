@@ -4,10 +4,21 @@ import domen.Instruktor;
 import java.util.List;
 import operacije.ApstraktnaGenerickaOperacija;
 
+/**
+ * Sistemska operacija za prijavu instruktora u sistem.
+ * Proverava korisničko ime i šifru u odnosu na podatke iz baze.
+ */
 public class PrijaviInstruktoraSO extends ApstraktnaGenerickaOperacija {
 
+    /** Prijavljeni instruktor. */
     private Instruktor instruktor;
 
+    /**
+     * Proverava da li su prosleđeni korisničko ime i šifra.
+     *
+     * @param param instruktor sa kredencijalima za prijavu
+     * @throws Exception ako parametar nije ispravan
+     */
     @Override
     protected void preduslovi(Object param) throws Exception {
         if (param == null || !(param instanceof Instruktor)) {
@@ -20,6 +31,14 @@ public class PrijaviInstruktoraSO extends ApstraktnaGenerickaOperacija {
         }
     }
 
+    /**
+     * Pronalazi instruktora u bazi čije korisničko ime i šifra
+     * odgovaraju prosleđenim vrednostima.
+     *
+     * @param param instruktor sa kredencijalima za prijavu
+     * @param kljuc dodatni ključ operacije
+     * @throws Exception ako kredencijali nisu ispravni
+     */
     @Override
     protected void izvrsiOperaciju(Object param, String kljuc) throws Exception {
         List<Instruktor> sviInstruktori = (List<Instruktor>) (List<?>) broker.getAll((Instruktor) param, null);
@@ -32,6 +51,11 @@ public class PrijaviInstruktoraSO extends ApstraktnaGenerickaOperacija {
         throw new Exception("Korisničko ime i šifra nisu ispravni.");
     }
 
+    /**
+     * Vraća prijavljenog instruktora.
+     *
+     * @return instruktor iz baze
+     */
     public Instruktor getInstruktor() {
         return instruktor;
     }

@@ -5,51 +5,109 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Mesto implements ApstraktniDomenskiObjekat{
+/**
+ * Predstavlja mesto u sistemu sportskog centra.
+ */
+public class Mesto implements ApstraktniDomenskiObjekat {
+
+    /** Jedinstveni identifikator mesta u bazi. */
     private int idMesto;
+
+    /** Naziv mesta. */
     private String naziv;
+
+    /** Poštanski broj mesta. */
     private int postanskiBroj;
 
+    /**
+     * Konstruktor bez inicijalizacije atributa.
+     */
     public Mesto() {
     }
 
+    /**
+     * Konstruktor koji postavlja atribute.
+     *
+     * @param idMesto jedinstveni identifikator mesta
+     * @param naziv naziv mesta
+     * @param postanskiBroj poštanski broj mesta
+     */
     public Mesto(int idMesto, String naziv, int postanskiBroj) {
         this.idMesto = idMesto;
         this.naziv = naziv;
         this.postanskiBroj = postanskiBroj;
     }
 
-    
-    
+    /**
+     * Vraća identifikator mesta.
+     *
+     * @return id mesta
+     */
     public int getIdMesto() {
         return idMesto;
     }
 
+    /**
+     * Postavlja identifikator mesta.
+     *
+     * @param idMesto jedinstveni identifikator mesta
+     */
     public void setIdMesto(int idMesto) {
         this.idMesto = idMesto;
     }
 
+    /**
+     * Vraća naziv mesta.
+     *
+     * @return naziv mesta
+     */
     public String getNaziv() {
         return naziv;
     }
 
+    /**
+     * Postavlja naziv mesta.
+     *
+     * @param naziv naziv mesta
+     */
     public void setNaziv(String naziv) {
         this.naziv = naziv;
     }
 
+    /**
+     * Vraća poštanski broj mesta.
+     *
+     * @return poštanski broj
+     */
     public int getPostanskiBroj() {
         return postanskiBroj;
     }
 
+    /**
+     * Postavlja poštanski broj mesta.
+     *
+     * @param postanskiBroj poštanski broj mesta
+     */
     public void setPostanskiBroj(int postanskiBroj) {
         this.postanskiBroj = postanskiBroj;
     }
 
+    /**
+     * Vraća String reprezentaciju objekta mesta.
+     *
+     * @return naziv mesta
+     */
     @Override
     public String toString() {
-        return  naziv;
+        return naziv;
     }
 
+    /**
+     * Poredi dva mesta na osnovu naziva i poštanskog broja.
+     *
+     * @param obj objekat za poređenje
+     * @return {@code true} ako su mesta jednaka, inače {@code false}
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -75,7 +133,7 @@ public class Mesto implements ApstraktniDomenskiObjekat{
 
     @Override
     public String primarniKljuc() {
-        return "mesto.idMesto="+idMesto;
+        return "mesto.idMesto=" + idMesto;
     }
 
     @Override
@@ -85,12 +143,12 @@ public class Mesto implements ApstraktniDomenskiObjekat{
 
     @Override
     public String vrednostiZaUbacivanje() {
-        return "'"+naziv+"',"+postanskiBroj;
+        return "'" + naziv + "'," + postanskiBroj;
     }
 
     @Override
     public String vrednostiZaIzmenu() {
-        return "naziv='"+naziv+"',"+postanskiBroj;
+        return "naziv='" + naziv + "'," + postanskiBroj;
     }
 
     @Override
@@ -98,17 +156,23 @@ public class Mesto implements ApstraktniDomenskiObjekat{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /**
+     * Formira listu mesta na osnovu rezultata upita.
+     *
+     * @param rs kursor sa rezultatima upita
+     * @return lista mesta
+     * @throws Exception ako dođe do greške pri čitanju rezultata
+     */
     @Override
     public List<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws Exception {
         List<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
-        while(rs.next()){
+        while (rs.next()) {
             int idMesto = rs.getInt("idMesto");
             String naziv = rs.getString("naziv");
             int postanskiBroj = rs.getInt("postanskiBroj");
             Mesto m = new Mesto(idMesto, naziv, postanskiBroj);
             lista.add(m);
         }
-        
         return lista;
     }
 
@@ -126,6 +190,4 @@ public class Mesto implements ApstraktniDomenskiObjekat{
     public String alijasTabele() {
         return "me";
     }
-    
-    
 }

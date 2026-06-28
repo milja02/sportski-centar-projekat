@@ -6,15 +6,37 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class InstruktorLicenca implements ApstraktniDomenskiObjekat{
+/**
+ * Predstavlja vezu između instruktora i licence (dodelu licence instruktoru).
+ */
+public class InstruktorLicenca implements ApstraktniDomenskiObjekat {
+
+    /** Instruktor kome je dodeljena licenca. */
     private Instruktor instruktor;
+
+    /** Licenca koja je dodeljena instruktoru. */
     private Licenca licenca;
+
+    /** Datum izdavanja licence. */
     private Date datumIzdavanja;
+
+    /** Datum isteka licence. */
     private Date datumIsteka;
 
+    /**
+     * Konstruktor bez inicijalizacije atributa.
+     */
     public InstruktorLicenca() {
     }
 
+    /**
+     * Konstruktor koji postavlja atribute.
+     *
+     * @param instruktor instruktor kome se dodeljuje licenca
+     * @param licenca licenca koja se dodeljuje
+     * @param datumIzdavanja datum izdavanja licence
+     * @param datumIsteka datum isteka licence
+     */
     public InstruktorLicenca(Instruktor instruktor, Licenca licenca, Date datumIzdavanja, Date datumIsteka) {
         this.instruktor = instruktor;
         this.licenca = licenca;
@@ -22,44 +44,95 @@ public class InstruktorLicenca implements ApstraktniDomenskiObjekat{
         this.datumIsteka = datumIsteka;
     }
 
+    /**
+     * Vraća instruktora.
+     *
+     * @return instruktor
+     */
     public Instruktor getInstruktor() {
         return instruktor;
     }
 
+    /**
+     * Postavlja instruktora.
+     *
+     * @param instruktor instruktor kome se dodeljuje licenca
+     */
     public void setInstruktor(Instruktor instruktor) {
         this.instruktor = instruktor;
     }
 
+    /**
+     * Vraća licencu.
+     *
+     * @return licenca
+     */
     public Licenca getLicenca() {
         return licenca;
     }
 
+    /**
+     * Postavlja licencu.
+     *
+     * @param licenca licenca koja se dodeljuje
+     */
     public void setLicenca(Licenca licenca) {
         this.licenca = licenca;
     }
 
+    /**
+     * Vraća datum izdavanja licence.
+     *
+     * @return datum izdavanja
+     */
     public Date getDatumIzdavanja() {
         return datumIzdavanja;
     }
 
+    /**
+     * Postavlja datum izdavanja licence.
+     *
+     * @param datumIzdavanja datum izdavanja
+     */
     public void setDatumIzdavanja(Date datumIzdavanja) {
         this.datumIzdavanja = datumIzdavanja;
     }
 
+    /**
+     * Vraća datum isteka licence.
+     *
+     * @return datum isteka
+     */
     public Date getDatumIsteka() {
         return datumIsteka;
     }
 
+    /**
+     * Postavlja datum isteka licence.
+     *
+     * @param datumIsteka datum isteka
+     */
     public void setDatumIsteka(Date datumIsteka) {
         this.datumIsteka = datumIsteka;
     }
 
+    /**
+     * Vraća String reprezentaciju objekta dodele licence.
+     *
+     * @return tekstualni prikaz atributa objekta
+     */
     @Override
     public String toString() {
-        return "InstruktorLicenca{" + "instruktor=" + instruktor + ", licenca=" + licenca + ", datumIzdavanja=" + datumIzdavanja + ", datumIsteka=" + datumIsteka + '}';
+        return "InstruktorLicenca{" + "instruktor=" + instruktor + ", licenca=" + licenca
+                + ", datumIzdavanja=" + datumIzdavanja + ", datumIsteka=" + datumIsteka + '}';
     }
 
-
+    /**
+     * Poredi dve dodele licence na osnovu instruktora, licence i datuma.
+     *
+     * @param obj objekat za poređenje
+     * @return {@code true} ako su objekti jednaki, inače {@code false}
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -99,6 +172,12 @@ public class InstruktorLicenca implements ApstraktniDomenskiObjekat{
         return "instruktor,licenca,datumIzdavanja,datumIsteka";
     }
 
+    /**
+     * Formira vrednosti za INSERT upit.
+     *
+     * @return vrednosti kolona u formatu pogodnom za SQL
+     * @throws IllegalStateException ako instruktor ili licenca nisu postavljeni
+     */
     @Override
     public String vrednostiZaUbacivanje() {
         if (instruktor == null || licenca == null) {
@@ -142,6 +221,4 @@ public class InstruktorLicenca implements ApstraktniDomenskiObjekat{
     public String alijasTabele() {
         return "il";
     }
-    
-    
 }

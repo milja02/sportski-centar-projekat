@@ -5,10 +5,21 @@ import domen.StavkaClanskeKarte;
 import java.util.List;
 import operacije.ApstraktnaGenerickaOperacija;
 
+/**
+ * Sistemska operacija za pretragu članjskih karata po zadatim kriterijumima.
+ * Pretraga može obuhvatiti polaznika, instruktora i sport.
+ */
 public class PretraziClanskeKarteSO extends ApstraktnaGenerickaOperacija {
 
+    /** Lista pronađenih članjskih karata. */
     private List<ClanskaKarta> clanskeKarte;
 
+    /**
+     * Proverava da li je prosleđen ispravan kriterijum pretrage.
+     *
+     * @param param kriterijum pretrage u obliku članske karte
+     * @throws Exception ako parametar nije ispravan
+     */
     @Override
     protected void preduslovi(Object param) throws Exception {
         if (param == null || !(param instanceof ClanskaKarta)) {
@@ -16,6 +27,14 @@ public class PretraziClanskeKarteSO extends ApstraktnaGenerickaOperacija {
         }
     }
 
+    /**
+     * Formira SQL uslov na osnovu kriterijuma, učitava pronađene karte
+     * i za svaku kartu učitava stavke.
+     *
+     * @param param kriterijum pretrage
+     * @param kljuc dodatni ključ operacije
+     * @throws Exception ako dođe do greške pri radu sa bazom
+     */
     @Override
     protected void izvrsiOperaciju(Object param, String kljuc) throws Exception {
         ClanskaKarta kriterijum = (ClanskaKarta) param;
@@ -75,6 +94,11 @@ public class PretraziClanskeKarteSO extends ApstraktnaGenerickaOperacija {
         }
     }
 
+    /**
+     * Vraća listu pronađenih članjskih karata.
+     *
+     * @return lista članjskih karata sa stavkama
+     */
     public List<ClanskaKarta> getClanskeKarte() {
         return clanskeKarte;
     }

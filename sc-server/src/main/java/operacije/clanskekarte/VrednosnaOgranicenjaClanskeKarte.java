@@ -8,11 +8,23 @@ import java.util.List;
 import java.util.Map;
 import repository.Repository;
 
+/**
+ * Pomoćna klasa za proveru vrednosnih ograničenja članske karte i njenih stavki.
+ */
 public final class VrednosnaOgranicenjaClanskeKarte {
 
     private VrednosnaOgranicenjaClanskeKarte() {
     }
 
+    /**
+     * Proverava ispravnost stavki i ukupnog iznosa članske karte.
+     * Za svaku stavku proverava sport, broj termina i iznos;
+     * ukupan iznos mora biti jednak zbiru iznosa stavki.
+     *
+     * @param ck članska karta za proveru
+     * @param broker repozitorijum za učitavanje cena sportova
+     * @throws Exception ako bilo koje ograničenje nije ispunjeno
+     */
     public static void proveri(ClanskaKarta ck, Repository broker) throws Exception {
         List<StavkaClanskeKarte> stavke = ck.getStavke();
         int zbirStavki = 0;

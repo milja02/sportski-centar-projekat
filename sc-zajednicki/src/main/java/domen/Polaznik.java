@@ -5,16 +5,41 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Polaznik implements ApstraktniDomenskiObjekat{
+/**
+ * Predstavlja polaznika sportskog centra.
+ */
+public class Polaznik implements ApstraktniDomenskiObjekat {
+
+    /** Jedinstveni identifikator polaznika u bazi. */
     private int idPolaznik;
+
+    /** Ime polaznika. */
     private String ime;
+
+    /** Prezime polaznika. */
     private String prezime;
+
+    /** Kontakt telefon polaznika. */
     private String brojTelefona;
+
+    /** Mesto prebivališta polaznika. */
     private Mesto mesto;
 
+    /**
+     * Konstruktor bez inicijalizacije atributa.
+     */
     public Polaznik() {
     }
 
+    /**
+     * Konstruktor koji postavlja atribute.
+     *
+     * @param idPolaznik jedinstveni identifikator polaznika
+     * @param ime ime polaznika
+     * @param prezime prezime polaznika
+     * @param brojTelefona kontakt telefon
+     * @param mesto mesto prebivališta
+     */
     public Polaznik(int idPolaznik, String ime, String prezime, String brojTelefona, Mesto mesto) {
         this.idPolaznik = idPolaznik;
         this.ime = ime;
@@ -23,46 +48,102 @@ public class Polaznik implements ApstraktniDomenskiObjekat{
         this.mesto = mesto;
     }
 
+    /**
+     * Vraća identifikator polaznika.
+     *
+     * @return id polaznika
+     */
     public int getIdPolaznik() {
         return idPolaznik;
     }
 
+    /**
+     * Postavlja identifikator polaznika.
+     *
+     * @param idPolaznik jedinstveni identifikator polaznika
+     */
     public void setIdPolaznik(int idPolaznik) {
         this.idPolaznik = idPolaznik;
     }
 
+    /**
+     * Vraća ime polaznika.
+     *
+     * @return ime polaznika
+     */
     public String getIme() {
         return ime;
     }
 
+    /**
+     * Postavlja ime polaznika.
+     *
+     * @param ime ime polaznika
+     */
     public void setIme(String ime) {
         this.ime = ime;
     }
 
+    /**
+     * Vraća prezime polaznika.
+     *
+     * @return prezime polaznika
+     */
     public String getPrezime() {
         return prezime;
     }
 
+    /**
+     * Postavlja prezime polaznika.
+     *
+     * @param prezime prezime polaznika
+     */
     public void setPrezime(String prezime) {
         this.prezime = prezime;
     }
 
+    /**
+     * Vraća broj telefona polaznika.
+     *
+     * @return broj telefona
+     */
     public String getBrojTelefona() {
         return brojTelefona;
     }
 
+    /**
+     * Postavlja broj telefona polaznika.
+     *
+     * @param brojTelefona kontakt telefon
+     */
     public void setBrojTelefona(String brojTelefona) {
         this.brojTelefona = brojTelefona;
     }
 
+    /**
+     * Vraća mesto prebivališta polaznika.
+     *
+     * @return mesto polaznika
+     */
     public Mesto getMesto() {
         return mesto;
     }
 
+    /**
+     * Postavlja mesto prebivališta polaznika.
+     *
+     * @param mesto mesto prebivališta
+     */
     public void setMesto(Mesto mesto) {
         this.mesto = mesto;
     }
 
+    /**
+     * Poredi dva polaznika na osnovu imena, prezimena i broja telefona.
+     *
+     * @param obj objekat za poređenje
+     * @return {@code true} ako su polaznici jednaki, inače {@code false}
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -84,6 +165,11 @@ public class Polaznik implements ApstraktniDomenskiObjekat{
         return Objects.equals(this.brojTelefona, other.brojTelefona);
     }
 
+    /**
+     * Vraća String reprezentaciju objekta polaznika.
+     *
+     * @return ime i prezime polaznika
+     */
     @Override
     public String toString() {
         return ime + " " + prezime;
@@ -96,7 +182,7 @@ public class Polaznik implements ApstraktniDomenskiObjekat{
 
     @Override
     public String primarniKljuc() {
-        return "polaznik.idPolaznik="+idPolaznik;
+        return "polaznik.idPolaznik=" + idPolaznik;
     }
 
     @Override
@@ -106,12 +192,12 @@ public class Polaznik implements ApstraktniDomenskiObjekat{
 
     @Override
     public String vrednostiZaUbacivanje() {
-        return "'"+ime+"','"+prezime+"','"+brojTelefona+"',"+mesto.getIdMesto();
+        return "'" + ime + "','" + prezime + "','" + brojTelefona + "'," + mesto.getIdMesto();
     }
 
     @Override
     public String vrednostiZaIzmenu() {
-        return "ime='"+ime+"',prezime='"+prezime+"',brojTelefona='"+brojTelefona+"', mesto="+mesto.getIdMesto();
+        return "ime='" + ime + "',prezime='" + prezime + "',brojTelefona='" + brojTelefona + "', mesto=" + mesto.getIdMesto();
     }
 
     @Override
@@ -119,10 +205,18 @@ public class Polaznik implements ApstraktniDomenskiObjekat{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /**
+     * Formira listu polaznika na osnovu rezultata upita.
+     * Učitava i mesto prebivališta svakog polaznika.
+     *
+     * @param rs kursor sa rezultatima upita
+     * @return lista polaznika
+     * @throws Exception ako dođe do greške pri čitanju rezultata
+     */
     @Override
     public List<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws Exception {
         List<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
-        while(rs.next()){
+        while (rs.next()) {
             int idPolaznik = rs.getInt("idPolaznik");
             String ime = rs.getString("ime");
             String prezime = rs.getString("prezime");
@@ -151,6 +245,4 @@ public class Polaznik implements ApstraktniDomenskiObjekat{
     public String alijasTabele() {
         return "po";
     }
-    
-    
 }

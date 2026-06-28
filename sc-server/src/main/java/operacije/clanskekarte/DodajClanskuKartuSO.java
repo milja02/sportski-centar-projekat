@@ -4,8 +4,19 @@ import domen.ClanskaKarta;
 import domen.StavkaClanskeKarte;
 import operacije.ApstraktnaGenerickaOperacija;
 
+/**
+ * Sistemska operacija za unos nove članske karte u bazu.
+ * Ubacuje kartu zajedno sa njenim stavkama.
+ */
 public class DodajClanskuKartuSO extends ApstraktnaGenerickaOperacija {
 
+    /**
+     * Proverava da li je prosleđena ispravna članska karta
+     * i da li ispunjava vrednosna ograničenja.
+     *
+     * @param param članska karta za unos
+     * @throws Exception ako parametar nije ispravan ili validacija ne uspe
+     */
     @Override
     protected void preduslovi(Object param) throws Exception {
         if (param == null || !(param instanceof ClanskaKarta)) {
@@ -21,6 +32,13 @@ public class DodajClanskuKartuSO extends ApstraktnaGenerickaOperacija {
         VrednosnaOgranicenjaClanskeKarte.proveri(ck, broker);
     }
 
+    /**
+     * Ubacuje člansku kartu u bazu i zatim ubacuje sve njene stavke.
+     *
+     * @param param članska karta za unos
+     * @param kljuc dodatni ključ operacije
+     * @throws Exception ako insert ne uspe ili dođe do greške pri radu sa bazom
+     */
     @Override
     protected void izvrsiOperaciju(Object param, String kljuc) throws Exception {
         ClanskaKarta ck = (ClanskaKarta) param;

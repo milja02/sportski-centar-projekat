@@ -5,46 +5,98 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Licenca implements ApstraktniDomenskiObjekat{
+/**
+ * Predstavlja licencu koju instruktor može da poseduje.
+ */
+public class Licenca implements ApstraktniDomenskiObjekat {
+
+    /** Jedinstveni identifikator licence u bazi. */
     private int idLicenca;
+
+    /** Tip licence. */
     private String tipLicence;
+
+    /** Nivo kvalifikacije licence. */
     private String nivoKvalifikacije;
 
+    /**
+     * Konstruktor bez inicijalizacije atributa.
+     */
     public Licenca() {
     }
 
+    /**
+     * Konstruktor koji postavlja atribute.
+     *
+     * @param idLicenca jedinstveni identifikator licence
+     * @param tipLicence tip licence
+     * @param nivoKvalifikacije nivo kvalifikacije
+     */
     public Licenca(int idLicenca, String tipLicence, String nivoKvalifikacije) {
         this.idLicenca = idLicenca;
         this.tipLicence = tipLicence;
         this.nivoKvalifikacije = nivoKvalifikacije;
     }
 
-    
-    
+    /**
+     * Vraća identifikator licence.
+     *
+     * @return id licence
+     */
     public int getIdLicenca() {
         return idLicenca;
     }
 
+    /**
+     * Postavlja identifikator licence.
+     *
+     * @param idLicenca jedinstveni identifikator licence
+     */
     public void setIdLicenca(int idLicenca) {
         this.idLicenca = idLicenca;
     }
 
+    /**
+     * Vraća tip licence.
+     *
+     * @return tip licence
+     */
     public String getTipLicence() {
         return tipLicence;
     }
 
+    /**
+     * Postavlja tip licence.
+     *
+     * @param tipLicence tip licence
+     */
     public void setTipLicence(String tipLicence) {
         this.tipLicence = tipLicence;
     }
 
+    /**
+     * Vraća nivo kvalifikacije licence.
+     *
+     * @return nivo kvalifikacije
+     */
     public String getNivoKvalifikacije() {
         return nivoKvalifikacije;
     }
 
+    /**
+     * Postavlja nivo kvalifikacije licence.
+     *
+     * @param nivoKvalifikacije nivo kvalifikacije
+     */
     public void setNivoKvalifikacije(String nivoKvalifikacije) {
         this.nivoKvalifikacije = nivoKvalifikacije;
     }
 
+    /**
+     * Vraća String reprezentaciju objekta licence.
+     *
+     * @return tip i nivo licence u čitljivom obliku
+     */
     @Override
     public String toString() {
         if (tipLicence == null && nivoKvalifikacije == null) {
@@ -61,6 +113,12 @@ public class Licenca implements ApstraktniDomenskiObjekat{
         return tip + " - " + nivo;
     }
 
+    /**
+     * Poredi dve licence na osnovu tipa i nivoa kvalifikacije.
+     *
+     * @param obj objekat za poređenje
+     * @return {@code true} ako su licence jednake, inače {@code false}
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -86,7 +144,7 @@ public class Licenca implements ApstraktniDomenskiObjekat{
 
     @Override
     public String primarniKljuc() {
-        return "licenca.idLicenca="+idLicenca;
+        return "licenca.idLicenca=" + idLicenca;
     }
 
     @Override
@@ -96,12 +154,12 @@ public class Licenca implements ApstraktniDomenskiObjekat{
 
     @Override
     public String vrednostiZaUbacivanje() {
-        return "'"+tipLicence+"','"+nivoKvalifikacije+"'";
+        return "'" + tipLicence + "','" + nivoKvalifikacije + "'";
     }
 
     @Override
     public String vrednostiZaIzmenu() {
-        return "tipLicence='"+tipLicence+"',nivoKvalifikacije='"+nivoKvalifikacije+"'";
+        return "tipLicence='" + tipLicence + "',nivoKvalifikacije='" + nivoKvalifikacije + "'";
     }
 
     @Override
@@ -109,14 +167,20 @@ public class Licenca implements ApstraktniDomenskiObjekat{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /**
+     * Formira listu licenci na osnovu rezultata upita.
+     *
+     * @param rs kursor sa rezultatima upita
+     * @return lista licenci
+     * @throws Exception ako dođe do greške pri čitanju rezultata
+     */
     @Override
     public List<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws Exception {
         List<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
-        while(rs.next()){
+        while (rs.next()) {
             int idLicenca = rs.getInt("idLicenca");
             String tipLicence = rs.getString("tipLicence");
             String nivoKvalifikacije = rs.getString("nivoKvalifikacije");
-            
             Licenca l = new Licenca(idLicenca, tipLicence, nivoKvalifikacije);
             lista.add(l);
         }
@@ -137,6 +201,4 @@ public class Licenca implements ApstraktniDomenskiObjekat{
     public String alijasTabele() {
         return "li";
     }
-    
-    
 }
