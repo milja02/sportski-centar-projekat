@@ -8,12 +8,14 @@ import domen.StavkaClanskeKarte;
 import forme.PrikazClanskihKarataForma;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.swing.JOptionPane;
 import klijent.Komunikacija;
 import koordinator.Koordinator;
+import json.JsonFajlServis;
 import modeli.ModelTabeleClanskeKarte;
 import modeli.ModelTabeleStavkaClanskeKarte;
 
@@ -94,6 +96,30 @@ public class PrikazClanskihKarataKontroler {
         pckf.addBtnResetujActionListener(e -> pripremiFormu());
         pckf.addBtnNadjiActionListener(e -> nadji());
         pckf.addBtnAzurirajActionListener(e -> promeni());
+        pckf.addBtnSacuvajJsonActionListener(e -> sacuvajJson());
+    }
+
+    private void sacuvajJson() {
+        ClanskaKarta izTabele = selektovanaKarta();
+        if (izTabele == null) {
+            return;
+        }
+        try {
+            ClanskaKarta karta = Komunikacija.getInstance().nadjiClanskuKartu(izTabele);
+            File fajl = JsonFajlServis.izaberiFajlZaSnimanje(pckf,
+                    "clanska_karta_" + karta.getIdClanskaKarta() + ".json");
+            if (fajl == null) {
+                return;
+            }
+            JsonFajlServis.snimi(karta, fajl);
+            JOptionPane.showMessageDialog(pckf,
+                    "Podaci o članskoj karti su sačuvani u JSON fajl.",
+                    "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(pckf,
+                    "Sistem ne može da sačuva podatke u JSON fajl.",
+                    "Greška", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void pretrazi() {

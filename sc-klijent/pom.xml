@@ -4,6 +4,7 @@
     <groupId>rs.ac.bg.fon</groupId>
     <artifactId>sportski-centar-projekat</artifactId>
     <version>0.1.0</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>sc-klijent</artifactId>
@@ -14,6 +15,10 @@
       <groupId>rs.ac.bg.fon</groupId>
       <artifactId>sc-zajednicki</artifactId>
       <version>0.1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
     </dependency>
   </dependencies>
 </project>

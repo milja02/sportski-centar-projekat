@@ -4,10 +4,12 @@ import domen.Mesto;
 import domen.Polaznik;
 import forme.DodajPolaznikaForma;
 import forme.FormaMod;
+import java.io.File;
 import java.util.List;
 import javax.swing.JOptionPane;
 import klijent.Komunikacija;
 import koordinator.Koordinator;
+import json.JsonFajlServis;
 
 public class DodajPolaznikaKontroler {
 
@@ -35,6 +37,31 @@ public class DodajPolaznikaKontroler {
         dpf.dodajAddActionListener(e -> zapamti());
         dpf.izmeniAddActionListener(e -> zapamti());
         dpf.obrisiAddActionListener(e -> obrisi());
+        dpf.uveziJsonAddActionListener(e -> uveziJson());
+    }
+
+    private void uveziJson() {
+        try {
+            File fajl = JsonFajlServis.izaberiFajlZaUcitavanje(dpf);
+            if (fajl == null) {
+                return;
+            }
+            Polaznik polaznik = JsonFajlServis.ucitaj(fajl, Polaznik.class);
+            if (polaznik == null) {
+                JOptionPane.showMessageDialog(dpf,
+                        "JSON fajl ne sadrži podatke o polazniku.",
+                        "Greška", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            popuniPodatke(polaznik, false);
+            JOptionPane.showMessageDialog(dpf,
+                    "Podaci su uvezeni iz JSON fajla. Proverite unos i kliknite Dodaj.",
+                    "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception exc) {
+            JOptionPane.showMessageDialog(dpf,
+                    "Sistem ne može da uveze podatke iz JSON fajla.",
+                    "Greška", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void zapamti() {
@@ -132,10 +159,16 @@ public class DodajPolaznikaKontroler {
     }
 
     private void popuniPodatke(Polaznik p) {
-        dpf.getjTextField1().setText(p.getIme());
-        dpf.getjTextField2().setText(p.getPrezime());
-        dpf.getjTextField3().setText(p.getBrojTelefona());
-        dpf.getjTextField4().setText(String.valueOf(p.getIdPolaznik()));
+        popuniPodatke(p, true);
+    }
+
+    private void popuniPodatke(Polaznik p, boolean postaviId) {
+        dpf.getjTextField1().setText(p.getIme() != null ? p.getIme() : "");
+        dpf.getjTextField2().setText(p.getPrezime() != null ? p.getPrezime() : "");
+        dpf.getjTextField3().setText(p.getBrojTelefona() != null ? p.getBrojTelefona() : "");
+        if (postaviId && p.getIdPolaznik() > 0) {
+            dpf.getjTextField4().setText(String.valueOf(p.getIdPolaznik()));
+        }
         dpf.getjTextField4().setVisible(true);
         dpf.getjLabel5().setVisible(true);
         selektujMesto(p.getMesto());
@@ -165,12 +198,14 @@ public class DodajPolaznikaKontroler {
         switch (mod) {
             case PREGLED:
                 postaviRezimPregleda();
+                dpf.getjButtonUveziJson().setVisible(false);
                 Polaznik zaPregled = (Polaznik) Koordinator.getInstance().vratiParam("polaznik");
                 popuniPodatke(zaPregled);
                 break;
             case DODAJ:
                 dpf.setTitle("Polaznik - unos");
                 dpf.getjButton1().setVisible(true);
+                dpf.getjButtonUveziJson().setVisible(true);
                 dpf.getjTextField4().setVisible(true);
                 dpf.getjTextField4().setEditable(false);
                 dpf.getjLabel5().setVisible(true);
@@ -187,6 +222,7 @@ public class DodajPolaznikaKontroler {
             case IZMENI:
                 dpf.setTitle("Polaznik - izmena");
                 dpf.getjButtonIzmeni().setVisible(true);
+                dpf.getjButtonUveziJson().setVisible(false);
                 dpf.getjTextField4().setVisible(true);
                 dpf.getjTextField4().setEditable(false);
                 Polaznik p = (Polaznik) Koordinator.getInstance().vratiParam("polaznik");

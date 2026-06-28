@@ -32,6 +32,7 @@ public class PrikazPolaznikaForma extends javax.swing.JFrame {
         jComboBoxMesto = new javax.swing.JComboBox<>();
         jButtonNadji = new javax.swing.JButton();
         jButtonNazad = new javax.swing.JButton();
+        jButtonSacuvajJson = new javax.swing.JButton();
 
         jTablePolaznici.setModel(new javax.swing.table.DefaultTableModel(
             new Object[][] {}, new String[] {"Title 1", "Title 2", "Title 3", "Title 4"}
@@ -57,6 +58,7 @@ public class PrikazPolaznikaForma extends javax.swing.JFrame {
         jButtonNazad.setText("Nazad");
         jButtonObrisi.setText("Obrisi");
         jButtonIzmeni.setText("Izmeni");
+        jButtonSacuvajJson.setText("Sačuvaj JSON");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,6 +97,8 @@ public class PrikazPolaznikaForma extends javax.swing.JFrame {
                         .addComponent(jButtonNadji)
                         .addGap(8, 8, 8)
                         .addComponent(jButtonIzmeni)
+                        .addGap(8, 8, 8)
+                        .addComponent(jButtonSacuvajJson)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(12, 12, 12))
         );
@@ -122,7 +126,8 @@ public class PrikazPolaznikaForma extends javax.swing.JFrame {
                     .addComponent(jButtonNazad)
                     .addComponent(jButtonObrisi)
                     .addComponent(jButtonNadji)
-                    .addComponent(jButtonIzmeni))
+                    .addComponent(jButtonIzmeni)
+                    .addComponent(jButtonSacuvajJson))
                 .addGap(12, 12, 12))
         );
 
@@ -137,6 +142,7 @@ public class PrikazPolaznikaForma extends javax.swing.JFrame {
         return jTablePolaznici;
     }
 
+    private javax.swing.JButton jButtonSacuvajJson;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonIzmeni;
     private javax.swing.JButton jButtonObrisi;
@@ -196,5 +202,9 @@ public class PrikazPolaznikaForma extends javax.swing.JFrame {
 
     public void addBtnNazadActionListener(ActionListener actionListener) {
         jButtonNazad.addActionListener(actionListener);
+    }
+
+    public void addBtnSacuvajJsonActionListener(ActionListener actionListener) {
+        jButtonSacuvajJson.addActionListener(actionListener);
     }
 }

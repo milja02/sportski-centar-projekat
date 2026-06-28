@@ -10,6 +10,7 @@ import javax.swing.JTextField;
 
 public class DodajClanskuKartuForma extends javax.swing.JFrame {
 
+    private javax.swing.JButton jButtonUveziJson;
     private javax.swing.JButton jButtonDodaj;
     private javax.swing.JButton jButtonIzmeni;
     private javax.swing.JButton jButtonDodajStavku;
@@ -75,6 +76,7 @@ public class DodajClanskuKartuForma extends javax.swing.JFrame {
         jButtonIzmeni = new JButton("Zapamti");
         jButtonObrisi = new JButton("Obrisi");
         jButtonNazad = new JButton("Nazad");
+        jButtonUveziJson = new JButton("Uvezi preko JSON-a");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Clanska karta");
@@ -117,6 +119,7 @@ public class DodajClanskuKartuForma extends javax.swing.JFrame {
                         .addComponent(jButtonDodajStavku)
                         .addGap(8, 8, 8)
                         .addComponent(jButtonObrisiStavku))
+                    .addComponent(jButtonUveziJson)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonNazad)
                         .addGap(8, 8, 8)
@@ -165,6 +168,8 @@ public class DodajClanskuKartuForma extends javax.swing.JFrame {
                     .addComponent(jTextFieldIznosStavke, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonDodajStavku)
                     .addComponent(jButtonObrisiStavku))
+                .addGap(8, 8, 8)
+                .addComponent(jButtonUveziJson)
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonNazad)
@@ -213,4 +218,6 @@ public class DodajClanskuKartuForma extends javax.swing.JFrame {
     public void dodajStavkuAddActionListener(ActionListener l) { jButtonDodajStavku.addActionListener(l); }
     public void obrisiStavkuAddActionListener(ActionListener l) { jButtonObrisiStavku.addActionListener(l); }
     public void nazadAddActionListener(ActionListener l) { jButtonNazad.addActionListener(l); }
+    public void uveziJsonAddActionListener(ActionListener l) { jButtonUveziJson.addActionListener(l); }
+    public JButton getjButtonUveziJson() { return jButtonUveziJson; }
 }
