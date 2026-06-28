@@ -7,6 +7,7 @@ import domen.Sport;
 import domen.StavkaClanskeKarte;
 import forme.DodajClanskuKartuForma;
 import forme.FormaMod;
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import javax.swing.event.DocumentListener;
 import klijent.Komunikacija;
 import koordinator.Koordinator;
 import modeli.ModelTabeleStavkaClanskeKarte;
+import json.JsonFajlServis;
 
 public class DodajClanskuKartuKontroler {
 
@@ -43,6 +45,7 @@ public class DodajClanskuKartuKontroler {
         forma.obrisiAddActionListener(e -> obrisiKartu());
         forma.dodajStavkuAddActionListener(e -> dodajStavku());
         forma.obrisiStavkuAddActionListener(e -> obrisiStavku());
+        forma.uveziJsonAddActionListener(e -> uveziJson());
         forma.nazadAddActionListener(e -> {
             forma.dispose();
             if (trenutniMod != FormaMod.PREGLED) {
@@ -169,6 +172,10 @@ public class DodajClanskuKartuKontroler {
         if (ck.getDatumUclanjenja() != null) {
             forma.getjTextFieldDatum().setText(SDF.format(ck.getDatumUclanjenja()));
         }
+        popuniPodatkeKarteBezIdentiteta(ck);
+    }
+
+    private void popuniPodatkeKarteBezIdentiteta(ClanskaKarta ck) {
         selektujPolaznika(ck.getPolaznik());
         selektujInstruktora(ck.getInstruktor());
         List<StavkaClanskeKarte> stavke = ck.getStavke() != null ? new ArrayList<>(ck.getStavke()) : new ArrayList<>();
@@ -215,6 +222,7 @@ public class DodajClanskuKartuKontroler {
 
         if (mod == FormaMod.PREGLED) {
             postaviRezimPregleda();
+            forma.getjButtonUveziJson().setVisible(false);
             return;
         }
 
@@ -223,6 +231,7 @@ public class DodajClanskuKartuKontroler {
         if (mod == FormaMod.DODAJ) {
             forma.setTitle("Članska karta - unos");
             forma.getjButtonDodaj().setVisible(true);
+            forma.getjButtonUveziJson().setVisible(true);
             ClanskaKarta nova = (ClanskaKarta) Koordinator.getInstance().vratiParam("novaClanskaKarta");
             if (nova != null) {
                 forma.getjTextFieldId().setText(String.valueOf(nova.getIdClanskaKarta()));
@@ -236,8 +245,37 @@ public class DodajClanskuKartuKontroler {
         } else {
             forma.setTitle("Članska karta - izmena");
             forma.getjButtonIzmeni().setVisible(true);
+            forma.getjButtonUveziJson().setVisible(false);
             ClanskaKarta ck = (ClanskaKarta) Koordinator.getInstance().vratiParam("clanskaKarta");
             popuniPodatkeKarte(ck);
+        }
+    }
+
+    private void uveziJson() {
+        try {
+            File fajl = JsonFajlServis.izaberiFajlZaUcitavanje(forma);
+            if (fajl == null) {
+                return;
+            }
+            ClanskaKarta ck = JsonFajlServis.ucitaj(fajl, ClanskaKarta.class);
+            if (ck == null) {
+                JOptionPane.showMessageDialog(forma,
+                        "JSON fajl ne sadrži podatke o članskoj karti.",
+                        "Greška", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (trenutniMod == FormaMod.DODAJ) {
+                popuniPodatkeKarteBezIdentiteta(ck);
+            } else {
+                popuniPodatkeKarte(ck);
+            }
+            JOptionPane.showMessageDialog(forma,
+                    "Podaci su uvezeni iz JSON fajla. Proverite unos i kliknite Zapamti.",
+                    "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(forma,
+                    "Sistem ne može da uveze podatke iz JSON fajla.",
+                    "Greška", JOptionPane.ERROR_MESSAGE);
         }
     }
 

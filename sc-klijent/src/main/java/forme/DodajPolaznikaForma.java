@@ -30,6 +30,7 @@ public class DodajPolaznikaForma extends javax.swing.JFrame {
         jButtonNazad = new javax.swing.JButton();
         jTextField4 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
+        jButtonUveziJson = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Polaznik");
@@ -43,6 +44,7 @@ public class DodajPolaznikaForma extends javax.swing.JFrame {
         jButtonIzmeni.setText("Izmeni");
         jButtonObrisi.setText("Obrisi");
         jButtonNazad.setText("Nazad");
+        jButtonUveziJson.setText("Uvezi preko JSON-a");
         jTextField4.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -64,6 +66,7 @@ public class DodajPolaznikaForma extends javax.swing.JFrame {
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonUveziJson)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonNazad)
                         .addGap(8, 8, 8)
@@ -97,6 +100,8 @@ public class DodajPolaznikaForma extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addComponent(jButtonUveziJson)
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonNazad)
@@ -110,6 +115,7 @@ public class DodajPolaznikaForma extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
+    private javax.swing.JButton jButtonUveziJson;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonIzmeni;
     private javax.swing.JButton jButtonObrisi;
@@ -139,6 +145,14 @@ public class DodajPolaznikaForma extends javax.swing.JFrame {
 
     public void nazadAddActionListener(ActionListener actionListener) {
         jButtonNazad.addActionListener(actionListener);
+    }
+
+    public void uveziJsonAddActionListener(ActionListener actionListener) {
+        jButtonUveziJson.addActionListener(actionListener);
+    }
+
+    public JButton getjButtonUveziJson() {
+        return jButtonUveziJson;
     }
 
     public JTextField getjTextField1() {

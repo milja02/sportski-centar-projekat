@@ -34,6 +34,7 @@ public class PrikazClanskihKarataForma extends javax.swing.JFrame {
         jComboBoxSport = new javax.swing.JComboBox<>();
         jButtonNadji = new javax.swing.JButton();
         jButtonNazad = new javax.swing.JButton();
+        jButtonSacuvajJson = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object[][] {}, new String[] {"Title 1", "Title 2", "Title 3", "Title 4"}
@@ -57,6 +58,7 @@ public class PrikazClanskihKarataForma extends javax.swing.JFrame {
         jButtonDodaj.setText("Dodaj");
         jButtonAzuriraj.setText("Izmeni");
         jButtonObrisi.setText("Obrisi");
+        jButtonSacuvajJson.setText("Sačuvaj JSON");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,6 +97,8 @@ public class PrikazClanskihKarataForma extends javax.swing.JFrame {
                         .addComponent(jButtonNadji)
                         .addGap(8, 8, 8)
                         .addComponent(jButtonObrisi)
+                        .addGap(8, 8, 8)
+                        .addComponent(jButtonSacuvajJson)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(12, 12, 12))
         );
@@ -121,7 +125,8 @@ public class PrikazClanskihKarataForma extends javax.swing.JFrame {
                     .addComponent(jButtonDodaj)
                     .addComponent(jButtonAzuriraj)
                     .addComponent(jButtonNadji)
-                    .addComponent(jButtonObrisi))
+                    .addComponent(jButtonObrisi)
+                    .addComponent(jButtonSacuvajJson))
                 .addGap(12, 12, 12))
         );
 
@@ -159,11 +164,13 @@ public class PrikazClanskihKarataForma extends javax.swing.JFrame {
     public void addBtnResetujActionListener(ActionListener l) { jButtonResetuj.addActionListener(l); }
     public void addBtnNadjiActionListener(ActionListener l) { jButtonNadji.addActionListener(l); }
     public void addBtnNazadActionListener(ActionListener l) { jButtonNazad.addActionListener(l); }
+    public void addBtnSacuvajJsonActionListener(ActionListener l) { jButtonSacuvajJson.addActionListener(l); }
 
     public JComboBox<Sport> getjComboBoxSport() {
         return jComboBoxSport;
     }
 
+    private javax.swing.JButton jButtonSacuvajJson;
     private javax.swing.JButton jButtonAzuriraj;
     private javax.swing.JButton jButtonDodaj;
     private javax.swing.JButton jButtonObrisi;

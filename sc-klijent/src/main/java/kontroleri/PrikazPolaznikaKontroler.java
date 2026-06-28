@@ -3,8 +3,10 @@ package kontroleri;
 import domen.Mesto;
 import domen.Polaznik;
 import forme.PrikazPolaznikaForma;
+import java.io.File;
 import java.util.List;
 import javax.swing.JOptionPane;
+import json.JsonFajlServis;
 import klijent.Komunikacija;
 import koordinator.Koordinator;
 import modeli.ModelTabelePolaznika;
@@ -75,6 +77,30 @@ public class PrikazPolaznikaKontroler {
         ppf.addBtnNazadActionListener(e -> Koordinator.getInstance().nazadNaGlavnuFormu(ppf));
         ppf.addBtnNadjiActionListener(e -> otvori());
         ppf.addBtnIzmeniActionListener(e -> promeni());
+        ppf.addBtnSacuvajJsonActionListener(e -> sacuvajJson());
+    }
+
+    private void sacuvajJson() {
+        Polaznik izTabele = selektovaniPolaznik();
+        if (izTabele == null) {
+            return;
+        }
+        try {
+            Polaznik polaznik = Komunikacija.getInstance().nadjiPolaznika(izTabele);
+            File fajl = JsonFajlServis.izaberiFajlZaSnimanje(ppf,
+                    "polaznik_" + polaznik.getIdPolaznik() + ".json");
+            if (fajl == null) {
+                return;
+            }
+            JsonFajlServis.snimi(polaznik, fajl);
+            JOptionPane.showMessageDialog(ppf,
+                    "Podaci o polazniku su sačuvani u JSON fajl.",
+                    "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(ppf,
+                    "Sistem ne može da sačuva podatke u JSON fajl.",
+                    "Greška", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void pretrazi() {
