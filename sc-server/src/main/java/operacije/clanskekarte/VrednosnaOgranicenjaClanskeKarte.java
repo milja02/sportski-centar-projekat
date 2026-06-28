@@ -8,9 +8,6 @@ import java.util.List;
 import java.util.Map;
 import repository.Repository;
 
-/**
- * Vrednosna ogranicenja za ClanskaKarta i StavkaClanskeKarte (preduslovi SO).
- */
 public final class VrednosnaOgranicenjaClanskeKarte {
 
     private VrednosnaOgranicenjaClanskeKarte() {
@@ -25,25 +22,25 @@ public final class VrednosnaOgranicenjaClanskeKarte {
 
             for (StavkaClanskeKarte s : stavke) {
                 if (s.getSport() == null || s.getSport().getIdSport() <= 0) {
-                    throw new Exception("Sistem ne moÅ¾e da zapamti Älansku kartu (neispravan sport na stavci).");
+                    throw new Exception("Sistem ne može da zapamti člansku kartu (neispravan sport na stavci).");
                 }
                 if (s.getBrojTermina() <= 0) {
-                    throw new Exception("Sistem ne moÅ¾e da zapamti Älansku kartu (broj termina mora biti veÄ‡i od nule).");
+                    throw new Exception("Sistem ne može da zapamti člansku kartu (broj termina mora biti veći od nule).");
                 }
                 Integer cena = ceneSportova.get(s.getSport().getIdSport());
                 if (cena == null) {
-                    throw new Exception("Sistem ne moÅ¾e da zapamti Älansku kartu (sport ne postoji u bazi).");
+                    throw new Exception("Sistem ne može da zapamti člansku kartu (sport ne postoji u bazi).");
                 }
                 int ocekivaniIznos = s.getBrojTermina() * cena;
                 if (s.getIznosStavke() != ocekivaniIznos) {
-                    throw new Exception("Sistem ne moÅ¾e da zapamti Älansku kartu (iznos stavke mora biti brojTermina Ã— cena sporta).");
+                    throw new Exception("Sistem ne može da zapamti člansku kartu (iznos stavke mora biti brojTermina × cena sporta).");
                 }
                 zbirStavki += s.getIznosStavke();
             }
         }
 
         if (ck.getUkupanIznos() != zbirStavki) {
-            throw new Exception("Sistem ne moÅ¾e da zapamti Älansku kartu (ukupan iznos mora biti zbir iznosa stavki).");
+            throw new Exception("Sistem ne može da zapamti člansku kartu (ukupan iznos mora biti zbir iznosa stavki).");
         }
     }
 

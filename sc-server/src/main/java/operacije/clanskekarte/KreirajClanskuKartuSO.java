@@ -1,7 +1,3 @@
-/*
- * SK1 - Kreiraj Älansku kartu.
- * INSERT praznog reda (placeholder vrednosti) i vraÄ‡anje generisanog ID-ja.
- */
 package operacije.clanskekarte;
 
 import domen.ApstraktniDomenskiObjekat;
@@ -11,7 +7,6 @@ import domen.Polaznik;
 import java.util.Date;
 import java.util.List;
 import operacije.ApstraktnaGenerickaOperacija;
-import repository.db.impl.DBRepositoryGeneric;
 
 public class KreirajClanskuKartuSO extends ApstraktnaGenerickaOperacija {
 
@@ -27,7 +22,7 @@ public class KreirajClanskuKartuSO extends ApstraktnaGenerickaOperacija {
         List<ApstraktniDomenskiObjekat> instruktori = broker.getAll(new Instruktor(), null);
         if (polaznici == null || polaznici.isEmpty()
                 || instruktori == null || instruktori.isEmpty()) {
-            throw new Exception("Sistem ne moÅ¾e da kreira Älansku kartu.");
+            throw new Exception("Sistem ne može da kreira člansku kartu.");
         }
 
         ClanskaKarta nova = new ClanskaKarta();
@@ -36,9 +31,9 @@ public class KreirajClanskuKartuSO extends ApstraktnaGenerickaOperacija {
         nova.setPolaznik((Polaznik) polaznici.get(0));
         nova.setInstruktor((Instruktor) instruktori.get(0));
 
-        int id = ((DBRepositoryGeneric) broker).addAndReturnId(nova);
+        int id = broker.addAndReturnId(nova);
         if (id <= 0) {
-            throw new Exception("Sistem ne moÅ¾e da kreira Älansku kartu.");
+            throw new Exception("Sistem ne može da kreira člansku kartu.");
         }
 
         clanskaKarta = new ClanskaKarta();

@@ -1,6 +1,3 @@
-/*
- * SK8 - Prijavi instruktora.
- */
 package operacije.instruktori;
 
 import domen.Instruktor;
@@ -14,12 +11,12 @@ public class PrijaviInstruktoraSO extends ApstraktnaGenerickaOperacija {
     @Override
     protected void preduslovi(Object param) throws Exception {
         if (param == null || !(param instanceof Instruktor)) {
-            throw new Exception("KorisniÄko ime i Å¡ifra nisu ispravni.");
+            throw new Exception("Korisničko ime i šifra nisu ispravni.");
         }
         Instruktor i = (Instruktor) param;
         if (i.getKorisnickoIme() == null || i.getKorisnickoIme().trim().isEmpty()
                 || i.getSifra() == null || i.getSifra().trim().isEmpty()) {
-            throw new Exception("KorisniÄko ime i Å¡ifra nisu ispravni.");
+            throw new Exception("Korisničko ime i šifra nisu ispravni.");
         }
     }
 
@@ -32,7 +29,7 @@ public class PrijaviInstruktoraSO extends ApstraktnaGenerickaOperacija {
                 return;
             }
         }
-        throw new Exception("KorisniÄko ime i Å¡ifra nisu ispravni.");
+        throw new Exception("Korisničko ime i šifra nisu ispravni.");
     }
 
     public Instruktor getInstruktor() {

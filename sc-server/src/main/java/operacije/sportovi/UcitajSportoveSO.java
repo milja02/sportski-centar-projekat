@@ -4,9 +4,6 @@ import domen.Sport;
 import java.util.List;
 import operacije.ApstraktnaGenerickaOperacija;
 
-/**
- * UÄitavanje liste sportova (za combo u formama).
- */
 public class UcitajSportoveSO extends ApstraktnaGenerickaOperacija {
 
     List<Sport> sportovi;

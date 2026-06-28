@@ -1,6 +1,3 @@
-/*
- * UÄitavanje liste instruktora (za combo u formi Ubaci licencu).
- */
 package operacije.instruktori;
 
 import domen.Instruktor;

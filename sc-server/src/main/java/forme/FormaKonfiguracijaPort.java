@@ -96,7 +96,6 @@ public class FormaKonfiguracijaPort extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextFieldPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPortActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldPortActionPerformed
 
     /**

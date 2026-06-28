@@ -133,19 +133,17 @@ public class ClanskaKarta implements ApstraktniDomenskiObjekat{
 
     @Override
     public String uslovWhere() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public List<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws Exception {
          List<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
         while(rs.next()){
-            //id
             int idClanskaKarta = rs.getInt("idClanskaKarta");
             java.sql.Date datumSQLp = rs.getDate("datumUclanjenja");
             java.util.Date datumUTILp = new java.util.Date(datumSQLp.getTime());
             int ukupanIznos = rs.getInt("ukupanIznos");
-            //instruktor
             int idInstruktor = rs.getInt("i.idInstruktor");
             String ime = rs.getString("i.ime");
             String prezime = rs.getString("i.prezime");
@@ -153,12 +151,10 @@ public class ClanskaKarta implements ApstraktniDomenskiObjekat{
             String sifra = rs.getString("i.sifra");
             
             Instruktor instruktor = new Instruktor(idInstruktor, ime, prezime, korisnickoIme, sifra);
-            //polaznik
             int idPolaznik = rs.getInt("p.idPolaznik");
             String imeP = rs.getString("p.ime");
             String prezimeP = rs.getString("p.prezime");
             String brojTelefona = rs.getString("p.brojTelefona");
-            //mesto
             int idMesto = rs.getInt("m.idMesto");
             String naziv = rs.getString("m.naziv");
             int postanskiBroj = rs.getInt("m.postanskiBroj");
@@ -173,7 +169,7 @@ public class ClanskaKarta implements ApstraktniDomenskiObjekat{
 
     @Override
     public ApstraktniDomenskiObjekat vratiObjekatIzRs(ResultSet rs) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
