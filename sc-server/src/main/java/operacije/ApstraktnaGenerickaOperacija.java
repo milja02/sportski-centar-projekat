@@ -3,12 +3,16 @@ package operacije;
 import repository.Repository;
 import repository.db.DBRepository;
 import repository.db.impl.DBRepositoryGeneric;
-//stavljamo metode koje znamo da ce se izvrsavati uvek
+
 public abstract class ApstraktnaGenerickaOperacija {
     protected final Repository broker;
 
     public ApstraktnaGenerickaOperacija() {
-        this.broker = new DBRepositoryGeneric();
+        this(new DBRepositoryGeneric());
+    }
+
+    protected ApstraktnaGenerickaOperacija(Repository broker) {
+        this.broker = broker;
     }
     
     public final void izvrsi(Object objekat, String kljuc) throws Exception{
@@ -20,8 +24,6 @@ public abstract class ApstraktnaGenerickaOperacija {
             }catch(Exception e){
                 ponistiTransakciju();
                 throw e;
-            }finally{
-                //ugasiKonekciju();
             }
     }
     

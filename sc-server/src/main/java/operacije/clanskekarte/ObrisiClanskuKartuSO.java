@@ -10,11 +10,11 @@ public class ObrisiClanskuKartuSO extends ApstraktnaGenerickaOperacija {
     @Override
     protected void preduslovi(Object param) throws Exception {
         if (param == null || !(param instanceof ClanskaKarta)) {
-            throw new Exception("Sistem nije mogao da obrise clansku kartu.");
+            throw new Exception("Sistem nije mogao da obriše člansku kartu.");
         }
         ClanskaKarta ck = (ClanskaKarta) param;
         if (ck.getIdClanskaKarta() <= 0) {
-            throw new Exception("Neispravan ID clanske kartice.");
+            throw new Exception("Neispravan ID članske kartice.");
         }
     }
 

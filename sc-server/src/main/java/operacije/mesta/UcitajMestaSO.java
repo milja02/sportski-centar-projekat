@@ -1,6 +1,3 @@
-/*
- * UÄitavanje liste mesta (preduslov SK4, SK6).
- */
 package operacije.mesta;
 
 import domen.Mesto;

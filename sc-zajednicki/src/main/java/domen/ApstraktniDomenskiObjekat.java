@@ -12,7 +12,6 @@ public interface ApstraktniDomenskiObjekat extends Serializable{
     public String vrednostiZaIzmenu();
     public String alijasTabele();
     public String join();
-//    public String uslovZaSelect();
     public String uslovWhere();
     public List<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws Exception;
     public ApstraktniDomenskiObjekat vratiObjekatIzRs(ResultSet rs) throws Exception;

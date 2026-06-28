@@ -4,9 +4,6 @@ import domen.Licenca;
 import java.util.List;
 import operacije.ApstraktnaGenerickaOperacija;
 
-/**
- * UÄitavanje liste licenci (za combo u formi Ubaci licencu).
- */
 public class UcitajLicenceSO extends ApstraktnaGenerickaOperacija {
 
     List<Licenca> licence;

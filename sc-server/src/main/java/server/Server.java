@@ -10,7 +10,6 @@ import niti.ObradaZahteva;
 public class Server extends Thread {
     private boolean kraj = false;
     private ServerSocket ss;
-    //ova rava kaze da se ovde cuvaju povezani klijenti tj lista Obrada Zahteva, ali ja se ne slazem
 
     @Override
     public void run() {
@@ -25,7 +24,6 @@ public class Server extends Thread {
                 oz.start();
             }
         } catch (IOException ex) {
-            // Zatvaranje ss u zaustaviServer() prekida accept() — ovo nije greška
             if (!kraj) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }

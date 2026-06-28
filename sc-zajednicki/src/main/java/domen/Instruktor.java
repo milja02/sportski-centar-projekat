@@ -114,7 +114,7 @@ public class Instruktor implements ApstraktniDomenskiObjekat{
 
     @Override
     public String uslovWhere() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -135,7 +135,7 @@ public class Instruktor implements ApstraktniDomenskiObjekat{
 
     @Override
     public ApstraktniDomenskiObjekat vratiObjekatIzRs(ResultSet rs) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override

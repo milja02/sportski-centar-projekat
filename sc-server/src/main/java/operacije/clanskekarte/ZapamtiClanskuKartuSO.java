@@ -1,6 +1,3 @@
-/*
- * SK1 korak 7 / SK3 korak 12 - Zapamti Älansku kartu (UPDATE + stavke).
- */
 package operacije.clanskekarte;
 
 import domen.ClanskaKarta;
@@ -13,14 +10,14 @@ public class ZapamtiClanskuKartuSO extends ApstraktnaGenerickaOperacija {
     @Override
     protected void preduslovi(Object param) throws Exception {
         if (param == null || !(param instanceof ClanskaKarta)) {
-            throw new Exception("Sistem ne moÅ¾e da zapamti Älansku kartu.");
+            throw new Exception("Sistem ne može da zapamti člansku kartu.");
         }
         ClanskaKarta ck = (ClanskaKarta) param;
         if (ck.getIdClanskaKarta() <= 0) {
-            throw new Exception("Sistem ne moÅ¾e da zapamti Älansku kartu.");
+            throw new Exception("Sistem ne može da zapamti člansku kartu.");
         }
         if (ck.getDatumUclanjenja() == null || ck.getInstruktor() == null || ck.getPolaznik() == null) {
-            throw new Exception("Sistem ne moÅ¾e da zapamti Älansku kartu.");
+            throw new Exception("Sistem ne može da zapamti člansku kartu.");
         }
         VrednosnaOgranicenjaClanskeKarte.proveri(ck, broker);
     }

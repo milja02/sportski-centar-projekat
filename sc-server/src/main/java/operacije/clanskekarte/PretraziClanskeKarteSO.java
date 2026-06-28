@@ -1,7 +1,3 @@
-/*
- * SK2 - PretraÅ¾i Älansku kartu.
- * Pretraga po polazniku i/ili instruktoru (po imenu/prezimenu) u bazi.
- */
 package operacije.clanskekarte;
 
 import domen.ClanskaKarta;
@@ -16,7 +12,7 @@ public class PretraziClanskeKarteSO extends ApstraktnaGenerickaOperacija {
     @Override
     protected void preduslovi(Object param) throws Exception {
         if (param == null || !(param instanceof ClanskaKarta)) {
-            throw new Exception("Sistem ne moÅ¾e da pretraÅ¾i Älanske karte po zadatim kriterijumima.");
+            throw new Exception("Sistem ne može da pretraži članske karte po zadatim kriterijumima.");
         }
     }
 
@@ -25,7 +21,6 @@ public class PretraziClanskeKarteSO extends ApstraktnaGenerickaOperacija {
         ClanskaKarta kriterijum = (ClanskaKarta) param;
         StringBuilder uslov = new StringBuilder(" WHERE 1=1");
 
-        // polaznik (iz combo-a po ID-ju, inaÄe po imenu/prezimenu)
         if (kriterijum.getPolaznik() != null) {
             if (kriterijum.getPolaznik().getIdPolaznik() > 0) {
                 uslov.append(" AND p.idPolaznik = ").append(kriterijum.getPolaznik().getIdPolaznik());
@@ -41,7 +36,6 @@ public class PretraziClanskeKarteSO extends ApstraktnaGenerickaOperacija {
             }
         }
 
-        // instruktor (iz combo-a po ID-ju, inaÄe po imenu/prezimenu)
         if (kriterijum.getInstruktor() != null) {
             if (kriterijum.getInstruktor().getIdInstruktor() > 0) {
                 uslov.append(" AND i.idInstruktor = ").append(kriterijum.getInstruktor().getIdInstruktor());
@@ -57,7 +51,6 @@ public class PretraziClanskeKarteSO extends ApstraktnaGenerickaOperacija {
             }
         }
 
-        // sport (preko stavki Älanske karte â€“ iz combo-a po ID-ju)
         if (kriterijum.getStavke() != null && !kriterijum.getStavke().isEmpty()) {
             StavkaClanskeKarte st = kriterijum.getStavke().get(0);
             if (st.getSport() != null && st.getSport().getIdSport() > 0) {
@@ -75,7 +68,6 @@ public class PretraziClanskeKarteSO extends ApstraktnaGenerickaOperacija {
 
         clanskeKarte = (List<ClanskaKarta>) (List<?>) broker.getAll(new ClanskaKarta(), uslov.toString());
 
-        // Odmah uÄitavamo i stavke za svaku pronaÄ‘enu karticu
         for (ClanskaKarta ck : clanskeKarte) {
             String uslovStavke = " WHERE clanskakarta=" + ck.getIdClanskaKarta();
             List<StavkaClanskeKarte> stavke = (List<StavkaClanskeKarte>) (List<?>) broker.getAll(new StavkaClanskeKarte(), uslovStavke);

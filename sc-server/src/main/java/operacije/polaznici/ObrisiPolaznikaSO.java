@@ -8,7 +8,7 @@ public class ObrisiPolaznikaSO extends ApstraktnaGenerickaOperacija{
     @Override
     protected void preduslovi(Object param) throws Exception {
         if(param == null || !(param instanceof Polaznik)){
-            throw new Exception("Sistem nije mogao da obrise polaznika");
+            throw new Exception("Sistem nije mogao da obriše polaznika.");
         }
     }
 

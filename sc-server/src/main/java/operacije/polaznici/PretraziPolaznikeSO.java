@@ -1,6 +1,3 @@
-/*
- * SO za pretragu polaznika po kriterijumima (ime, prezime, broj telefona, mesto).
- */
 package operacije.polaznici;
 
 import domen.Polaznik;
@@ -14,7 +11,7 @@ public class PretraziPolaznikeSO extends ApstraktnaGenerickaOperacija {
     @Override
     protected void preduslovi(Object param) throws Exception {
         if (param == null || !(param instanceof Polaznik)) {
-            throw new Exception("Sistem ne moÅ¾e da pretraÅ¾i polaznike po zadatim kriterijumima.");
+            throw new Exception("Sistem ne može da pretraži polaznike po zadatim kriterijumima.");
         }
     }
 
