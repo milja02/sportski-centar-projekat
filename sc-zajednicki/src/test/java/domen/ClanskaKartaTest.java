@@ -67,8 +67,13 @@ class ClanskaKartaTest {
 
     @Test
     void vrednostiZaUbacivanjePodrzavaNullDatum() {
-        ClanskaKarta karta = new ClanskaKarta(5, null, 0, noviInstruktor(), noviPolaznik());
-        assertEquals("NULL,0,2,1", karta.vrednostiZaUbacivanje());
+        ClanskaKarta karta = new ClanskaKarta();
+        karta.setIdClanskaKarta(5);
+        karta.setInstruktor(noviInstruktor());
+        karta.setPolaznik(noviPolaznik());
+        karta.setUkupanIznos(1);
+
+        assertEquals("NULL,1,2,1", karta.vrednostiZaUbacivanje());
     }
 
     @Test

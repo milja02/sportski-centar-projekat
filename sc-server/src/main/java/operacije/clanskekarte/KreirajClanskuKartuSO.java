@@ -40,7 +40,7 @@ public class KreirajClanskuKartuSO extends ApstraktnaGenerickaOperacija {
 
         ClanskaKarta nova = new ClanskaKarta();
         nova.setDatumUclanjenja(new Date());
-        nova.setUkupanIznos(0);
+        nova.setUkupanIznos(1);
         nova.setPolaznik((Polaznik) polaznici.get(0));
         nova.setInstruktor((Instruktor) instruktori.get(0));
 

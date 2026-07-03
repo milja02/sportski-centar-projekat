@@ -33,9 +33,9 @@ public class Sport implements ApstraktniDomenskiObjekat {
      * @param cena cena po terminu
      */
     public Sport(int idSport, String naziv, int cena) {
-        this.idSport = idSport;
-        this.naziv = naziv;
-        this.cena = cena;
+        setIdSport(idSport);
+        setNaziv(naziv);
+        setCena(cena);
     }
 
     /**
@@ -50,9 +50,13 @@ public class Sport implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja id sporta.
      *
-     * @param idSport jedinstveni identifikator sporta
+     * @param idSport jedinstveni identifikator sporta, mora biti veći od nule
+     * @throws IllegalArgumentException ako je id manji ili jednak nuli
      */
     public void setIdSport(int idSport) {
+        if (idSport <= 0) {
+            throw new IllegalArgumentException("Id sporta mora biti veci od nule.");
+        }
         this.idSport = idSport;
     }
 
@@ -68,9 +72,15 @@ public class Sport implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja naziv sporta.
      *
-     * @param naziv naziv sporta
+     * @param naziv naziv sporta, ne sme biti {@code null} niti prazan
+     * @throws NullPointerException ako je naziv {@code null}
+     * @throws IllegalArgumentException ako je naziv prazan
      */
     public void setNaziv(String naziv) {
+        Objects.requireNonNull(naziv, "Naziv sporta je obavezan.");
+        if (naziv.isBlank()) {
+            throw new IllegalArgumentException("Naziv sporta ne sme biti prazan.");
+        }
         this.naziv = naziv;
     }
 
@@ -86,9 +96,13 @@ public class Sport implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja cenu sporta po terminu.
      *
-     * @param cena cena po terminu
+     * @param cena cena po terminu, ne sme biti negativna
+     * @throws IllegalArgumentException ako je cena negativna
      */
     public void setCena(int cena) {
+        if (cena < 0) {
+            throw new IllegalArgumentException("Cena sporta ne sme biti negativna.");
+        }
         this.cena = cena;
     }
 

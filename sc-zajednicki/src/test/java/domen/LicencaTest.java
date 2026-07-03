@@ -43,9 +43,7 @@ class LicencaTest {
     @Test
     void toStringKombinujeTipINivo() {
         assertEquals("FITNESS - Nivo 2", new Licenca(1, "FITNESS", "Nivo 2").toString());
-        assertEquals("Nivo 3", new Licenca(1, null, "Nivo 3").toString());
-        assertEquals("YOGA", new Licenca(1, "YOGA", null).toString());
-        assertEquals("", new Licenca(1, null, null).toString());
+        assertEquals("", new Licenca().toString());
     }
 
     @Test

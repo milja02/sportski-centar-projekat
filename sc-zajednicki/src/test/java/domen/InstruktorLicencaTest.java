@@ -57,7 +57,10 @@ class InstruktorLicencaTest {
 
     @Test
     void primarniKljucKoristiIdInstruktoraILicence() {
-        InstruktorLicenca il = new InstruktorLicenca(instruktor, licenca, null, null);
+        InstruktorLicenca il = new InstruktorLicenca();
+        il.setInstruktor(instruktor);
+        il.setLicenca(licenca);
+
         assertEquals("instruktor=1 AND licenca=2", il.primarniKljuc());
     }
 
@@ -73,7 +76,10 @@ class InstruktorLicencaTest {
 
     @Test
     void vrednostiZaUbacivanjePodrzavaNullDatume() {
-        InstruktorLicenca il = new InstruktorLicenca(instruktor, licenca, null, null);
+        InstruktorLicenca il = new InstruktorLicenca();
+        il.setInstruktor(instruktor);
+        il.setLicenca(licenca);
+
         assertEquals("1,2,NULL,NULL", il.vrednostiZaUbacivanje());
     }
 

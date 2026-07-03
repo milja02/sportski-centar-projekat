@@ -39,7 +39,7 @@ class NadjiPolaznikaSOTest {
         repo.dodaj(PodaciZaTest.polaznik(7, "Sara", "Saric", "064"));
 
         NadjiPolaznikaSO so = InjekcijaBrokera.saBrokerom(new NadjiPolaznikaSO(), repo);
-        so.izvrsi(PodaciZaTest.polaznik(7, "", "", ""), null);
+        so.izvrsi(PodaciZaTest.polaznik(7, "Sara", "Saric", "064"), null);
 
         assertNotNull(so.getPolaznik());
         assertEquals("Sara", so.getPolaznik().getIme());
