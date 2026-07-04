@@ -40,13 +40,17 @@ public abstract class ApstraktnaGenerickaOperacija {
      * @throws Exception ako preduslovi nisu ispunjeni ili dođe do greške pri radu sa bazom
      */
     public final void izvrsi(Object objekat, String kljuc) throws Exception {
+        boolean transakcijaPokrenuta = false;
         try {
             preduslovi(objekat);
             zapocniTransakciju();
+            transakcijaPokrenuta = true;
             izvrsiOperaciju(objekat, kljuc);
             potvrdiTransakciju();
         } catch (Exception e) {
-            ponistiTransakciju();
+            if (transakcijaPokrenuta) {
+                ponistiTransakciju();
+            }
             throw e;
         }
     }
