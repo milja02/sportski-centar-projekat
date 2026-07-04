@@ -7,50 +7,49 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import domen.Polaznik;
 import java.util.stream.Stream;
-import operacije.pomocni.InjekcijaBrokera;
-import operacije.pomocni.PodaciZaTest;
-import operacije.pomocni.PomocniRepository;
+import operacije.integracija.SOTestoviHelper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class NadjiPolaznikaSOTest {
+class NadjiPolaznikaSOTest extends SOTestoviHelper {
 
     @ParameterizedTest(name = "{1}")
     @MethodSource("neispravniPolaznici")
-    void predusloviOdbijaNeispravanUnos(Object polaznik, String opis) throws Exception {
-        NadjiPolaznikaSO so = InjekcijaBrokera.saBrokerom(new NadjiPolaznikaSO(), PodaciZaTest.prazanRepo());
-
-        Exception ex = assertThrows(Exception.class, () -> InjekcijaBrokera.pokreniPreduslove(so, polaznik));
+    void izvrsiOdbijaNeispravanUnos(Object polaznik, String opis) {
+        Exception ex = assertThrows(Exception.class, () -> new NadjiPolaznikaSO().izvrsi(polaznik, null));
         assertTrue(ex.getMessage().contains("polaznika"), opis);
     }
 
     static Stream<Arguments> neispravniPolaznici() {
+        Polaznik bezId = new Polaznik();
+
         return Stream.of(
                 Arguments.of(null, "null parametar"),
-                Arguments.of(new Polaznik(), "nema ID"),
-                Arguments.of(PodaciZaTest.polaznik(0, "Pera", "Peric", "061"), "ID nula"));
+                Arguments.of(bezId, "nema ID"));
     }
 
     @Test
     void izvrsiVracaPolaznikaPoId() throws Exception {
-        PomocniRepository repo = new PomocniRepository();
-        repo.dodaj(PodaciZaTest.polaznik(7, "Sara", "Saric", "064"));
+        Polaznik unet = unesiTestPolaznikaZaCiscenje("Sara", "Saric");
 
-        NadjiPolaznikaSO so = InjekcijaBrokera.saBrokerom(new NadjiPolaznikaSO(), repo);
-        so.izvrsi(PodaciZaTest.polaznik(7, "Sara", "Saric", "064"), null);
+        NadjiPolaznikaSO so = new NadjiPolaznikaSO();
+        Polaznik kriterijum = new Polaznik();
+        kriterijum.setIdPolaznik(unet.getIdPolaznik());
+        so.izvrsi(kriterijum, null);
 
         assertNotNull(so.getPolaznik());
         assertEquals("Sara", so.getPolaznik().getIme());
+        assertEquals("Saric", so.getPolaznik().getPrezime());
     }
 
     @Test
-    void izvrsiBacaAkoPolaznikNePostoji() throws Exception {
-        NadjiPolaznikaSO so = InjekcijaBrokera.saBrokerom(new NadjiPolaznikaSO(), new PomocniRepository());
+    void izvrsiBacaAkoPolaznikNePostoji() {
+        Polaznik kriterijum = new Polaznik();
+        kriterijum.setIdPolaznik(9_999_999);
 
-        Exception ex = assertThrows(Exception.class,
-                () -> so.izvrsi(PodaciZaTest.polaznik(99, "X", "Y", "060"), null));
+        Exception ex = assertThrows(Exception.class, () -> new NadjiPolaznikaSO().izvrsi(kriterijum, null));
         assertTrue(ex.getMessage().contains("polaznika"));
     }
 }

@@ -6,22 +6,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import domen.Polaznik;
 import java.util.stream.Stream;
-import operacije.pomocni.InjekcijaBrokera;
-import operacije.pomocni.PodaciZaTest;
-import operacije.pomocni.PomocniRepository;
+import operacije.integracija.SOTestoviHelper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class PretraziPolaznikeSOTest {
+class PretraziPolaznikeSOTest extends SOTestoviHelper {
 
     @ParameterizedTest(name = "{1}")
     @MethodSource("neispravniKriterijumi")
-    void predusloviOdbijaNeispravanUnos(Object parametar, String opis) throws Exception {
-        PretraziPolaznikeSO so = InjekcijaBrokera.saBrokerom(new PretraziPolaznikeSO(), PodaciZaTest.prazanRepo());
-
-        Exception ex = assertThrows(Exception.class, () -> InjekcijaBrokera.pokreniPreduslove(so, parametar));
+    void izvrsiOdbijaNeispravanUnos(Object parametar, String opis) {
+        Exception ex = assertThrows(Exception.class, () -> new PretraziPolaznikeSO().izvrsi(parametar, null));
         assertTrue(ex.getMessage().contains("polaznike"), opis);
     }
 
@@ -33,15 +29,20 @@ class PretraziPolaznikeSOTest {
 
     @Test
     void izvrsiFiltriraPoImenu() throws Exception {
-        PomocniRepository repo = new PomocniRepository();
-        PodaciZaTest.popuniPolaznike(repo);
+        Polaznik polaznik = unesiTestPolaznikaZaCiscenje("PretragaTest", "Jedan");
 
-        PretraziPolaznikeSO so = InjekcijaBrokera.saBrokerom(new PretraziPolaznikeSO(), repo);
+        PretraziPolaznikeSO so = new PretraziPolaznikeSO();
         Polaznik kriterijum = new Polaznik();
-        kriterijum.setIme("Per");
+        kriterijum.setIme("PretragaT");
         so.izvrsi(kriterijum, null);
 
-        assertEquals(1, so.getPolaznici().size());
-        assertEquals("Pera", so.getPolaznici().get(0).getIme());
+        assertEquals(1, so.getPolaznici().stream()
+                .filter(p -> p.getIdPolaznik() == polaznik.getIdPolaznik())
+                .count());
+        assertEquals("PretragaTest", so.getPolaznici().stream()
+                .filter(p -> p.getIdPolaznik() == polaznik.getIdPolaznik())
+                .findFirst()
+                .orElseThrow()
+                .getIme());
     }
 }

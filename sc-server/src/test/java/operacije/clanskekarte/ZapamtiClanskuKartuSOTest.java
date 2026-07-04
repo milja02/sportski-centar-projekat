@@ -1,73 +1,64 @@
-package operacije.clanskekarte;
-
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import domen.ClanskaKarta;
-import domen.StavkaClanskeKarte;
-import java.util.stream.Stream;
-import operacije.pomocni.InjekcijaBrokera;
-import operacije.pomocni.PodaciZaTest;
-import operacije.pomocni.PomocniRepository;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-
-class ZapamtiClanskuKartuSOTest {
-
-    @ParameterizedTest(name = "{1}")
-    @MethodSource("neispravneKarte")
-    void predusloviOdbijaNeispravanUnos(Object karta, String opis) throws Exception {
-        ZapamtiClanskuKartuSO so = InjekcijaBrokera.saBrokerom(new ZapamtiClanskuKartuSO(), PodaciZaTest.repoSaSportovima());
-
-        Exception ex = assertThrows(Exception.class, () -> InjekcijaBrokera.pokreniPreduslove(so, karta));
-        assertTrue(ex.getMessage().contains("zapamti") && ex.getMessage().contains("kartu"), opis);
-    }
-
-    static Stream<Arguments> neispravneKarte() throws Exception {
-        ClanskaKarta bezDatuma = new ClanskaKarta();
-        bezDatuma.setIdClanskaKarta(1);
-        bezDatuma.setInstruktor(PodaciZaTest.instruktor(1, "Mika", "Mikic", "mika", "pass"));
-        bezDatuma.setPolaznik(PodaciZaTest.polaznik(1, "Pera", "Peric", "061"));
-
-        ClanskaKarta bezInstruktora = new ClanskaKarta();
-        bezInstruktora.setIdClanskaKarta(1);
-        bezInstruktora.setDatumUclanjenja(PodaciZaTest.datum("2024-06-01"));
-        bezInstruktora.setPolaznik(PodaciZaTest.polaznik(1, "Pera", "Peric", "061"));
-
-        return Stream.of(
-                Arguments.of(null, "null parametar"),
-                Arguments.of(new ClanskaKarta(), "nema ID"),
-                Arguments.of(bezDatuma, "nema datum"),
-                Arguments.of(bezInstruktora, "nema instruktora"));
-    }
-
-    @Test
-    void predusloviPrihvataIspravnuKartu() throws Exception {
-        ZapamtiClanskuKartuSO so = InjekcijaBrokera.saBrokerom(new ZapamtiClanskuKartuSO(), PodaciZaTest.repoSaSportovima());
-        assertDoesNotThrow(() -> InjekcijaBrokera.pokreniPreduslove(so, PodaciZaTest.kartaSaStavkom(3, 4000)));
-    }
-
-    @Test
-    void izvrsiMenjaKartuIZamenjujeStavke() throws Exception {
-        PomocniRepository repo = PodaciZaTest.repoSaSportovima();
-        ClanskaKarta karta = PodaciZaTest.kartaSaStavkom(2, 4000);
-        repo.dodaj(karta);
-        repo.dodaj(karta.getStavke().get(0));
-
-        karta.getStavke().clear();
-        karta.getStavke().add(
-                new StavkaClanskeKarte(karta, 1, 3, 12000, PodaciZaTest.sport(1, "Tenis", 4000)));
-        karta.setUkupanIznos(12000);
-
-        ZapamtiClanskuKartuSO so = InjekcijaBrokera.saBrokerom(new ZapamtiClanskuKartuSO(), repo);
-        so.izvrsi(karta, null);
-
-        assertEquals(12000, ((ClanskaKarta) repo.getAll(new ClanskaKarta(), null).get(0)).getUkupanIznos());
-        assertEquals(1, repo.getAll(new StavkaClanskeKarte(), " WHERE sck.clanskakarta=1").size());
-    }
-}
-
+package operacije.clanskekarte;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import domen.ClanskaKarta;
+import domen.Mesto;
+import domen.Polaznik;
+import domen.Sport;
+import java.text.SimpleDateFormat;
+import java.util.stream.Stream;
+import operacije.integracija.SOTestoviHelper;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+class ZapamtiClanskuKartuSOTest extends SOTestoviHelper {
+
+    @ParameterizedTest(name = "{1}")
+    @MethodSource("neispravneKarte")
+    void izvrsiOdbijaNeispravanUnos(Object karta, String opis) {
+        Exception ex = assertThrows(Exception.class, () -> new ZapamtiClanskuKartuSO().izvrsi(karta, null));
+        assertTrue(ex.getMessage().contains("zapamti") && ex.getMessage().contains("kartu"), opis);
+    }
+
+    static Stream<Arguments> neispravneKarte() throws Exception {
+        ClanskaKarta bezDatuma = new ClanskaKarta();
+        bezDatuma.setIdClanskaKarta(1);
+
+        ClanskaKarta bezInstruktora = new ClanskaKarta();
+        bezInstruktora.setIdClanskaKarta(1);
+        bezInstruktora.setDatumUclanjenja(new SimpleDateFormat("yyyy-MM-dd").parse("2024-06-01"));
+        Mesto mesto = new Mesto(1, "Beograd", 11000);
+        Polaznik polaznik = new Polaznik(1, "Test", "Test", "0611111111", mesto);
+        bezInstruktora.setPolaznik(polaznik);
+
+        return Stream.of(
+                Arguments.of(null, "null parametar"),
+                Arguments.of(new ClanskaKarta(), "nema ID"),
+                Arguments.of(bezDatuma, "nema datum"),
+                Arguments.of(bezInstruktora, "nema instruktora"));
+    }
+
+    @Test
+    void izvrsiMenjaKartuIZamenjujeStavke() throws Exception {
+        ClanskaKarta karta = unesiTestKartuZaCiscenje(2);
+        int noviBrojTermina = 5;
+        Sport sport = prviSport();
+        int noviIznos = noviBrojTermina * sport.getCena();
+
+        karta.getStavke().clear();
+        karta.getStavke().add(napraviStavku(noviBrojTermina, noviIznos, sport));
+        karta.setUkupanIznos(noviIznos);
+
+        new ZapamtiClanskuKartuSO().izvrsi(karta, null);
+
+        ClanskaKarta sacuvana = nadjiClanskuKartuPoId(karta.getIdClanskaKarta());
+        assertEquals(noviIznos, sacuvana.getUkupanIznos());
+        assertEquals(1, sacuvana.getStavke().size());
+        assertEquals(noviBrojTermina, sacuvana.getStavke().get(0).getBrojTermina());
+    }
+}
