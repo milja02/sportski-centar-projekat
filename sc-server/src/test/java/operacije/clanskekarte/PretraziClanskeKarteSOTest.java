@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import domen.ClanskaKarta;
-import domen.Polaznik;
 import java.util.stream.Stream;
 import operacije.integracija.SOTestoviHelper;
 import org.junit.jupiter.api.Test;
@@ -32,9 +31,7 @@ class PretraziClanskeKarteSOTest extends SOTestoviHelper {
         ClanskaKarta karta = unesiTestKartuZaCiscenje(2);
 
         ClanskaKarta kriterijum = new ClanskaKarta();
-        Polaznik polaznik = new Polaznik();
-        polaznik.setIdPolaznik(karta.getPolaznik().getIdPolaznik());
-        kriterijum.setPolaznik(polaznik);
+        kriterijum.setPolaznik(karta.getPolaznik());
 
         PretraziClanskeKarteSO so = new PretraziClanskeKarteSO();
         so.izvrsi(kriterijum, null);

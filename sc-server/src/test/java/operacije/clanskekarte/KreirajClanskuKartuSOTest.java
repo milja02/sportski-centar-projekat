@@ -5,9 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import domen.ClanskaKarta;
 import operacije.integracija.SOTestoviHelper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class KreirajClanskuKartuSOTest extends SOTestoviHelper {
+
+    @BeforeEach
+    void obezbediValidnogPolaznika() throws Exception {
+        unesiTestPolaznikaZaCiscenje("Kreiraj", "Karta");
+    }
 
     @Test
     void izvrsiKreiraNoviId() throws Exception {

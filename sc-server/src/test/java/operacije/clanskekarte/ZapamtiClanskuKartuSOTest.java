@@ -5,8 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import domen.ClanskaKarta;
+import domen.Mesto;
 import domen.Polaznik;
-import domen.StavkaClanskeKarte;
+import domen.Sport;
 import java.text.SimpleDateFormat;
 import java.util.stream.Stream;
 import operacije.integracija.SOTestoviHelper;
@@ -31,8 +32,8 @@ class ZapamtiClanskuKartuSOTest extends SOTestoviHelper {
         ClanskaKarta bezInstruktora = new ClanskaKarta();
         bezInstruktora.setIdClanskaKarta(1);
         bezInstruktora.setDatumUclanjenja(new SimpleDateFormat("yyyy-MM-dd").parse("2024-06-01"));
-        Polaznik polaznik = new Polaznik();
-        polaznik.setIdPolaznik(1);
+        Mesto mesto = new Mesto(1, "Beograd", 11000);
+        Polaznik polaznik = new Polaznik(1, "Test", "Test", "0611111111", mesto);
         bezInstruktora.setPolaznik(polaznik);
 
         return Stream.of(
@@ -46,11 +47,11 @@ class ZapamtiClanskuKartuSOTest extends SOTestoviHelper {
     void izvrsiMenjaKartuIZamenjujeStavke() throws Exception {
         ClanskaKarta karta = unesiTestKartuZaCiscenje(2);
         int noviBrojTermina = 5;
-        int noviIznos = noviBrojTermina * prviSport().getCena();
+        Sport sport = prviSport();
+        int noviIznos = noviBrojTermina * sport.getCena();
 
         karta.getStavke().clear();
-        karta.getStavke().add(new StavkaClanskeKarte(
-                karta, 1, noviBrojTermina, noviIznos, prviSport()));
+        karta.getStavke().add(napraviStavku(noviBrojTermina, noviIznos, sport));
         karta.setUkupanIznos(noviIznos);
 
         new ZapamtiClanskuKartuSO().izvrsi(karta, null);

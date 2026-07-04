@@ -150,6 +150,27 @@ public abstract class SOTestoviHelper {
         return sacuvan;
     }
 
+    protected Polaznik minimalanPolaznik(int id) throws Exception {
+        return new Polaznik(id, "Test", "Test", "0611111111", prvoMesto());
+    }
+
+    protected Instruktor minimalanInstruktor(int id) {
+        return new Instruktor(id, "Test", "Test", "testuser", "pass");
+    }
+
+    protected Licenca minimalnaLicenca(int id) {
+        return new Licenca(id, "TIP", "Nivo");
+    }
+
+    protected StavkaClanskeKarte napraviStavku(int brojTermina, int iznos, Sport sport) {
+        StavkaClanskeKarte stavka = new StavkaClanskeKarte();
+        stavka.setRb(1);
+        stavka.setSport(sport);
+        stavka.setBrojTermina(brojTermina);
+        stavka.setIznosStavke(iznos);
+        return stavka;
+    }
+
     protected ClanskaKarta napraviValidnuKartu(Polaznik polaznik, Instruktor instruktor, Sport sport, int brojTermina)
             throws Exception {
         ClanskaKarta karta = new ClanskaKarta();
@@ -158,8 +179,7 @@ public abstract class SOTestoviHelper {
         karta.setPolaznik(polaznik);
 
         int iznos = brojTermina * sport.getCena();
-        StavkaClanskeKarte stavka = new StavkaClanskeKarte(karta, 1, brojTermina, iznos, sport);
-        karta.setStavke(new ArrayList<>(List.of(stavka)));
+        karta.setStavke(new ArrayList<>(List.of(napraviStavku(brojTermina, iznos, sport))));
         karta.setUkupanIznos(iznos);
         return karta;
     }
