@@ -5,10 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -18,12 +21,116 @@ import domen.pomocni.PomocniResultSet;
 
 class ClanskaKartaTest {
 
+    private ClanskaKarta clanskaKarta;
+
+    @BeforeEach
+    void setUp() {
+        clanskaKarta = new ClanskaKarta(
+                1, datum("2024-03-15"), 4000, noviInstruktor(), noviPolaznik());
+        clanskaKarta.setStavke(new ArrayList<>(List.of(
+                new StavkaClanskeKarte(clanskaKarta, 1, 2, 4000, new Sport(1, "Plivanje", 2000)))));
+    }
+
+    @AfterEach
+    void tearDown() {
+        clanskaKarta = null;
+    }
+
+    private static java.util.Date datum(String vrednost) {
+        try {
+            return new SimpleDateFormat("yyyy-MM-dd").parse(vrednost);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private static Polaznik noviPolaznik() {
         return new Polaznik(1, "Pera", "Peric", "061", new Mesto(1, "Beograd", 11000));
     }
 
     private static Instruktor noviInstruktor() {
         return new Instruktor(2, "Mika", "Mikic", "mika", "pass");
+    }
+
+    @Test
+    void konstruktorPostavljaAtribute() {
+        java.util.Date datum = datum("2024-03-15");
+        ClanskaKarta karta = new ClanskaKarta(1, datum, 4000, noviInstruktor(), noviPolaznik());
+
+        assertEquals(1, karta.getIdClanskaKarta());
+        assertEquals(datum, karta.getDatumUclanjenja());
+        assertEquals(4000, karta.getUkupanIznos());
+        assertEquals(noviInstruktor(), karta.getInstruktor());
+        assertEquals(noviPolaznik(), karta.getPolaznik());
+    }
+
+    @Test
+    void setteriPostavljajuAtribute() {
+        java.util.Date datum = datum("2024-04-01");
+        ClanskaKarta karta = new ClanskaKarta();
+        List<StavkaClanskeKarte> stavke = new ArrayList<>();
+
+        karta.setIdClanskaKarta(2);
+        karta.setDatumUclanjenja(datum);
+        karta.setInstruktor(noviInstruktor());
+        karta.setPolaznik(noviPolaznik());
+        karta.setStavke(stavke);
+        karta.setUkupanIznos(1);
+
+        assertEquals(2, karta.getIdClanskaKarta());
+        assertEquals(datum, karta.getDatumUclanjenja());
+        assertEquals(1, karta.getUkupanIznos());
+        assertEquals(stavke, karta.getStavke());
+    }
+
+    @Test
+    void setIdClanskaKarta_bacaIllegalArgumentException_kadaJeNula() {
+        assertThrows(IllegalArgumentException.class, () -> clanskaKarta.setIdClanskaKarta(0));
+    }
+
+    @Test
+    void setDatumUclanjenja_bacaNullPointerException_kadaJeNull() {
+        assertThrows(NullPointerException.class, () -> clanskaKarta.setDatumUclanjenja(null));
+    }
+
+    @Test
+    void setInstruktor_bacaNullPointerException_kadaJeNull() {
+        assertThrows(NullPointerException.class, () -> clanskaKarta.setInstruktor(null));
+    }
+
+    @Test
+    void setInstruktor_bacaNullPointerException_kadaJeInstruktorNeispravan() {
+        assertThrows(NullPointerException.class, () -> clanskaKarta.setInstruktor(new Instruktor()));
+    }
+
+    @Test
+    void setPolaznik_bacaNullPointerException_kadaJeNull() {
+        assertThrows(NullPointerException.class, () -> clanskaKarta.setPolaznik(null));
+    }
+
+    @Test
+    void setPolaznik_bacaNullPointerException_kadaJePolaznikNeispravan() {
+        assertThrows(NullPointerException.class, () -> clanskaKarta.setPolaznik(new Polaznik()));
+    }
+
+    @Test
+    void setStavke_bacaNullPointerException_kadaJeListaNull() {
+        assertThrows(NullPointerException.class, () -> clanskaKarta.setStavke(null));
+    }
+
+    @Test
+    void setUkupanIznos_bacaIllegalArgumentException_kadaJeNula() {
+        assertThrows(IllegalArgumentException.class, () -> clanskaKarta.setUkupanIznos(0));
+    }
+
+    @Test
+    void setUkupanIznos_bacaIllegalArgumentException_kadaNijeZbirStavki() {
+        assertThrows(IllegalArgumentException.class, () -> clanskaKarta.setUkupanIznos(9999));
+    }
+
+    @Test
+    void izracunajZbirStavki_racunaZbirIznosa() {
+        assertEquals(4000, clanskaKarta.izracunajZbirStavki());
     }
 
     @ParameterizedTest(name = "{3}")
