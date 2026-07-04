@@ -38,10 +38,10 @@ public class InstruktorLicenca implements ApstraktniDomenskiObjekat {
      * @param datumIsteka datum isteka licence
      */
     public InstruktorLicenca(Instruktor instruktor, Licenca licenca, Date datumIzdavanja, Date datumIsteka) {
-        this.instruktor = instruktor;
-        this.licenca = licenca;
-        this.datumIzdavanja = datumIzdavanja;
-        this.datumIsteka = datumIsteka;
+        setInstruktor(instruktor);
+        setLicenca(licenca);
+        setDatumIzdavanja(datumIzdavanja);
+        setDatumIsteka(datumIsteka);
     }
 
     /**
@@ -54,11 +54,20 @@ public class InstruktorLicenca implements ApstraktniDomenskiObjekat {
     }
 
     /**
-     * Postavlja instruktora.
+     * Postavlja instruktora i validira njegove atribute.
      *
-     * @param instruktor instruktor kome se dodeljuje licenca
+     * @param instruktor instruktor, ne sme biti {@code null}
+     * @throws NullPointerException ako je instruktor {@code null}
      */
     public void setInstruktor(Instruktor instruktor) {
+        Objects.requireNonNull(instruktor, "Instruktor licence je obavezan.");
+        if (instruktor.getIdInstruktor() > 0) {
+            instruktor.setIdInstruktor(instruktor.getIdInstruktor());
+        }
+        instruktor.setIme(instruktor.getIme());
+        instruktor.setPrezime(instruktor.getPrezime());
+        instruktor.setKorisnickoIme(instruktor.getKorisnickoIme());
+        instruktor.setSifra(instruktor.getSifra());
         this.instruktor = instruktor;
     }
 
@@ -72,11 +81,18 @@ public class InstruktorLicenca implements ApstraktniDomenskiObjekat {
     }
 
     /**
-     * Postavlja licencu.
+     * Postavlja licencu i validira njene atribute.
      *
-     * @param licenca licenca koja se dodeljuje
+     * @param licenca licenca, ne sme biti {@code null}
+     * @throws NullPointerException ako je licenca {@code null}
      */
     public void setLicenca(Licenca licenca) {
+        Objects.requireNonNull(licenca, "Licenca je obavezna.");
+        if (licenca.getIdLicenca() > 0) {
+            licenca.setIdLicenca(licenca.getIdLicenca());
+        }
+        licenca.setTipLicence(licenca.getTipLicence());
+        licenca.setNivoKvalifikacije(licenca.getNivoKvalifikacije());
         this.licenca = licenca;
     }
 
@@ -92,9 +108,11 @@ public class InstruktorLicenca implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja datum izdavanja licence.
      *
-     * @param datumIzdavanja datum izdavanja
+     * @param datumIzdavanja datum izdavanja, ne sme biti {@code null}
+     * @throws NullPointerException ako je datum izdavanja {@code null}
      */
     public void setDatumIzdavanja(Date datumIzdavanja) {
+        Objects.requireNonNull(datumIzdavanja, "Datum izdavanja licence je obavezan.");
         this.datumIzdavanja = datumIzdavanja;
     }
 
@@ -110,7 +128,7 @@ public class InstruktorLicenca implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja datum isteka licence.
      *
-     * @param datumIsteka datum isteka
+     * @param datumIsteka datum isteka, može biti {@code null}
      */
     public void setDatumIsteka(Date datumIsteka) {
         this.datumIsteka = datumIsteka;

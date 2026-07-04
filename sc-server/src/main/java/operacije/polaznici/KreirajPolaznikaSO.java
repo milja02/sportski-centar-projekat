@@ -36,9 +36,9 @@ public class KreirajPolaznikaSO extends ApstraktnaGenerickaOperacija {
         Mesto mesto = (Mesto) mesta.get(0);
 
         Polaznik novi = new Polaznik();
-        novi.setIme("");
-        novi.setPrezime("");
-        novi.setBrojTelefona("");
+        novi.setIme("-");
+        novi.setPrezime("-");
+        novi.setBrojTelefona("-");
         novi.setMesto(mesto);
 
         int id = broker.addAndReturnId(novi);

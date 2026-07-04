@@ -47,11 +47,11 @@ public class ClanskaKarta implements ApstraktniDomenskiObjekat {
      */
     public ClanskaKarta(int idClanskaKarta, Date datumUclanjenja, int ukupanIznos,
             Instruktor instruktor, Polaznik polaznik) {
-        this.idClanskaKarta = idClanskaKarta;
-        this.datumUclanjenja = datumUclanjenja;
-        this.ukupanIznos = ukupanIznos;
-        this.instruktor = instruktor;
-        this.polaznik = polaznik;
+        setIdClanskaKarta(idClanskaKarta);
+        setDatumUclanjenja(datumUclanjenja);
+        setInstruktor(instruktor);
+        setPolaznik(polaznik);
+        setUkupanIznos(ukupanIznos);
     }
 
     /**
@@ -66,9 +66,13 @@ public class ClanskaKarta implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja identifikator članske karte.
      *
-     * @param idClanskaKarta jedinstveni identifikator karte
+     * @param idClanskaKarta jedinstveni identifikator, mora biti veći od nule
+     * @throws IllegalArgumentException ako je id manji ili jednak nuli
      */
     public void setIdClanskaKarta(int idClanskaKarta) {
+        if (idClanskaKarta <= 0) {
+            throw new IllegalArgumentException("Id clanske karte mora biti veci od nule.");
+        }
         this.idClanskaKarta = idClanskaKarta;
     }
 
@@ -84,9 +88,13 @@ public class ClanskaKarta implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja datum učlanjenja.
      *
-     * @param datumUclanjenja datum učlanjenja
+     * @param datumUclanjenja datum učlanjenja, ne sme biti {@code null}
+     * @throws NullPointerException ako je datum {@code null}
      */
     public void setDatumUclanjenja(Date datumUclanjenja) {
+        if (datumUclanjenja == null) {
+            throw new NullPointerException("Datum uclanjenja je obavezan.");
+        }
         this.datumUclanjenja = datumUclanjenja;
     }
 
@@ -101,10 +109,21 @@ public class ClanskaKarta implements ApstraktniDomenskiObjekat {
 
     /**
      * Postavlja ukupan iznos članske karte.
+     * Ako postoje stavke, iznos mora biti jednak njihovom zbiru.
      *
-     * @param ukupanIznos ukupan iznos
+     * @param ukupanIznos ukupan iznos, mora biti veći od nule
+     * @throws IllegalArgumentException ako je iznos neispravan ili ne odgovara zbiru stavki
      */
     public void setUkupanIznos(int ukupanIznos) {
+        if (ukupanIznos <= 0) {
+            throw new IllegalArgumentException("Ukupan iznos mora biti veci od nule.");
+        }
+        if (stavke != null && !stavke.isEmpty()) {
+            int zbirStavki = izracunajZbirStavki();
+            if (ukupanIznos != zbirStavki) {
+                throw new IllegalArgumentException("Ukupan iznos mora biti jednak zbiru iznosa stavki");
+            }
+        }
         this.ukupanIznos = ukupanIznos;
     }
 
@@ -118,11 +137,22 @@ public class ClanskaKarta implements ApstraktniDomenskiObjekat {
     }
 
     /**
-     * Postavlja instruktora koji je izdao kartu.
+     * Postavlja instruktora koji je izdao kartu i validira njegove atribute.
      *
-     * @param instruktor instruktor
+     * @param instruktor instruktor, ne sme biti {@code null}
+     * @throws NullPointerException ako je instruktor {@code null}
      */
     public void setInstruktor(Instruktor instruktor) {
+        if (instruktor == null) {
+            throw new NullPointerException("Clanska karta mora imati instruktora.");
+        }
+        if (instruktor.getIdInstruktor() > 0) {
+            instruktor.setIdInstruktor(instruktor.getIdInstruktor());
+        }
+        instruktor.setIme(instruktor.getIme());
+        instruktor.setPrezime(instruktor.getPrezime());
+        instruktor.setKorisnickoIme(instruktor.getKorisnickoIme());
+        instruktor.setSifra(instruktor.getSifra());
         this.instruktor = instruktor;
     }
 
@@ -136,11 +166,22 @@ public class ClanskaKarta implements ApstraktniDomenskiObjekat {
     }
 
     /**
-     * Postavlja polaznika kojem karta pripada.
+     * Postavlja polaznika kojem karta pripada i validira njegove atribute.
      *
-     * @param polaznik polaznik
+     * @param polaznik polaznik, ne sme biti {@code null}
+     * @throws NullPointerException ako je polaznik {@code null}
      */
     public void setPolaznik(Polaznik polaznik) {
+        if (polaznik == null) {
+            throw new NullPointerException("Clanska karta mora imati polaznika.");
+        }
+        if (polaznik.getIdPolaznik() > 0) {
+            polaznik.setIdPolaznik(polaznik.getIdPolaznik());
+        }
+        polaznik.setIme(polaznik.getIme());
+        polaznik.setPrezime(polaznik.getPrezime());
+        polaznik.setBrojTelefona(polaznik.getBrojTelefona());
+        polaznik.setMesto(polaznik.getMesto());
         this.polaznik = polaznik;
     }
 
@@ -156,10 +197,29 @@ public class ClanskaKarta implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja listu stavki članske karte.
      *
-     * @param stavke lista stavki
+     * @param stavke lista stavki, ne sme biti {@code null}
+     * @throws NullPointerException ako je lista {@code null}
      */
     public void setStavke(List<StavkaClanskeKarte> stavke) {
+        if (stavke == null) {
+            throw new NullPointerException("Lista stavki ne sme biti null.");
+        }
         this.stavke = stavke;
+    }
+
+    /**
+     * Računa zbir iznosa svih stavki na karti.
+     *
+     * @return zbir iznosa stavki
+     */
+    public int izracunajZbirStavki() {
+        int zbir = 0;
+        if (stavke != null) {
+            for (StavkaClanskeKarte stavka : stavke) {
+                zbir += stavka.getIznosStavke();
+            }
+        }
+        return zbir;
     }
 
     /**
@@ -169,8 +229,8 @@ public class ClanskaKarta implements ApstraktniDomenskiObjekat {
      */
     @Override
     public String toString() {
-        return "ClanskaKarta{" + "datumUclanjenja=" + datumUclanjenja + ", ukupanIznos=" + ukupanIznos
-                + ", instruktor=" + instruktor + ", polaznik=" + polaznik + '}';
+        return "ClanskaKarta[datumUclanjenja=" + datumUclanjenja + ", ukupanIznos=" + ukupanIznos
+                + ", instruktor=" + instruktor + ", polaznik=" + polaznik + "]";
     }
 
     /**

@@ -1,11 +1,14 @@
 package domen;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -14,6 +17,67 @@ import org.junit.jupiter.params.provider.MethodSource;
 import domen.pomocni.PomocniResultSet;
 
 class LicencaTest {
+
+    private Licenca licenca;
+
+    @BeforeEach
+    void setUp() {
+        licenca = new Licenca(1, "FITNESS", "Nivo 1");
+    }
+
+    @AfterEach
+    void tearDown() {
+        licenca = null;
+    }
+
+    @Test
+    void konstruktorPostavljaAtribute() {
+        assertEquals(1, licenca.getIdLicenca());
+        assertEquals("FITNESS", licenca.getTipLicence());
+        assertEquals("Nivo 1", licenca.getNivoKvalifikacije());
+    }
+
+    @Test
+    void setteriPostavljajuAtribute() {
+        licenca = new Licenca();
+        licenca.setIdLicenca(2);
+        licenca.setTipLicence("PILATES");
+        licenca.setNivoKvalifikacije("Nivo 2");
+
+        assertEquals(2, licenca.getIdLicenca());
+        assertEquals("PILATES", licenca.getTipLicence());
+        assertEquals("Nivo 2", licenca.getNivoKvalifikacije());
+    }
+
+    @Test
+    void setIdLicenca_bacaIllegalArgumentException_kadaJeNula() {
+        licenca = new Licenca();
+        assertThrows(IllegalArgumentException.class, () -> licenca.setIdLicenca(0));
+    }
+
+    @Test
+    void setTipLicence_bacaNullPointerException_kadaJeNull() {
+        licenca = new Licenca();
+        assertThrows(NullPointerException.class, () -> licenca.setTipLicence(null));
+    }
+
+    @Test
+    void setTipLicence_bacaIllegalArgumentException_kadaJePrazan() {
+        licenca = new Licenca();
+        assertThrows(IllegalArgumentException.class, () -> licenca.setTipLicence(""));
+    }
+
+    @Test
+    void setNivoKvalifikacije_bacaNullPointerException_kadaJeNull() {
+        licenca = new Licenca();
+        assertThrows(NullPointerException.class, () -> licenca.setNivoKvalifikacije(null));
+    }
+
+    @Test
+    void setNivoKvalifikacije_bacaIllegalArgumentException_kadaJePrazan() {
+        licenca = new Licenca();
+        assertThrows(IllegalArgumentException.class, () -> licenca.setNivoKvalifikacije("   "));
+    }
 
     @ParameterizedTest(name = "{3}")
     @MethodSource("equalsPodaci")
@@ -43,9 +107,7 @@ class LicencaTest {
     @Test
     void toStringKombinujeTipINivo() {
         assertEquals("FITNESS - Nivo 2", new Licenca(1, "FITNESS", "Nivo 2").toString());
-        assertEquals("Nivo 3", new Licenca(1, null, "Nivo 3").toString());
-        assertEquals("YOGA", new Licenca(1, "YOGA", null).toString());
-        assertEquals("", new Licenca(1, null, null).toString());
+        assertEquals("", new Licenca().toString());
     }
 
     @Test

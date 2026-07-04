@@ -41,11 +41,13 @@ public class Instruktor implements ApstraktniDomenskiObjekat {
      * @param sifra šifra za prijavu
      */
     public Instruktor(int idInstruktor, String ime, String prezime, String korisnickoIme, String sifra) {
-        this.idInstruktor = idInstruktor;
-        this.ime = ime;
-        this.prezime = prezime;
-        this.korisnickoIme = korisnickoIme;
-        this.sifra = sifra;
+        if (idInstruktor > 0) {
+            setIdInstruktor(idInstruktor);
+        }
+        setIme(ime);
+        setPrezime(prezime);
+        setKorisnickoIme(korisnickoIme);
+        setSifra(sifra);
     }
 
     /**
@@ -60,9 +62,13 @@ public class Instruktor implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja identifikator instruktora.
      *
-     * @param idInstruktor jedinstveni identifikator instruktora
+     * @param idInstruktor jedinstveni identifikator instruktora, mora biti veći od nule
+     * @throws IllegalArgumentException ako je id manji ili jednak nuli
      */
     public void setIdInstruktor(int idInstruktor) {
+        if (idInstruktor <= 0) {
+            throw new IllegalArgumentException("Id instruktora mora biti veci od nule.");
+        }
         this.idInstruktor = idInstruktor;
     }
 
@@ -78,9 +84,15 @@ public class Instruktor implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja ime instruktora.
      *
-     * @param ime ime instruktora
+     * @param ime ime instruktora, ne sme biti {@code null} niti prazno
+     * @throws NullPointerException ako je ime {@code null}
+     * @throws IllegalArgumentException ako je ime prazno
      */
     public void setIme(String ime) {
+        Objects.requireNonNull(ime, "Ime instruktora je obavezno.");
+        if (ime.isBlank()) {
+            throw new IllegalArgumentException("Ime instruktora ne sme biti prazno.");
+        }
         this.ime = ime;
     }
 
@@ -96,9 +108,15 @@ public class Instruktor implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja prezime instruktora.
      *
-     * @param prezime prezime instruktora
+     * @param prezime prezime instruktora, ne sme biti {@code null} niti prazno
+     * @throws NullPointerException ako je prezime {@code null}
+     * @throws IllegalArgumentException ako je prezime prazno
      */
     public void setPrezime(String prezime) {
+        Objects.requireNonNull(prezime, "Prezime instruktora je obavezno.");
+        if (prezime.isBlank()) {
+            throw new IllegalArgumentException("Prezime instruktora ne sme biti prazno.");
+        }
         this.prezime = prezime;
     }
 
@@ -114,9 +132,15 @@ public class Instruktor implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja korisničko ime instruktora.
      *
-     * @param korisnickoIme korisničko ime za prijavu
+     * @param korisnickoIme korisničko ime za prijavu, ne sme biti {@code null} niti prazno
+     * @throws NullPointerException ako je korisničko ime {@code null}
+     * @throws IllegalArgumentException ako je korisničko ime prazno
      */
     public void setKorisnickoIme(String korisnickoIme) {
+        Objects.requireNonNull(korisnickoIme, "Korisnicko ime instruktora je obavezno.");
+        if (korisnickoIme.isBlank()) {
+            throw new IllegalArgumentException("Korisnicko ime instruktora ne sme biti prazno.");
+        }
         this.korisnickoIme = korisnickoIme;
     }
 
@@ -132,9 +156,15 @@ public class Instruktor implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja šifru instruktora.
      *
-     * @param sifra šifra za prijavu
+     * @param sifra šifra za prijavu, ne sme biti {@code null} niti prazna
+     * @throws NullPointerException ako je šifra {@code null}
+     * @throws IllegalArgumentException ako je šifra prazna
      */
     public void setSifra(String sifra) {
+        Objects.requireNonNull(sifra, "Sifra instruktora je obavezna.");
+        if (sifra.isBlank()) {
+            throw new IllegalArgumentException("Sifra instruktora ne sme biti prazna.");
+        }
         this.sifra = sifra;
     }
 

@@ -33,9 +33,11 @@ public class Licenca implements ApstraktniDomenskiObjekat {
      * @param nivoKvalifikacije nivo kvalifikacije
      */
     public Licenca(int idLicenca, String tipLicence, String nivoKvalifikacije) {
-        this.idLicenca = idLicenca;
-        this.tipLicence = tipLicence;
-        this.nivoKvalifikacije = nivoKvalifikacije;
+        if (idLicenca > 0) {
+            setIdLicenca(idLicenca);
+        }
+        setTipLicence(tipLicence);
+        setNivoKvalifikacije(nivoKvalifikacije);
     }
 
     /**
@@ -50,9 +52,13 @@ public class Licenca implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja identifikator licence.
      *
-     * @param idLicenca jedinstveni identifikator licence
+     * @param idLicenca jedinstveni identifikator licence, mora biti veći od nule
+     * @throws IllegalArgumentException ako je id manji ili jednak nuli
      */
     public void setIdLicenca(int idLicenca) {
+        if (idLicenca <= 0) {
+            throw new IllegalArgumentException("Id licence mora biti veci od nule.");
+        }
         this.idLicenca = idLicenca;
     }
 
@@ -68,9 +74,15 @@ public class Licenca implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja tip licence.
      *
-     * @param tipLicence tip licence
+     * @param tipLicence tip licence, ne sme biti {@code null} niti prazan
+     * @throws NullPointerException ako je tip licence {@code null}
+     * @throws IllegalArgumentException ako je tip licence prazan
      */
     public void setTipLicence(String tipLicence) {
+        Objects.requireNonNull(tipLicence, "Tip licence je obavezan.");
+        if (tipLicence.isBlank()) {
+            throw new IllegalArgumentException("Tip licence ne sme biti prazan.");
+        }
         this.tipLicence = tipLicence;
     }
 
@@ -86,9 +98,15 @@ public class Licenca implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja nivo kvalifikacije licence.
      *
-     * @param nivoKvalifikacije nivo kvalifikacije
+     * @param nivoKvalifikacije nivo kvalifikacije, ne sme biti {@code null} niti prazan
+     * @throws NullPointerException ako je nivo kvalifikacije {@code null}
+     * @throws IllegalArgumentException ako je nivo kvalifikacije prazan
      */
     public void setNivoKvalifikacije(String nivoKvalifikacije) {
+        Objects.requireNonNull(nivoKvalifikacije, "Nivo kvalifikacije je obavezan.");
+        if (nivoKvalifikacije.isBlank()) {
+            throw new IllegalArgumentException("Nivo kvalifikacije ne sme biti prazan.");
+        }
         this.nivoKvalifikacije = nivoKvalifikacije;
     }
 

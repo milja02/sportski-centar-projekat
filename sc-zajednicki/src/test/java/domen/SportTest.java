@@ -1,11 +1,14 @@
 package domen;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -14,6 +17,72 @@ import org.junit.jupiter.params.provider.MethodSource;
 import domen.pomocni.PomocniResultSet;
 
 class SportTest {
+
+    private Sport sport;
+
+    @BeforeEach
+    void setUp() {
+        sport = new Sport(1, "Plivanje", 2000);
+    }
+
+    @AfterEach
+    void tearDown() {
+        sport = null;
+    }
+
+    @Test
+    void konstruktorPostavljaAtribute() {
+        assertEquals(1, sport.getIdSport());
+        assertEquals("Plivanje", sport.getNaziv());
+        assertEquals(2000, sport.getCena());
+    }
+
+    @Test
+    void setteriPostavljajuAtribute() {
+        sport = new Sport();
+        sport.setIdSport(2);
+        sport.setNaziv("Tenis");
+        sport.setCena(1500);
+
+        assertEquals(2, sport.getIdSport());
+        assertEquals("Tenis", sport.getNaziv());
+        assertEquals(1500, sport.getCena());
+    }
+
+    @Test
+    void setIdSport_bacaIllegalArgumentException_kadaJeNula() {
+        sport = new Sport();
+        assertThrows(IllegalArgumentException.class, () -> sport.setIdSport(0));
+    }
+
+    @Test
+    void setIdSport_bacaIllegalArgumentException_kadaJeNegativan() {
+        sport = new Sport();
+        assertThrows(IllegalArgumentException.class, () -> sport.setIdSport(-5));
+    }
+
+    @Test
+    void setNaziv_bacaNullPointerException_kadaJeNull() {
+        sport = new Sport();
+        assertThrows(NullPointerException.class, () -> sport.setNaziv(null));
+    }
+
+    @Test
+    void setNaziv_bacaIllegalArgumentException_kadaJePrazan() {
+        sport = new Sport();
+        assertThrows(IllegalArgumentException.class, () -> sport.setNaziv(""));
+    }
+
+    @Test
+    void setNaziv_bacaIllegalArgumentException_kadaJeBlank() {
+        sport = new Sport();
+        assertThrows(IllegalArgumentException.class, () -> sport.setNaziv("  "));
+    }
+
+    @Test
+    void setCena_bacaIllegalArgumentException_kadaJeNegativna() {
+        assertThrows(IllegalArgumentException.class, () -> sport.setCena(-100));
+    }
 
     @ParameterizedTest(name = "{3}")
     @MethodSource("equalsPodaci")

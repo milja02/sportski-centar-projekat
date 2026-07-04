@@ -3,6 +3,7 @@ package domen;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Predstavlja stavku na članskoj karti.
@@ -10,7 +11,7 @@ import java.util.List;
 public class StavkaClanskeKarte implements ApstraktniDomenskiObjekat {
 
     /** Članska karta kojoj stavka pripada. */
-    private ClanskaKarta clanskaKarta;
+    private transient ClanskaKarta clanskaKarta;
 
     /** Redni broj stavke unutar karte. */
     private int rb;
@@ -23,6 +24,9 @@ public class StavkaClanskeKarte implements ApstraktniDomenskiObjekat {
 
     /** Sport na koji se stavka odnosi. */
     private Sport sport;
+
+    /** Oznaka da je iznos stavke eksplicitno postavljen i treba validirati. */
+    private boolean iznosPostavljen;
 
     /**
      * Konstruktor bez inicijalizacije atributa.
@@ -40,11 +44,11 @@ public class StavkaClanskeKarte implements ApstraktniDomenskiObjekat {
      * @param sport sport na koji se stavka odnosi
      */
     public StavkaClanskeKarte(ClanskaKarta clanskaKarta, int rb, int brojTermina, int iznosStavke, Sport sport) {
-        this.clanskaKarta = clanskaKarta;
-        this.rb = rb;
-        this.brojTermina = brojTermina;
-        this.iznosStavke = iznosStavke;
-        this.sport = sport;
+        setClanskaKarta(clanskaKarta);
+        setRb(rb);
+        setBrojTermina(brojTermina);
+        setSport(sport);
+        setIznosStavke(iznosStavke);
     }
 
     /**
@@ -59,9 +63,15 @@ public class StavkaClanskeKarte implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja člansku kartu kojoj stavka pripada.
      *
-     * @param clanskaKarta članska karta
+     * @param clanskaKarta članska karta sa validnim id-jem
+     * @throws NullPointerException ako je karta {@code null}
+     * @throws IllegalArgumentException ako id karte nije veći od nule
      */
     public void setClanskaKarta(ClanskaKarta clanskaKarta) {
+        Objects.requireNonNull(clanskaKarta, "Stavka mora pripadati clanskoj karti.");
+        if (clanskaKarta.getIdClanskaKarta() <= 0) {
+            throw new IllegalArgumentException("Id clanske karte na stavci mora biti veci od nule.");
+        }
         this.clanskaKarta = clanskaKarta;
     }
 
@@ -77,9 +87,13 @@ public class StavkaClanskeKarte implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja redni broj stavke.
      *
-     * @param rb redni broj stavke
+     * @param rb redni broj, mora biti veći od nule
+     * @throws IllegalArgumentException ako je redni broj manji ili jednak nuli
      */
     public void setRb(int rb) {
+        if (rb <= 0) {
+            throw new IllegalArgumentException("Redni broj stavke mora biti veci od nule.");
+        }
         this.rb = rb;
     }
 
@@ -95,10 +109,17 @@ public class StavkaClanskeKarte implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja broj termina na stavci.
      *
-     * @param brojTermina broj termina
+     * @param brojTermina broj termina, mora biti veći ili jednak 1
+     * @throws IllegalArgumentException ako je broj termina manji od 1 ili iznos ne odgovara
      */
     public void setBrojTermina(int brojTermina) {
+        if (brojTermina < 1) {
+            throw new IllegalArgumentException("Broj termina mora biti veci ili jednak 1.");
+        }
         this.brojTermina = brojTermina;
+        if (iznosPostavljen) {
+            proveriIznosStavke();
+        }
     }
 
     /**
@@ -111,12 +132,17 @@ public class StavkaClanskeKarte implements ApstraktniDomenskiObjekat {
     }
 
     /**
-     * Postavlja iznos stavke.
+     * Postavlja iznos stavke i proverava da li odgovara broju termina i ceni sporta.
      *
      * @param iznosStavke iznos stavke
+     * @throws IllegalArgumentException ako iznos ne odgovara očekivanom iznosu
      */
     public void setIznosStavke(int iznosStavke) {
         this.iznosStavke = iznosStavke;
+        if (sport != null && brojTermina >= 1) {
+            proveriIznosStavke();
+            iznosPostavljen = true;
+        }
     }
 
     /**
@@ -129,12 +155,45 @@ public class StavkaClanskeKarte implements ApstraktniDomenskiObjekat {
     }
 
     /**
-     * Postavlja sport stavke.
+     * Postavlja sport stavke i validira njegove atribute.
      *
-     * @param sport sport stavke
+     * @param sport sport stavke, ne sme biti {@code null}
+     * @throws NullPointerException ako je sport {@code null}
+     * @throws IllegalArgumentException ako iznos ne odgovara novom sportu
      */
     public void setSport(Sport sport) {
+        Objects.requireNonNull(sport, "Stavka mora imati definisan sport.");
+        sport.setIdSport(sport.getIdSport());
+        sport.setNaziv(sport.getNaziv());
+        sport.setCena(sport.getCena());
         this.sport = sport;
+        if (iznosPostavljen) {
+            proveriIznosStavke();
+        }
+    }
+
+    /**
+     * Računa očekivani iznos stavke kao proizvod broja termina i cene sporta.
+     *
+     * @return očekivani iznos stavke
+     * @throws NullPointerException ako sport nije definisan
+     */
+    public int izracunajOcekivaniIznos() {
+        Objects.requireNonNull(sport, "Sport mora biti definisan da bi se izracunao iznos stavke.");
+        return brojTermina * sport.getCena();
+    }
+
+    /**
+     * Proverava da li je postavljeni iznos stavke jednak očekivanom iznosu.
+     *
+     * @throws IllegalArgumentException ako iznos ne odgovara proizvodu broja termina i cene sporta
+     */
+    private void proveriIznosStavke() {
+        int ocekivaniIznos = izracunajOcekivaniIznos();
+        if (iznosStavke != ocekivaniIznos) {
+            throw new IllegalArgumentException(
+                    "Iznos stavke mora biti jednak proizvodu broja termina i cene sporta");
+        }
     }
 
     @Override
@@ -149,8 +208,8 @@ public class StavkaClanskeKarte implements ApstraktniDomenskiObjekat {
      */
     @Override
     public String toString() {
-        return "StavkaClanskeKarte{" + "clanskaKarta=" + clanskaKarta + ", rb=" + rb
-                + ", brojTermina=" + brojTermina + ", iznosStavke=" + iznosStavke + ", sport=" + sport + '}';
+        return "StavkaClanskeKarte[rb=" + rb + ", brojTermina=" + brojTermina
+                + ", iznosStavke=" + iznosStavke + ", sport=" + sport + "]";
     }
 
     @Override
@@ -194,15 +253,16 @@ public class StavkaClanskeKarte implements ApstraktniDomenskiObjekat {
     public List<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws Exception {
         List<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
         while (rs.next()) {
-            StavkaClanskeKarte stavka = new StavkaClanskeKarte();
-            stavka.setRb(rs.getInt("rb"));
-            stavka.setIznosStavke(rs.getInt("iznosStavke"));
-            stavka.setBrojTermina(rs.getInt("brojTermina"));
             int idSport = rs.getInt("idSport");
             String naziv = rs.getString("naziv");
             int cena = rs.getInt("cena");
             Sport sport = new Sport(idSport, naziv, cena);
+
+            StavkaClanskeKarte stavka = new StavkaClanskeKarte();
+            stavka.setRb(rs.getInt("rb"));
             stavka.setSport(sport);
+            stavka.setBrojTermina(rs.getInt("brojTermina"));
+            stavka.setIznosStavke(rs.getInt("iznosStavke"));
             lista.add(stavka);
         }
         return lista;

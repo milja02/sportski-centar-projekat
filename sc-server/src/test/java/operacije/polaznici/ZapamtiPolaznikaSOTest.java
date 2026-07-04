@@ -29,15 +29,18 @@ class ZapamtiPolaznikaSOTest {
 
     static Stream<Arguments> neispravniPolaznici() {
         Mesto mesto = PodaciZaTest.beograd();
+        Polaznik bezMesta = new Polaznik();
+        bezMesta.setIdPolaznik(1);
+        bezMesta.setIme("Pera");
+        bezMesta.setPrezime("Peric");
+        bezMesta.setBrojTelefona("061");
+
         return Stream.of(
                 Arguments.of(null, "null parametar"),
                 Arguments.of("nije polaznik", "pogresan tip"),
                 Arguments.of(new Polaznik(), "nema ID"),
-                Arguments.of(new Polaznik(0, "Pera", "Peric", "061", mesto), "ID nula"),
-                Arguments.of(new Polaznik(1, "", "Peric", "061", mesto), "prazno ime"),
-                Arguments.of(new Polaznik(1, "Pera", "", "061", mesto), "prazno prezime"),
-                Arguments.of(new Polaznik(1, "Pera", "Peric", "", mesto), "prazan telefon"),
-                Arguments.of(new Polaznik(1, "Pera", "Peric", "061", null), "nema mesto"));
+                Arguments.of(PodaciZaTest.polaznik(0, "Pera", "Peric", "061"), "ID nula"),
+                Arguments.of(bezMesta, "nema mesto"));
     }
 
     @Test

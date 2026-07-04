@@ -33,9 +33,11 @@ public class Mesto implements ApstraktniDomenskiObjekat {
      * @param postanskiBroj poštanski broj mesta
      */
     public Mesto(int idMesto, String naziv, int postanskiBroj) {
-        this.idMesto = idMesto;
-        this.naziv = naziv;
-        this.postanskiBroj = postanskiBroj;
+        if (idMesto > 0) {
+            setIdMesto(idMesto);
+        }
+        setNaziv(naziv);
+        setPostanskiBroj(postanskiBroj);
     }
 
     /**
@@ -50,9 +52,13 @@ public class Mesto implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja identifikator mesta.
      *
-     * @param idMesto jedinstveni identifikator mesta
+     * @param idMesto jedinstveni identifikator mesta, mora biti veći od nule
+     * @throws IllegalArgumentException ako je id manji ili jednak nuli
      */
     public void setIdMesto(int idMesto) {
+        if (idMesto <= 0) {
+            throw new IllegalArgumentException("Id mesta mora biti veci od nule.");
+        }
         this.idMesto = idMesto;
     }
 
@@ -68,9 +74,15 @@ public class Mesto implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja naziv mesta.
      *
-     * @param naziv naziv mesta
+     * @param naziv naziv mesta, ne sme biti {@code null} niti prazan
+     * @throws NullPointerException ako je naziv {@code null}
+     * @throws IllegalArgumentException ako je naziv prazan
      */
     public void setNaziv(String naziv) {
+        Objects.requireNonNull(naziv, "Naziv mesta je obavezan.");
+        if (naziv.isBlank()) {
+            throw new IllegalArgumentException("Naziv mesta ne sme biti prazan.");
+        }
         this.naziv = naziv;
     }
 

@@ -41,11 +41,13 @@ public class Polaznik implements ApstraktniDomenskiObjekat {
      * @param mesto mesto prebivališta
      */
     public Polaznik(int idPolaznik, String ime, String prezime, String brojTelefona, Mesto mesto) {
-        this.idPolaznik = idPolaznik;
-        this.ime = ime;
-        this.prezime = prezime;
-        this.brojTelefona = brojTelefona;
-        this.mesto = mesto;
+        if (idPolaznik > 0) {
+            setIdPolaznik(idPolaznik);
+        }
+        setIme(ime);
+        setPrezime(prezime);
+        setBrojTelefona(brojTelefona);
+        setMesto(mesto);
     }
 
     /**
@@ -60,9 +62,13 @@ public class Polaznik implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja identifikator polaznika.
      *
-     * @param idPolaznik jedinstveni identifikator polaznika
+     * @param idPolaznik jedinstveni identifikator polaznika, mora biti veći od nule
+     * @throws IllegalArgumentException ako je id manji ili jednak nuli
      */
     public void setIdPolaznik(int idPolaznik) {
+        if (idPolaznik <= 0) {
+            throw new IllegalArgumentException("Id polaznika mora biti veci od nule.");
+        }
         this.idPolaznik = idPolaznik;
     }
 
@@ -78,9 +84,15 @@ public class Polaznik implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja ime polaznika.
      *
-     * @param ime ime polaznika
+     * @param ime ime polaznika, ne sme biti {@code null} niti prazno
+     * @throws NullPointerException ako je ime {@code null}
+     * @throws IllegalArgumentException ako je ime prazno
      */
     public void setIme(String ime) {
+        Objects.requireNonNull(ime, "Ime polaznika je obavezno.");
+        if (ime.isBlank()) {
+            throw new IllegalArgumentException("Ime polaznika ne sme biti prazno.");
+        }
         this.ime = ime;
     }
 
@@ -96,9 +108,15 @@ public class Polaznik implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja prezime polaznika.
      *
-     * @param prezime prezime polaznika
+     * @param prezime prezime polaznika, ne sme biti {@code null} niti prazno
+     * @throws NullPointerException ako je prezime {@code null}
+     * @throws IllegalArgumentException ako je prezime prazno
      */
     public void setPrezime(String prezime) {
+        Objects.requireNonNull(prezime, "Prezime polaznika je obavezno.");
+        if (prezime.isBlank()) {
+            throw new IllegalArgumentException("Prezime polaznika ne sme biti prazno.");
+        }
         this.prezime = prezime;
     }
 
@@ -114,9 +132,15 @@ public class Polaznik implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja broj telefona polaznika.
      *
-     * @param brojTelefona kontakt telefon
+     * @param brojTelefona kontakt telefon, ne sme biti {@code null} niti prazan
+     * @throws NullPointerException ako je broj telefona {@code null}
+     * @throws IllegalArgumentException ako je broj telefona prazan
      */
     public void setBrojTelefona(String brojTelefona) {
+        Objects.requireNonNull(brojTelefona, "Broj telefona polaznika je obavezan.");
+        if (brojTelefona.isBlank()) {
+            throw new IllegalArgumentException("Broj telefona polaznika ne sme biti prazan.");
+        }
         this.brojTelefona = brojTelefona;
     }
 
@@ -130,11 +154,17 @@ public class Polaznik implements ApstraktniDomenskiObjekat {
     }
 
     /**
-     * Postavlja mesto prebivališta polaznika.
+     * Postavlja mesto prebivališta polaznika i validira njegove atribute.
      *
-     * @param mesto mesto prebivališta
+     * @param mesto mesto prebivališta, ne sme biti {@code null}
+     * @throws NullPointerException ako je mesto {@code null}
      */
     public void setMesto(Mesto mesto) {
+        Objects.requireNonNull(mesto, "Polaznik mora imati definisano mesto.");
+        if (mesto.getIdMesto() > 0) {
+            mesto.setIdMesto(mesto.getIdMesto());
+        }
+        mesto.setNaziv(mesto.getNaziv());
         this.mesto = mesto;
     }
 

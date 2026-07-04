@@ -24,11 +24,27 @@ public final class PodaciZaTest {
     }
 
     public static Polaznik polaznik(int id, String ime, String prezime, String telefon) {
-        return new Polaznik(id, ime, prezime, telefon, beograd());
+        Polaznik polaznik = new Polaznik();
+        if (id > 0) {
+            polaznik.setIdPolaznik(id);
+        }
+        polaznik.setIme(ime);
+        polaznik.setPrezime(prezime);
+        polaznik.setBrojTelefona(telefon);
+        polaznik.setMesto(beograd());
+        return polaznik;
     }
 
     public static Instruktor instruktor(int id, String ime, String prezime, String korisnicko, String sifra) {
-        return new Instruktor(id, ime, prezime, korisnicko, sifra);
+        Instruktor instruktor = new Instruktor();
+        if (id > 0) {
+            instruktor.setIdInstruktor(id);
+        }
+        instruktor.setIme(ime);
+        instruktor.setPrezime(prezime);
+        instruktor.setKorisnickoIme(korisnicko);
+        instruktor.setSifra(sifra);
+        return instruktor;
     }
 
     public static Sport sport(int id, String naziv, int cena) {

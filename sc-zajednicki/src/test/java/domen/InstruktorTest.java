@@ -1,11 +1,14 @@
 package domen;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -14,6 +17,91 @@ import org.junit.jupiter.params.provider.MethodSource;
 import domen.pomocni.PomocniResultSet;
 
 class InstruktorTest {
+
+    private Instruktor instruktor;
+
+    @BeforeEach
+    void setUp() {
+        instruktor = new Instruktor(1, "Marko", "Markovic", "marko", "123");
+    }
+
+    @AfterEach
+    void tearDown() {
+        instruktor = null;
+    }
+
+    @Test
+    void konstruktorPostavljaAtribute() {
+        assertEquals(1, instruktor.getIdInstruktor());
+        assertEquals("Marko", instruktor.getIme());
+        assertEquals("Markovic", instruktor.getPrezime());
+        assertEquals("marko", instruktor.getKorisnickoIme());
+        assertEquals("123", instruktor.getSifra());
+    }
+
+    @Test
+    void setteriPostavljajuAtribute() {
+        instruktor = new Instruktor();
+        instruktor.setIdInstruktor(2);
+        instruktor.setIme("Ana");
+        instruktor.setPrezime("Anic");
+        instruktor.setKorisnickoIme("ana");
+        instruktor.setSifra("abc");
+
+        assertEquals(2, instruktor.getIdInstruktor());
+        assertEquals("Ana", instruktor.getIme());
+        assertEquals("Anic", instruktor.getPrezime());
+        assertEquals("ana", instruktor.getKorisnickoIme());
+        assertEquals("abc", instruktor.getSifra());
+    }
+
+    @Test
+    void setIdInstruktor_bacaIllegalArgumentException_kadaJeNula() {
+        instruktor = new Instruktor();
+        assertThrows(IllegalArgumentException.class, () -> instruktor.setIdInstruktor(0));
+    }
+
+    @Test
+    void setIme_bacaNullPointerException_kadaJeNull() {
+        instruktor = new Instruktor();
+        assertThrows(NullPointerException.class, () -> instruktor.setIme(null));
+    }
+
+    @Test
+    void setIme_bacaIllegalArgumentException_kadaJePrazno() {
+        instruktor = new Instruktor();
+        assertThrows(IllegalArgumentException.class, () -> instruktor.setIme(""));
+    }
+
+    @Test
+    void setPrezime_bacaNullPointerException_kadaJeNull() {
+        instruktor = new Instruktor();
+        assertThrows(NullPointerException.class, () -> instruktor.setPrezime(null));
+    }
+
+    @Test
+    void setKorisnickoIme_bacaNullPointerException_kadaJeNull() {
+        instruktor = new Instruktor();
+        assertThrows(NullPointerException.class, () -> instruktor.setKorisnickoIme(null));
+    }
+
+    @Test
+    void setKorisnickoIme_bacaIllegalArgumentException_kadaJePrazno() {
+        instruktor = new Instruktor();
+        assertThrows(IllegalArgumentException.class, () -> instruktor.setKorisnickoIme(""));
+    }
+
+    @Test
+    void setSifra_bacaNullPointerException_kadaJeNull() {
+        instruktor = new Instruktor();
+        assertThrows(NullPointerException.class, () -> instruktor.setSifra(null));
+    }
+
+    @Test
+    void setSifra_bacaIllegalArgumentException_kadaJePrazna() {
+        instruktor = new Instruktor();
+        assertThrows(IllegalArgumentException.class, () -> instruktor.setSifra("   "));
+    }
 
     @ParameterizedTest(name = "{3}")
     @MethodSource("equalsPodaci")
