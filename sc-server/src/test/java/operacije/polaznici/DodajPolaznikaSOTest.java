@@ -7,13 +7,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import domen.Mesto;
 import domen.Polaznik;
 import java.util.stream.Stream;
-import operacije.integracija.IntegracioniTestOsnova;
+import operacije.integracija.SOTestoviHelper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class DodajPolaznikaSOTest extends IntegracioniTestOsnova {
+class DodajPolaznikaSOTest extends SOTestoviHelper {
 
     @ParameterizedTest(name = "{1}")
     @MethodSource("neispravniParametri")
