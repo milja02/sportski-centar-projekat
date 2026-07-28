@@ -14,11 +14,12 @@ import operacije.integracija.SOTestoviHelper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class DodajClanskuKartuSOTest extends SOTestoviHelper {
 
-    @ParameterizedTest(name = "{1}")
+    @ParameterizedTest
     @MethodSource("neispravneKarte")
     void izvrsiOdbijaNeispravanUnos(Object karta, String opis) {
         Exception ex = assertThrows(Exception.class, () -> new DodajClanskuKartuSO().izvrsi(karta, null));

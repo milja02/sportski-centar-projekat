@@ -163,9 +163,10 @@ public class StavkaClanskeKarte implements ApstraktniDomenskiObjekat {
      */
     public void setSport(Sport sport) {
         Objects.requireNonNull(sport, "Stavka mora imati definisan sport.");
-        sport.setIdSport(sport.getIdSport());
-        sport.setNaziv(sport.getNaziv());
-        sport.setCena(sport.getCena());
+        if (sport.getIdSport() <= 0) {
+            throw new IllegalArgumentException("Id sporta mora biti veci od nule.");
+        }
+        Objects.requireNonNull(sport.getNaziv(), "Naziv sporta je obavezan.");
         this.sport = sport;
         if (iznosPostavljen) {
             proveriIznosStavke();

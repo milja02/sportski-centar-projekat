@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class ObrisiClanskuKartuSOTest extends SOTestoviHelper {
 
-    @ParameterizedTest(name = "{1}")
+    @ParameterizedTest
     @MethodSource("neispravniParametri")
     void izvrsiOdbijaNeispravanUnos(Object parametar, String opis) {
         Exception ex = assertThrows(Exception.class, () -> new ObrisiClanskuKartuSO().izvrsi(parametar, null));

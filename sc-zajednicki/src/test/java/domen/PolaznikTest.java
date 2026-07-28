@@ -113,7 +113,7 @@ class PolaznikTest {
         assertThrows(NullPointerException.class, () -> polaznik.setMesto(loseMesto));
     }
 
-    @ParameterizedTest(name = "{3}")
+    @ParameterizedTest
     @MethodSource("equalsPodaci")
     void equals(Polaznik levi, Polaznik desni, boolean ocekivano, String opis) {
         assertEquals(ocekivano, levi.equals(desni));

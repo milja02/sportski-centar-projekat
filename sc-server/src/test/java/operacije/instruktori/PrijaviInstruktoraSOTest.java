@@ -15,7 +15,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class PrijaviInstruktoraSOTest extends SOTestoviHelper {
 
-    @ParameterizedTest(name = "{1}")
+    @ParameterizedTest
     @MethodSource("neispravniParametri")
     void izvrsiOdbijaNeispravanUnos(Object instruktor, String opis) {
         Exception ex = assertThrows(Exception.class, () -> new PrijaviInstruktoraSO().izvrsi(instruktor, null));

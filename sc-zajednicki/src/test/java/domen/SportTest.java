@@ -84,7 +84,7 @@ class SportTest {
         assertThrows(IllegalArgumentException.class, () -> sport.setCena(-100));
     }
 
-    @ParameterizedTest(name = "{3}")
+    @ParameterizedTest
     @MethodSource("equalsPodaci")
     void equals(Sport levi, Sport desni, boolean ocekivano, String opis) {
         assertEquals(ocekivano, levi.equals(desni));

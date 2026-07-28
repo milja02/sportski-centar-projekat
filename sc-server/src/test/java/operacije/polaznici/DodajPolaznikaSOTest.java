@@ -15,7 +15,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class DodajPolaznikaSOTest extends SOTestoviHelper {
 
-    @ParameterizedTest(name = "{1}")
+    @ParameterizedTest
     @MethodSource("neispravniParametri")
     void izvrsiOdbijaNeispravanUnos(Object polaznik, String opis) {
         DodajPolaznikaSO so = new DodajPolaznikaSO();

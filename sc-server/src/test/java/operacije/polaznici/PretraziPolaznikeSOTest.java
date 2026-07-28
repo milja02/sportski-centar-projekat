@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class PretraziPolaznikeSOTest extends SOTestoviHelper {
 
-    @ParameterizedTest(name = "{1}")
+    @ParameterizedTest
     @MethodSource("neispravniKriterijumi")
     void izvrsiOdbijaNeispravanUnos(Object parametar, String opis) {
         Exception ex = assertThrows(Exception.class, () -> new PretraziPolaznikeSO().izvrsi(parametar, null));

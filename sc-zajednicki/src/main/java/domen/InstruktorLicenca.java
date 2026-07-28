@@ -61,13 +61,10 @@ public class InstruktorLicenca implements ApstraktniDomenskiObjekat {
      */
     public void setInstruktor(Instruktor instruktor) {
         Objects.requireNonNull(instruktor, "Instruktor licence je obavezan.");
-        if (instruktor.getIdInstruktor() > 0) {
-            instruktor.setIdInstruktor(instruktor.getIdInstruktor());
-        }
-        instruktor.setIme(instruktor.getIme());
-        instruktor.setPrezime(instruktor.getPrezime());
-        instruktor.setKorisnickoIme(instruktor.getKorisnickoIme());
-        instruktor.setSifra(instruktor.getSifra());
+        Objects.requireNonNull(instruktor.getIme(), "Ime instruktora je obavezno.");
+        Objects.requireNonNull(instruktor.getPrezime(), "Prezime instruktora je obavezno.");
+        Objects.requireNonNull(instruktor.getKorisnickoIme(), "Korisnicko ime instruktora je obavezno.");
+        Objects.requireNonNull(instruktor.getSifra(), "Sifra instruktora je obavezna.");
         this.instruktor = instruktor;
     }
 
@@ -88,11 +85,8 @@ public class InstruktorLicenca implements ApstraktniDomenskiObjekat {
      */
     public void setLicenca(Licenca licenca) {
         Objects.requireNonNull(licenca, "Licenca je obavezna.");
-        if (licenca.getIdLicenca() > 0) {
-            licenca.setIdLicenca(licenca.getIdLicenca());
-        }
-        licenca.setTipLicence(licenca.getTipLicence());
-        licenca.setNivoKvalifikacije(licenca.getNivoKvalifikacije());
+        Objects.requireNonNull(licenca.getTipLicence(), "Tip licence je obavezan.");
+        Objects.requireNonNull(licenca.getNivoKvalifikacije(), "Nivo kvalifikacije je obavezan.");
         this.licenca = licenca;
     }
 

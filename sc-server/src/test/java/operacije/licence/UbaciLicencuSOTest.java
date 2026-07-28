@@ -17,7 +17,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class UbaciLicencuSOTest extends SOTestoviHelper {
 
-    @ParameterizedTest(name = "{1}")
+    @ParameterizedTest
     @MethodSource("neispravniParametri")
     void izvrsiOdbijaNeispravanUnos(Object dodela, String opis) throws Exception {
         Exception ex = assertThrows(Exception.class, () -> new UbaciLicencuSO().izvrsi(dodela, null));

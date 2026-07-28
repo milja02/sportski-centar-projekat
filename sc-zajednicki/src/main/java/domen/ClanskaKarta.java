@@ -45,8 +45,7 @@ public class ClanskaKarta implements ApstraktniDomenskiObjekat {
      * @param instruktor instruktor koji je izdao kartu
      * @param polaznik polaznik kojem karta pripada
      */
-    public ClanskaKarta(int idClanskaKarta, Date datumUclanjenja, int ukupanIznos,
-            Instruktor instruktor, Polaznik polaznik) {
+    public ClanskaKarta(int idClanskaKarta, Date datumUclanjenja, int ukupanIznos, Instruktor instruktor, Polaznik polaznik) {
         setIdClanskaKarta(idClanskaKarta);
         setDatumUclanjenja(datumUclanjenja);
         setInstruktor(instruktor);
@@ -146,13 +145,10 @@ public class ClanskaKarta implements ApstraktniDomenskiObjekat {
         if (instruktor == null) {
             throw new NullPointerException("Clanska karta mora imati instruktora.");
         }
-        if (instruktor.getIdInstruktor() > 0) {
-            instruktor.setIdInstruktor(instruktor.getIdInstruktor());
-        }
-        instruktor.setIme(instruktor.getIme());
-        instruktor.setPrezime(instruktor.getPrezime());
-        instruktor.setKorisnickoIme(instruktor.getKorisnickoIme());
-        instruktor.setSifra(instruktor.getSifra());
+        Objects.requireNonNull(instruktor.getIme(), "Ime instruktora je obavezno.");
+        Objects.requireNonNull(instruktor.getPrezime(), "Prezime instruktora je obavezno.");
+        Objects.requireNonNull(instruktor.getKorisnickoIme(), "Korisnicko ime instruktora je obavezno.");
+        Objects.requireNonNull(instruktor.getSifra(), "Sifra instruktora je obavezna.");
         this.instruktor = instruktor;
     }
 
@@ -175,13 +171,10 @@ public class ClanskaKarta implements ApstraktniDomenskiObjekat {
         if (polaznik == null) {
             throw new NullPointerException("Clanska karta mora imati polaznika.");
         }
-        if (polaznik.getIdPolaznik() > 0) {
-            polaznik.setIdPolaznik(polaznik.getIdPolaznik());
-        }
-        polaznik.setIme(polaznik.getIme());
-        polaznik.setPrezime(polaznik.getPrezime());
-        polaznik.setBrojTelefona(polaznik.getBrojTelefona());
-        polaznik.setMesto(polaznik.getMesto());
+        Objects.requireNonNull(polaznik.getIme(), "Ime polaznika je obavezno.");
+        Objects.requireNonNull(polaznik.getPrezime(), "Prezime polaznika je obavezno.");
+        Objects.requireNonNull(polaznik.getBrojTelefona(), "Broj telefona polaznika je obavezan.");
+        Objects.requireNonNull(polaznik.getMesto(), "Polaznik mora imati definisano mesto.");
         this.polaznik = polaznik;
     }
 

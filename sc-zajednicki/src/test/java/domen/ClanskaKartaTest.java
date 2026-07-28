@@ -133,7 +133,7 @@ class ClanskaKartaTest {
         assertEquals(4000, clanskaKarta.izracunajZbirStavki());
     }
 
-    @ParameterizedTest(name = "{3}")
+    @ParameterizedTest
     @MethodSource("equalsPodaci")
     void equals(ClanskaKarta leva, ClanskaKarta desna, boolean ocekivano, String opis) {
         assertEquals(ocekivano, leva.equals(desna));

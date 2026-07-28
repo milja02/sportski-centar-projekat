@@ -79,7 +79,7 @@ class MestoTest {
         assertThrows(IllegalArgumentException.class, () -> mesto.setNaziv("   "));
     }
 
-    @ParameterizedTest(name = "{3}")
+    @ParameterizedTest
     @MethodSource("equalsPodaci")
     void equals(Mesto levo, Mesto desno, boolean ocekivano, String opis) {
         assertEquals(ocekivano, levo.equals(desno));

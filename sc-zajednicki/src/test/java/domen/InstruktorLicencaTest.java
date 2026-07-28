@@ -74,7 +74,7 @@ class InstruktorLicencaTest {
         assertEquals(istek, il.getDatumIsteka());
     }
 
-    @ParameterizedTest(name = "{3}")
+    @ParameterizedTest
     @MethodSource("equalsPodaci")
     void equals(InstruktorLicenca leva, InstruktorLicenca desna, boolean ocekivano, String opis) {
         assertEquals(ocekivano, leva.equals(desna));

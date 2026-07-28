@@ -98,10 +98,6 @@ public class FormaKonfiguracijaPort extends javax.swing.JDialog {
     private void jTextFieldPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPortActionPerformed
     }//GEN-LAST:event_jTextFieldPortActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

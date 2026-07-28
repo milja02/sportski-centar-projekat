@@ -79,7 +79,7 @@ class LicencaTest {
         assertThrows(IllegalArgumentException.class, () -> licenca.setNivoKvalifikacije("   "));
     }
 
-    @ParameterizedTest(name = "{3}")
+    @ParameterizedTest
     @MethodSource("equalsPodaci")
     void equals(Licenca leva, Licenca desna, boolean ocekivano, String opis) {
         assertEquals(ocekivano, leva.equals(desna));

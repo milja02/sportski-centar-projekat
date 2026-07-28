@@ -161,10 +161,7 @@ public class Polaznik implements ApstraktniDomenskiObjekat {
      */
     public void setMesto(Mesto mesto) {
         Objects.requireNonNull(mesto, "Polaznik mora imati definisano mesto.");
-        if (mesto.getIdMesto() > 0) {
-            mesto.setIdMesto(mesto.getIdMesto());
-        }
-        mesto.setNaziv(mesto.getNaziv());
+        Objects.requireNonNull(mesto.getNaziv(), "Naziv mesta je obavezan.");
         this.mesto = mesto;
     }
 

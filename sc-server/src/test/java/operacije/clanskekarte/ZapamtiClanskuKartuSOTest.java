@@ -18,7 +18,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class ZapamtiClanskuKartuSOTest extends SOTestoviHelper {
 
-    @ParameterizedTest(name = "{1}")
+    @ParameterizedTest
     @MethodSource("neispravneKarte")
     void izvrsiOdbijaNeispravanUnos(Object karta, String opis) {
         Exception ex = assertThrows(Exception.class, () -> new ZapamtiClanskuKartuSO().izvrsi(karta, null));

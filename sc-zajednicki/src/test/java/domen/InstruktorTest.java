@@ -103,7 +103,7 @@ class InstruktorTest {
         assertThrows(IllegalArgumentException.class, () -> instruktor.setSifra("   "));
     }
 
-    @ParameterizedTest(name = "{3}")
+    @ParameterizedTest
     @MethodSource("equalsPodaci")
     void equals(Instruktor levi, Instruktor desni, boolean ocekivano, String opis) {
         assertEquals(ocekivano, levi.equals(desni));
