@@ -1,41 +1,51 @@
 package forme;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import ui.UiStil;
 
 public class DodajClanskuKartuForma extends javax.swing.JFrame {
 
-    private javax.swing.JButton jButtonUveziJson;
-    private javax.swing.JButton jButtonDodaj;
-    private javax.swing.JButton jButtonIzmeni;
-    private javax.swing.JButton jButtonDodajStavku;
-    private javax.swing.JButton jButtonObrisiStavku;
-    private javax.swing.JButton jButtonObrisi;
-    private javax.swing.JButton jButtonNazad;
-    private javax.swing.JComboBox<Object> jComboBoxPolaznik;
-    private javax.swing.JLabel jLabelDatum;
-    private javax.swing.JLabel jLabelId;
-    private javax.swing.JLabel jLabelInstruktor;
-    private javax.swing.JComboBox<Object> jComboBoxInstruktor;
-    private javax.swing.JLabel jLabelPolaznik;
-    private javax.swing.JLabel jLabelUkupanIznos;
-    private javax.swing.JLabel jLabelSport;
-    private javax.swing.JLabel jLabelBrojTermina;
-    private javax.swing.JLabel jLabelIznosStavke;
-    private javax.swing.JLabel jLabelCenaSporta;
-    private javax.swing.JScrollPane jScrollPaneStavke;
-    private javax.swing.JTable jTableStavke;
-    private javax.swing.JTextField jTextFieldId;
-    private javax.swing.JTextField jTextFieldDatum;
-    private javax.swing.JTextField jTextFieldUkupanIznos;
-    private javax.swing.JTextField jTextFieldBrojTermina;
-    private javax.swing.JTextField jTextFieldIznosStavke;
-    private javax.swing.JComboBox<Object> jComboBoxSport;
+    private JButton jButtonUveziJson;
+    private JButton jButtonDodaj;
+    private JButton jButtonIzmeni;
+    private JButton jButtonDodajStavku;
+    private JButton jButtonObrisiStavku;
+    private JButton jButtonObrisi;
+    private JButton jButtonNazad;
+    private JComboBox<Object> jComboBoxPolaznik;
+    private JLabel jLabelDatum;
+    private JLabel jLabelId;
+    private JLabel jLabelInstruktor;
+    private JComboBox<Object> jComboBoxInstruktor;
+    private JLabel jLabelPolaznik;
+    private JLabel jLabelUkupanIznos;
+    private JLabel jLabelSport;
+    private JLabel jLabelBrojTermina;
+    private JLabel jLabelIznosStavke;
+    private JLabel jLabelCenaSporta;
+    private JScrollPane jScrollPaneStavke;
+    private JTable jTableStavke;
+    private JTextField jTextFieldId;
+    private JTextField jTextFieldDatum;
+    private JTextField jTextFieldUkupanIznos;
+    private JTextField jTextFieldBrojTermina;
+    private JTextField jTextFieldIznosStavke;
+    private JComboBox<Object> jComboBoxSport;
+    private JPanel panelUnosStavke;
 
     public DodajClanskuKartuForma() {
         initComponents();
@@ -49,7 +59,7 @@ public class DodajClanskuKartuForma extends javax.swing.JFrame {
         jLabelDatum = new JLabel("Datum učlanjenja (dd.MM.yyyy)");
         jTextFieldDatum = new JTextField(12);
 
-        jLabelUkupanIznos = new JLabel("Ukupan iznos (zbir stavki)");
+        jLabelUkupanIznos = new JLabel("Ukupan iznos");
         jTextFieldUkupanIznos = new JTextField(10);
         jTextFieldUkupanIznos.setEditable(false);
 
@@ -59,7 +69,9 @@ public class DodajClanskuKartuForma extends javax.swing.JFrame {
         jComboBoxPolaznik = new JComboBox<>();
 
         jTableStavke = new JTable();
+        UiStil.stilTabela(jTableStavke);
         jScrollPaneStavke = new JScrollPane(jTableStavke);
+        jScrollPaneStavke.setPreferredSize(new Dimension(520, 140));
 
         jLabelSport = new JLabel("Sport");
         jComboBoxSport = new JComboBox<>();
@@ -74,110 +86,75 @@ public class DodajClanskuKartuForma extends javax.swing.JFrame {
         jButtonObrisiStavku = new JButton("Obriši stavku");
         jButtonDodaj = new JButton("Zapamti");
         jButtonIzmeni = new JButton("Zapamti");
-        jButtonObrisi = new JButton("Obrisi");
+        jButtonObrisi = new JButton("Obriši");
         jButtonNazad = new JButton("Nazad");
         jButtonUveziJson = new JButton("Uvezi preko JSON-a");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Clanska karta");
+        setTitle("Sportski centar - Članska karta");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabelId)
-                    .addComponent(jLabelDatum)
-                    .addComponent(jLabelUkupanIznos)
-                    .addComponent(jLabelInstruktor)
-                    .addComponent(jLabelPolaznik))
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldDatum, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldUkupanIznos, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxInstruktor, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxPolaznik, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPaneStavke, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelSport)
-                        .addGap(8, 8, 8)
-                        .addComponent(jComboBoxSport, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabelCenaSporta))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelBrojTermina)
-                        .addGap(8, 8, 8)
-                        .addComponent(jTextFieldBrojTermina, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabelIznosStavke)
-                        .addGap(8, 8, 8)
-                        .addComponent(jTextFieldIznosStavke, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jButtonDodajStavku)
-                        .addGap(8, 8, 8)
-                        .addComponent(jButtonObrisiStavku))
-                    .addComponent(jButtonUveziJson)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonNazad)
-                        .addGap(8, 8, 8)
-                        .addComponent(jButtonObrisi)
-                        .addGap(8, 8, 8)
-                        .addComponent(jButtonIzmeni)
-                        .addGap(8, 8, 8)
-                        .addComponent(jButtonDodaj)))
-                .addGap(12, 12, 12))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelId)
-                    .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelDatum)
-                    .addComponent(jTextFieldDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelUkupanIznos)
-                    .addComponent(jTextFieldUkupanIznos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelInstruktor)
-                    .addComponent(jComboBoxInstruktor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelPolaznik)
-                    .addComponent(jComboBoxPolaznik, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addComponent(jScrollPaneStavke, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelSport)
-                    .addComponent(jComboBoxSport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelCenaSporta))
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelBrojTermina)
-                    .addComponent(jTextFieldBrojTermina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelIznosStavke)
-                    .addComponent(jTextFieldIznosStavke, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonDodajStavku)
-                    .addComponent(jButtonObrisiStavku))
-                .addGap(8, 8, 8)
-                .addComponent(jButtonUveziJson)
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonNazad)
-                    .addComponent(jButtonObrisi)
-                    .addComponent(jButtonIzmeni)
-                    .addComponent(jButtonDodaj))
-                .addGap(12, 12, 12))
-        );
+        JPanel podaci = new JPanel(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.insets = new Insets(6, 6, 6, 6);
+        c.anchor = GridBagConstraints.WEST;
+        c.gridx = 0; c.gridy = 0; podaci.add(jLabelId, c);
+        c.gridx = 1; podaci.add(jTextFieldId, c);
+        c.gridx = 0; c.gridy = 1; podaci.add(jLabelDatum, c);
+        c.gridx = 1; podaci.add(jTextFieldDatum, c);
+        c.gridx = 0; c.gridy = 2; podaci.add(jLabelUkupanIznos, c);
+        c.gridx = 1; podaci.add(jTextFieldUkupanIznos, c);
+        c.gridx = 0; c.gridy = 3; podaci.add(jLabelInstruktor, c);
+        c.gridx = 1; c.fill = GridBagConstraints.HORIZONTAL; podaci.add(jComboBoxInstruktor, c);
+        c.gridx = 0; c.gridy = 4; c.fill = GridBagConstraints.NONE; podaci.add(jLabelPolaznik, c);
+        c.gridx = 1; c.fill = GridBagConstraints.HORIZONTAL; podaci.add(jComboBoxPolaznik, c);
+
+        panelUnosStavke = new JPanel(new GridBagLayout());
+        GridBagConstraints s = new GridBagConstraints();
+        s.insets = new Insets(4, 4, 4, 4);
+        s.anchor = GridBagConstraints.WEST;
+        s.gridy = 0;
+        s.gridx = 0; panelUnosStavke.add(jLabelSport, s);
+        s.gridx = 1; panelUnosStavke.add(jComboBoxSport, s);
+        s.gridx = 2; panelUnosStavke.add(jLabelCenaSporta, s);
+        s.gridy = 1;
+        s.gridx = 0; panelUnosStavke.add(jLabelBrojTermina, s);
+        s.gridx = 1; panelUnosStavke.add(jTextFieldBrojTermina, s);
+        s.gridx = 2; panelUnosStavke.add(jLabelIznosStavke, s);
+        s.gridx = 3; panelUnosStavke.add(jTextFieldIznosStavke, s);
+        s.gridx = 4; panelUnosStavke.add(jButtonDodajStavku, s);
+        s.gridx = 5; panelUnosStavke.add(jButtonObrisiStavku, s);
+
+        JPanel stavke = new JPanel(new BorderLayout(0, 8));
+        stavke.add(jScrollPaneStavke, BorderLayout.CENTER);
+        stavke.add(panelUnosStavke, BorderLayout.SOUTH);
+
+        JPanel akcije = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
+        akcije.add(jButtonNazad);
+        akcije.add(jButtonObrisi);
+        akcije.add(jButtonIzmeni);
+        akcije.add(jButtonDodaj);
+        akcije.add(jButtonUveziJson);
+
+        JPanel north = new JPanel(new BorderLayout());
+        north.setBorder(new EmptyBorder(16, 16, 8, 16));
+        north.add(UiStil.naslov("Članska karta"), BorderLayout.NORTH);
+
+        JPanel center = new JPanel(new BorderLayout(0, 12));
+        center.setBorder(new EmptyBorder(0, 16, 8, 16));
+        center.add(UiStil.okvir("Podaci o karti", podaci), BorderLayout.NORTH);
+        center.add(UiStil.okvir("Stavke", stavke), BorderLayout.CENTER);
+
+        JPanel south = new JPanel(new BorderLayout());
+        south.setBorder(new EmptyBorder(0, 16, 16, 16));
+        south.add(akcije, BorderLayout.WEST);
+
+        JPanel content = new JPanel(new BorderLayout());
+        content.add(north, BorderLayout.NORTH);
+        content.add(center, BorderLayout.CENTER);
+        content.add(south, BorderLayout.SOUTH);
+        setContentPane(content);
+
+        setMinimumSize(new Dimension(720, 560));
         pack();
         setLocationRelativeTo(null);
     }
@@ -203,6 +180,7 @@ public class DodajClanskuKartuForma extends javax.swing.JFrame {
     public void obrisiAddActionListener(ActionListener l) { jButtonObrisi.addActionListener(l); }
 
     public void setUnosStavkiVisible(boolean visible) {
+        panelUnosStavke.setVisible(visible);
         jLabelSport.setVisible(visible);
         jComboBoxSport.setVisible(visible);
         jLabelCenaSporta.setVisible(visible);
