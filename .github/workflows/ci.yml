@@ -54,6 +54,12 @@ jobs:
       - name: Build and test
         run: mvn -B verify
 
+      - name: Show test failures
+        if: failure()
+        run: |
+          echo "== Surefire summary =="
+          find . -path "*/target/surefire-reports/*.txt" -print -exec cat {} \;
+
       - name: Upload test reports
         if: always()
         uses: actions/upload-artifact@v4

@@ -269,6 +269,11 @@ public class Polaznik implements ApstraktniDomenskiObjekat {
     }
 
     @Override
+    public String koloneZaSelect() {
+        return "*";
+    }
+
+    @Override
     public String alijasTabele() {
         return "po";
     }

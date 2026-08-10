@@ -59,6 +59,14 @@ public interface ApstraktniDomenskiObjekat extends Serializable {
     String join();
 
     /**
+     * Vraća listu kolona za SELECT upit.
+     * Većina klasa vraća {@code *}; {@code ClanskaKarta} koristi alias-e zbog JOIN-a.
+     *
+     * @return kolone za SELECT
+     */
+    String koloneZaSelect();
+
+    /**
      * Vraća WHERE uslov za selekciju objekta.
      *
      * @return SQL WHERE uslov

@@ -337,6 +337,20 @@ public class ClanskaKarta implements ApstraktniDomenskiObjekat {
                 + "JOIN mesto m ON p.mesto = m.idMesto";
     }
 
+    /**
+     * Eksplicitni aliasi kolona da {@code ResultSet.getXxx("i.ime")} radi
+     * sa MySQL Connector/J 8 (uz {@code SELECT *} table.column labeli ne postoje).
+     */
+    @Override
+    public String koloneZaSelect() {
+        return "ck.idClanskaKarta, ck.datumUclanjenja, ck.ukupanIznos, "
+                + "i.idInstruktor AS `i.idInstruktor`, i.ime AS `i.ime`, i.prezime AS `i.prezime`, "
+                + "i.korisnickoIme AS `i.korisnickoIme`, i.sifra AS `i.sifra`, "
+                + "p.idPolaznik AS `p.idPolaznik`, p.ime AS `p.ime`, p.prezime AS `p.prezime`, "
+                + "p.brojTelefona AS `p.brojTelefona`, "
+                + "m.idMesto AS `m.idMesto`, m.naziv AS `m.naziv`, m.postanskiBroj AS `m.postanskiBroj`";
+    }
+
     @Override
     public String alijasTabele() {
         return "ck";

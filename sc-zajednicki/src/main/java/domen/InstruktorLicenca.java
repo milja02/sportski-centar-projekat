@@ -230,6 +230,11 @@ public class InstruktorLicenca implements ApstraktniDomenskiObjekat {
     }
 
     @Override
+    public String koloneZaSelect() {
+        return "*";
+    }
+
+    @Override
     public String alijasTabele() {
         return "il";
     }

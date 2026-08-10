@@ -216,6 +216,11 @@ public class Licenca implements ApstraktniDomenskiObjekat {
     }
 
     @Override
+    public String koloneZaSelect() {
+        return "*";
+    }
+
+    @Override
     public String alijasTabele() {
         return "li";
     }

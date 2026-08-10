@@ -198,6 +198,11 @@ public class Sport implements ApstraktniDomenskiObjekat {
     }
 
     @Override
+    public String koloneZaSelect() {
+        return "*";
+    }
+
+    @Override
     public String alijasTabele() {
         return "sp";
     }

@@ -41,7 +41,7 @@ public class NadjiClanskuKartuSO extends ApstraktnaGenerickaOperacija {
     @Override
     protected void izvrsiOperaciju(Object param, String kljuc) throws Exception {
         ClanskaKarta kriterijum = (ClanskaKarta) param;
-        String uslov = " WHERE idClanskaKarta=" + kriterijum.getIdClanskaKarta();
+        String uslov = " WHERE ck.idClanskaKarta=" + kriterijum.getIdClanskaKarta();
         List<ClanskaKarta> lista = (List<ClanskaKarta>) (List<?>) broker.getAll(new ClanskaKarta(), uslov);
         if (lista == null || lista.isEmpty()) {
             throw new Exception("Sistem ne može da nađe člansku kartu.");

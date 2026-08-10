@@ -265,6 +265,11 @@ public class Instruktor implements ApstraktniDomenskiObjekat {
     }
 
     @Override
+    public String koloneZaSelect() {
+        return "*";
+    }
+
+    @Override
     public String alijasTabele() {
         return "i";
     }

@@ -280,6 +280,11 @@ public class StavkaClanskeKarte implements ApstraktniDomenskiObjekat {
     }
 
     @Override
+    public String koloneZaSelect() {
+        return "*";
+    }
+
+    @Override
     public String alijasTabele() {
         return "sck";
     }

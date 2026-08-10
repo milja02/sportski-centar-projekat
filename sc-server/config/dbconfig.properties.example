@@ -1,9 +1,10 @@
 # Kopiraj ovaj fajl u: sc-server/config/dbconfig.properties
 # i prilagodi vrednosti za svoju lokalnu MySQL instalaciju.
 #
-# Podrazumevane vrednosti odgovaraju docker-compose.yml iz root-a projekta.
+# Podrazumevane vrednosti odgovaraju docker-compose.yml / GitHub Actions.
+# Koristi 127.0.0.1 umesto localhost (bitno na Linux CI runnerima).
 
-url=jdbc:mysql://localhost:3306/sportskicentar
+url=jdbc:mysql://127.0.0.1:3306/sportskicentar?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
 username=root
 password=root
 port=9000
