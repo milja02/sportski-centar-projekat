@@ -25,7 +25,7 @@ public class LoginKontroler {
 
             private void prijava(ActionEvent e) {
                 String korisnickoIme = lf.getjTextFieldUsername().getText().trim();
-                String sifra = lf.getjTextFieldPassword().getText().trim();
+                String sifra = new String(lf.getjPasswordField().getPassword()).trim();
 
                 if (korisnickoIme.isEmpty() || sifra.isEmpty()) {
                     JOptionPane.showMessageDialog(lf,

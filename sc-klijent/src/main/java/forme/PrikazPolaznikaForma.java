@@ -1,11 +1,20 @@
 package forme;
 
 import domen.Mesto;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import ui.UiStil;
 
 public class PrikazPolaznikaForma extends javax.swing.JFrame {
 
@@ -15,123 +24,82 @@ public class PrikazPolaznikaForma extends javax.swing.JFrame {
 
     @SuppressWarnings("unchecked")
     private void initComponents() {
-
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTablePolaznici = new javax.swing.JTable();
-        jButtonObrisi = new javax.swing.JButton();
-        jButtonIzmeni = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jTextFieldIme = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextFieldPrezime = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jTextFieldBrojTelefona = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButtonResetuj = new javax.swing.JButton();
-        jLabelMesto = new javax.swing.JLabel();
-        jComboBoxMesto = new javax.swing.JComboBox<>();
-        jButtonNadji = new javax.swing.JButton();
-        jButtonNazad = new javax.swing.JButton();
-        jButtonSacuvajJson = new javax.swing.JButton();
-
-        jTablePolaznici.setModel(new javax.swing.table.DefaultTableModel(
-            new Object[][] {}, new String[] {"Title 1", "Title 2", "Title 3", "Title 4"}
-        ));
-        jScrollPane1.setViewportView(jTablePolaznici);
-
-        jButtonIzmeni.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonIzmeniActionPerformed(evt);
-            }
-        });
+        jTablePolaznici = new JTable();
+        jButtonObrisi = new JButton("Obri\u0161i");
+        jButtonIzmeni = new JButton("Izmeni");
+        jLabel1 = new JLabel("Ime");
+        jTextFieldIme = new JTextField();
+        jLabel2 = new JLabel("Prezime");
+        jTextFieldPrezime = new JTextField();
+        jLabel3 = new JLabel("Telefon");
+        jTextFieldBrojTelefona = new JTextField();
+        jButton1 = new JButton("Pretra\u017ei");
+        jButtonResetuj = new JButton("Resetuj");
+        jLabelMesto = new JLabel("Mesto");
+        jComboBoxMesto = new JComboBox<>();
+        jButtonNadji = new JButton("Otvori");
+        jButtonNazad = new JButton("Nazad");
+        jButtonSacuvajJson = new JButton("Sa\u010duvaj JSON");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Pregled polaznika");
+        setTitle("Sportski centar - Pregled polaznika");
 
-        jLabel1.setText("Ime");
-        jLabel2.setText("Prezime");
-        jLabel3.setText("Telefon");
-        jLabelMesto.setText("Mesto");
-        jButton1.setText("Pretrazi");
-        jButtonResetuj.setText("Resetuj");
-        jButtonNadji.setText("Otvori");
-        jButtonNazad.setText("Nazad");
-        jButtonObrisi.setText("Obrisi");
-        jButtonIzmeni.setText("Izmeni");
-        jButtonSacuvajJson.setText("Sačuvaj JSON");
+        jTablePolaznici.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][] {}, new String[] {"Title 1", "Title 2", "Title 3", "Title 4"}));
+        UiStil.velikoPolje(jTextFieldIme);
+        UiStil.velikoPolje(jTextFieldPrezime);
+        UiStil.velikoPolje(jTextFieldBrojTelefona);
+        UiStil.velikiCombo(jComboBoxMesto);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(4, 4, 4)
-                        .addComponent(jTextFieldIme, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel2)
-                        .addGap(4, 4, 4)
-                        .addComponent(jTextFieldPrezime, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel3)
-                        .addGap(4, 4, 4)
-                        .addComponent(jTextFieldBrojTelefona, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabelMesto)
-                        .addGap(4, 4, 4)
-                        .addComponent(jComboBoxMesto, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonResetuj)
-                        .addGap(8, 8, 8)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonNazad)
-                        .addGap(8, 8, 8)
-                        .addComponent(jButtonObrisi)
-                        .addGap(8, 8, 8)
-                        .addComponent(jButtonNadji)
-                        .addGap(8, 8, 8)
-                        .addComponent(jButtonIzmeni)
-                        .addGap(8, 8, 8)
-                        .addComponent(jButtonSacuvajJson)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(12, 12, 12))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextFieldIme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextFieldPrezime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextFieldBrojTelefona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelMesto)
-                    .addComponent(jComboBoxMesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonResetuj)
-                    .addComponent(jButton1))
-                .addGap(8, 8, 8)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonNazad)
-                    .addComponent(jButtonObrisi)
-                    .addComponent(jButtonNadji)
-                    .addComponent(jButtonIzmeni)
-                    .addComponent(jButtonSacuvajJson))
-                .addGap(12, 12, 12))
-        );
+        jButtonIzmeni.addActionListener(evt -> jButtonIzmeniActionPerformed(evt));
 
-        pack();
+        JPanel filterSadrzaj = new JPanel(new BorderLayout(16, 8));
+        filterSadrzaj.setOpaque(false);
+
+        JPanel polja = new JPanel(new FlowLayout(FlowLayout.LEFT, 16, 4));
+        polja.setOpaque(false);
+        polja.add(UiStil.poljeSaLabelom("Ime", jTextFieldIme));
+        polja.add(UiStil.poljeSaLabelom("Prezime", jTextFieldPrezime));
+        polja.add(UiStil.poljeSaLabelom("Telefon", jTextFieldBrojTelefona));
+        polja.add(UiStil.poljeSaLabelom("Mesto", jComboBoxMesto));
+
+        JPanel filterDugmad = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 4));
+        filterDugmad.setOpaque(false);
+        filterDugmad.add(Box.createVerticalStrut(18));
+        JPanel dugmadWrap = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 0));
+        dugmadWrap.setOpaque(false);
+        dugmadWrap.add(jButtonResetuj);
+        dugmadWrap.add(jButton1);
+        JPanel desno = new JPanel(new BorderLayout());
+        desno.setOpaque(false);
+        desno.add(Box.createVerticalStrut(18), BorderLayout.NORTH);
+        desno.add(dugmadWrap, BorderLayout.CENTER);
+
+        filterSadrzaj.add(polja, BorderLayout.CENTER);
+        filterSadrzaj.add(desno, BorderLayout.EAST);
+
+        jScrollPane1 = UiStil.tabelaScroll(jTablePolaznici);
+
+        JPanel north = new JPanel(new BorderLayout(0, 8));
+        north.setBorder(new EmptyBorder(16, 20, 0, 20));
+        north.add(UiStil.naslov("Pregled polaznika"), BorderLayout.NORTH);
+        north.add(UiStil.filterPanel(filterSadrzaj), BorderLayout.CENTER);
+
+        JPanel center = new JPanel(new BorderLayout());
+        center.setBorder(new EmptyBorder(12, 20, 0, 20));
+        center.add(jScrollPane1, BorderLayout.CENTER);
+
+        JPanel south = UiStil.actionBar(
+                jButtonNazad, jButtonObrisi, jButtonNadji, jButtonIzmeni, jButtonSacuvajJson);
+
+        JPanel content = new JPanel(new BorderLayout());
+        content.add(north, BorderLayout.NORTH);
+        content.add(center, BorderLayout.CENTER);
+        content.add(south, BorderLayout.SOUTH);
+        setContentPane(content);
+
+        setMinimumSize(new Dimension(960, 580));
+        setSize(1020, 640);
         setLocationRelativeTo(null);
     }
 
@@ -142,23 +110,23 @@ public class PrikazPolaznikaForma extends javax.swing.JFrame {
         return jTablePolaznici;
     }
 
-    private javax.swing.JButton jButtonSacuvajJson;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButtonIzmeni;
-    private javax.swing.JButton jButtonObrisi;
-    private javax.swing.JButton jButtonResetuj;
-    private javax.swing.JButton jButtonNadji;
-    private javax.swing.JButton jButtonNazad;
-    private javax.swing.JLabel jLabelMesto;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTablePolaznici;
-    private javax.swing.JTextField jTextFieldBrojTelefona;
-    private javax.swing.JTextField jTextFieldIme;
-    private javax.swing.JTextField jTextFieldPrezime;
-    private javax.swing.JComboBox<Mesto> jComboBoxMesto;
+    private JButton jButtonSacuvajJson;
+    private JButton jButton1;
+    private JButton jButtonIzmeni;
+    private JButton jButtonObrisi;
+    private JButton jButtonResetuj;
+    private JButton jButtonNadji;
+    private JButton jButtonNazad;
+    private JLabel jLabelMesto;
+    private JLabel jLabel1;
+    private JLabel jLabel2;
+    private JLabel jLabel3;
+    private JScrollPane jScrollPane1;
+    private JTable jTablePolaznici;
+    private JTextField jTextFieldBrojTelefona;
+    private JTextField jTextFieldIme;
+    private JTextField jTextFieldPrezime;
+    private JComboBox<Mesto> jComboBoxMesto;
 
     public JButton getjButtonObrisi() {
         return jButtonObrisi;

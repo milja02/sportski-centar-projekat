@@ -1,6 +1,17 @@
 package forme;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 
 public class GlavnaForma extends javax.swing.JFrame {
 
@@ -9,9 +20,8 @@ public class GlavnaForma extends javax.swing.JFrame {
     }
 
     private void initComponents() {
-
-        jLabel1 = new javax.swing.JLabel();
-        jLabelUlogovani = new javax.swing.JLabel();
+        jLabelPozdrav = new JLabel();
+        jLabelUlogovani = new JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -26,119 +36,153 @@ public class GlavnaForma extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sportski centar");
 
-        jLabel1.setText("Zdravo, ");
+        jLabelPozdrav.setFont(new Font("Arial", Font.PLAIN, 16));
+        jLabelPozdrav.setText("Zdravo,");
 
+        jLabelUlogovani.setFont(new Font("Arial", Font.BOLD, 16));
         jLabelUlogovani.setText("-");
 
-        jMenu1.setText("Polaznik");
-
-        jMenuItem1.setText("Dodaj");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem1);
-
-        jMenuItem2.setText("Pregled");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
+        jMenu1.setText("Polaznici");
+        jMenuItem2.setText("Pregled svih polaznika");
+        jMenuItem2.addActionListener(e -> otvoriPrikazPolaznika());
         jMenu1.add(jMenuItem2);
-
+        jMenu1.addSeparator();
+        jMenuItem1.setText("Novi polaznik");
+        jMenuItem1.addActionListener(e -> otvoriDodajPolaznika());
+        jMenu1.add(jMenuItem1);
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Clanska karta");
-
-        jMenuItem3.setText("Dodaj");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem3);
-
-        jMenuItem4.setText("Pregled");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
-            }
-        });
+        jMenu2.setText("\u010clanske karte");
+        jMenuItem4.setText("Pregled svih karata");
+        jMenuItem4.addActionListener(e -> otvoriPrikazClanskihKarata());
         jMenu2.add(jMenuItem4);
-
+        jMenu2.addSeparator();
+        jMenuItem3.setText("Nova \u010dlanska karta");
+        jMenuItem3.addActionListener(e -> otvoriDodajClanskuKartu());
+        jMenu2.add(jMenuItem3);
         jMenuBar1.add(jMenu2);
 
-        jMenu3.setText("Licenca");
-
-        jMenuItem5.setText("Dodaj");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem5);
-
-        jMenuItem6.setText("Pregled");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
-            }
-        });
+        jMenu3.setText("Licence");
+        jMenuItem6.setText("Pregled licenci");
+        jMenuItem6.addActionListener(e -> otvoriPrikazLicenci());
         jMenu3.add(jMenuItem6);
-
+        jMenu3.addSeparator();
+        jMenuItem5.setText("Ubaci licencu");
+        jMenuItem5.addActionListener(e -> otvoriUbaciLicencu());
+        jMenu3.add(jMenuItem5);
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(jLabel1)
-                .addGap(4, 4, 4)
-                .addComponent(jLabelUlogovani)
-                .addContainerGap(12, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabelUlogovani))
-                .addContainerGap(12, Short.MAX_VALUE))
-        );
+        JPanel header = new JPanel();
+        header.setLayout(new BoxLayout(header, BoxLayout.X_AXIS));
+        header.setBorder(new EmptyBorder(20, 24, 8, 24));
+        header.add(jLabelPozdrav);
+        header.add(Box.createHorizontalStrut(6));
+        header.add(jLabelUlogovani);
+        header.add(Box.createHorizontalGlue());
 
-        pack();
-        setMinimumSize(new java.awt.Dimension(320, 120));
+        JLabel naslov = new JLabel("Po\u010detna");
+        naslov.setFont(new Font("Arial", Font.BOLD, 20));
+        naslov.setBorder(new EmptyBorder(0, 24, 12, 24));
+
+        JPanel kartice = new JPanel(new GridLayout(1, 3, 16, 0));
+        kartice.setBorder(new EmptyBorder(8, 24, 24, 24));
+        kartice.add(napraviKarticu(
+                "Polaznici",
+                "Pregled i unos polaznika",
+                "Pregled", e -> otvoriPrikazPolaznika(),
+                "Dodaj", e -> otvoriDodajPolaznika()));
+        kartice.add(napraviKarticu(
+                "\u010clanske karte",
+                "Pregled i izrada karata",
+                "Pregled", e -> otvoriPrikazClanskihKarata(),
+                "Dodaj", e -> otvoriDodajClanskuKartu()));
+        kartice.add(napraviKarticu(
+                "Licence",
+                "Pregled i unos licenci",
+                "Pregled", e -> otvoriPrikazLicenci(),
+                "Ubaci", e -> otvoriUbaciLicencu()));
+
+        JPanel content = new JPanel(new BorderLayout());
+        content.add(header, BorderLayout.NORTH);
+
+        JPanel centar = new JPanel(new BorderLayout());
+        centar.add(naslov, BorderLayout.NORTH);
+        centar.add(kartice, BorderLayout.CENTER);
+        content.add(centar, BorderLayout.CENTER);
+
+        setContentPane(content);
+        setMinimumSize(new Dimension(760, 420));
+        setSize(820, 480);
         setLocationRelativeTo(null);
     }
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {
+    private JPanel napraviKarticu(
+            String naslov,
+            String opis,
+            String tekstPrvog,
+            java.awt.event.ActionListener akcijaPrvog,
+            String tekstDrugog,
+            java.awt.event.ActionListener akcijaDrugog) {
+
+        JPanel kartica = new JPanel(new BorderLayout(0, 12));
+        kartica.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createTitledBorder(
+                        BorderFactory.createEtchedBorder(),
+                        naslov,
+                        TitledBorder.LEFT,
+                        TitledBorder.TOP,
+                        new Font("Arial", Font.BOLD, 14)),
+                new EmptyBorder(12, 12, 12, 12)));
+
+        JLabel lblOpis = new JLabel(opis);
+        lblOpis.setFont(new Font("Arial", Font.PLAIN, 12));
+
+        JButton btnPrvi = new JButton(tekstPrvog);
+        btnPrvi.setPreferredSize(new Dimension(10, 34));
+        btnPrvi.addActionListener(akcijaPrvog);
+
+        JButton btnDrugi = new JButton(tekstDrugog);
+        btnDrugi.setPreferredSize(new Dimension(10, 34));
+        btnDrugi.addActionListener(akcijaDrugog);
+
+        JPanel dugmad = new JPanel();
+        dugmad.setLayout(new BoxLayout(dugmad, BoxLayout.Y_AXIS));
+        btnPrvi.setAlignmentX(LEFT_ALIGNMENT);
+        btnDrugi.setAlignmentX(LEFT_ALIGNMENT);
+        btnPrvi.setMaximumSize(new Dimension(Integer.MAX_VALUE, 34));
+        btnDrugi.setMaximumSize(new Dimension(Integer.MAX_VALUE, 34));
+        dugmad.add(btnPrvi);
+        dugmad.add(Box.createVerticalStrut(8));
+        dugmad.add(btnDrugi);
+
+        kartica.add(lblOpis, BorderLayout.NORTH);
+        kartica.add(dugmad, BorderLayout.SOUTH);
+        return kartica;
+    }
+
+    private void otvoriPrikazPolaznika() {
         koordinator.Koordinator.getInstance().otvoriPrikazPolaznikaFormu();
     }
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void otvoriDodajPolaznika() {
         koordinator.Koordinator.getInstance().otvoriDodajPolaznikaFormu();
     }
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void otvoriPrikazClanskihKarata() {
         koordinator.Koordinator.getInstance().otvoriPrikazClanskihKarataFormu();
     }
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void otvoriDodajClanskuKartu() {
         koordinator.Koordinator.getInstance().otvoriDodajClanskuKartuFormu();
     }
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void otvoriUbaciLicencu() {
         koordinator.Koordinator.getInstance().otvoriUbaciLicencuFormu();
     }
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void otvoriPrikazLicenci() {
         koordinator.Koordinator.getInstance().otvoriPrikazLicenciFormu();
     }
 
@@ -150,8 +194,8 @@ public class GlavnaForma extends javax.swing.JFrame {
         this.jLabelUlogovani = jLabelUlogovani;
     }
 
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabelUlogovani;
+    private JLabel jLabelPozdrav;
+    private JLabel jLabelUlogovani;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

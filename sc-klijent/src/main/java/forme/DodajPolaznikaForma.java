@@ -1,11 +1,20 @@
 package forme;
 
 import domen.Mesto;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import ui.UiStil;
 
 public class DodajPolaznikaForma extends javax.swing.JFrame {
 
@@ -15,121 +24,87 @@ public class DodajPolaznikaForma extends javax.swing.JFrame {
 
     @SuppressWarnings("unchecked")
     private void initComponents() {
-
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButtonIzmeni = new javax.swing.JButton();
-        jButtonObrisi = new javax.swing.JButton();
-        jButtonNazad = new javax.swing.JButton();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jButtonUveziJson = new javax.swing.JButton();
+        jLabel1 = new JLabel("Ime");
+        jTextField1 = new JTextField(18);
+        jLabel2 = new JLabel("Prezime");
+        jTextField2 = new JTextField(18);
+        jTextField3 = new JTextField(18);
+        jLabel3 = new JLabel("Telefon");
+        jComboBox1 = new JComboBox<>();
+        jLabel4 = new JLabel("Mesto");
+        jButton1 = new JButton("Dodaj");
+        jButtonIzmeni = new JButton("Izmeni");
+        jButtonObrisi = new JButton("Obriši");
+        jButtonNazad = new JButton("Nazad");
+        jTextField4 = new JTextField(8);
+        jLabel5 = new JLabel("ID");
+        jButtonUveziJson = new JButton("Uvezi preko JSON-a");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Polaznik");
-
-        jLabel1.setText("Ime");
-        jLabel2.setText("Prezime");
-        jLabel3.setText("Telefon");
-        jLabel4.setText("Mesto");
-        jLabel5.setText("ID");
-        jButton1.setText("Dodaj");
-        jButtonIzmeni.setText("Izmeni");
-        jButtonObrisi.setText("Obrisi");
-        jButtonNazad.setText("Nazad");
-        jButtonUveziJson.setText("Uvezi preko JSON-a");
+        setTitle("Sportski centar - Polaznik");
         jTextField4.setEditable(false);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonUveziJson)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonNazad)
-                        .addGap(8, 8, 8)
-                        .addComponent(jButtonObrisi)
-                        .addGap(8, 8, 8)
-                        .addComponent(jButtonIzmeni)
-                        .addGap(8, 8, 8)
-                        .addComponent(jButton1)))
-                .addGap(12, 12, 12))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addComponent(jButtonUveziJson)
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonNazad)
-                    .addComponent(jButtonObrisi)
-                    .addComponent(jButtonIzmeni)
-                    .addComponent(jButton1))
-                .addGap(12, 12, 12))
-        );
+        JPanel forma = new JPanel(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.insets = new Insets(6, 6, 6, 6);
+        c.anchor = GridBagConstraints.WEST;
 
+        c.gridx = 0; c.gridy = 0; forma.add(jLabel5, c);
+        c.gridx = 1; forma.add(jTextField4, c);
+        c.gridx = 0; c.gridy = 1; forma.add(jLabel1, c);
+        c.gridx = 1; forma.add(jTextField1, c);
+        c.gridx = 0; c.gridy = 2; forma.add(jLabel2, c);
+        c.gridx = 1; forma.add(jTextField2, c);
+        c.gridx = 0; c.gridy = 3; forma.add(jLabel3, c);
+        c.gridx = 1; forma.add(jTextField3, c);
+        c.gridx = 0; c.gridy = 4; forma.add(jLabel4, c);
+        c.gridx = 1; c.fill = GridBagConstraints.HORIZONTAL; forma.add(jComboBox1, c);
+
+        JPanel akcije = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
+        akcije.add(jButtonNazad);
+        akcije.add(jButtonObrisi);
+        akcije.add(jButtonIzmeni);
+        akcije.add(jButton1);
+        akcije.add(jButtonUveziJson);
+
+        JPanel north = new JPanel(new BorderLayout());
+        north.setBorder(new EmptyBorder(16, 16, 8, 16));
+        north.add(UiStil.naslov("Polaznik"), BorderLayout.NORTH);
+
+        JPanel center = new JPanel(new BorderLayout());
+        center.setBorder(new EmptyBorder(0, 16, 8, 16));
+        center.add(UiStil.okvir("Podaci", forma), BorderLayout.CENTER);
+
+        JPanel south = new JPanel(new BorderLayout());
+        south.setBorder(new EmptyBorder(0, 16, 16, 16));
+        south.add(akcije, BorderLayout.WEST);
+
+        JPanel content = new JPanel(new BorderLayout());
+        content.add(north, BorderLayout.NORTH);
+        content.add(center, BorderLayout.CENTER);
+        content.add(south, BorderLayout.SOUTH);
+        setContentPane(content);
+
+        setMinimumSize(new Dimension(480, 360));
         pack();
         setLocationRelativeTo(null);
     }
 
-    private javax.swing.JButton jButtonUveziJson;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButtonIzmeni;
-    private javax.swing.JButton jButtonObrisi;
-    private javax.swing.JButton jButtonNazad;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private JButton jButtonUveziJson;
+    private JButton jButton1;
+    private JButton jButtonIzmeni;
+    private JButton jButtonObrisi;
+    private JButton jButtonNazad;
+    private JComboBox<String> jComboBox1;
+    private JLabel jLabel1;
+    private JLabel jLabel2;
+    private JLabel jLabel3;
+    private JLabel jLabel4;
+    private JLabel jLabel5;
+    private JTextField jTextField1;
+    private JTextField jTextField2;
+    private JTextField jTextField3;
+    private JTextField jTextField4;
 
     public void dodajAddActionListener(ActionListener actionListener) {
         jButton1.addActionListener(actionListener);
