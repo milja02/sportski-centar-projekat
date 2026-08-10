@@ -25,5 +25,11 @@ INSERT INTO polaznik (ime, prezime, brojTelefona, mesto) VALUES
 ('Ana', 'Anić', '0652223344', 2);
 
 INSERT INTO instruktorlicenca (instruktor, licenca, datumIzdavanja, datumIsteka) VALUES
-(1, 1, '2024-01-15', '2027-01-15'),
-(2, 2, '2024-03-01', '2026-03-01');
+(1, 2, '2024-01-15', '2027-01-15'),
+(2, 3, '2024-03-01', '2026-03-01');
+
+INSERT INTO clanskakarta (datumUclanjenja, ukupanIznos, instruktor, polaznik) VALUES
+('2024-06-01', 9000, 1, 1);
+
+INSERT INTO stavkaclanskekarte (clanskakarta, rb, brojTermina, iznosStavke, sport) VALUES
+(1, 1, 3, 9000, 1);
