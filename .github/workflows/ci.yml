@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  build-and-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: sportskicentar
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+
+      - name: Install MySQL client
+        run: sudo apt-get update && sudo apt-get install -y mysql-client
+
+      - name: Initialize database schema and seed
+        env:
+          MYSQL_PWD: root
+        run: |
+          mysql -h 127.0.0.1 -P 3306 -u root sportskicentar < db/schema.sql
+          mysql -h 127.0.0.1 -P 3306 -u root sportskicentar < db/data.sql
+
+      - name: Prepare server config for CI
+        run: |
+          mkdir -p sc-server/config
+          cp sc-server/config/dbconfig.properties.example sc-server/config/dbconfig.properties
+
+      - name: Build and test
+        run: mvn -B verify
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: "**/target/surefire-reports/"
+          if-no-files-found: ignore
