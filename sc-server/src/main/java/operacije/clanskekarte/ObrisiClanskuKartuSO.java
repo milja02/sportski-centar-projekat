@@ -24,7 +24,7 @@ public class ObrisiClanskuKartuSO extends ApstraktnaGenerickaOperacija {
         }
         ClanskaKarta ck = (ClanskaKarta) param;
         if (ck.getIdClanskaKarta() <= 0) {
-            throw new Exception("Neispravan ID članske kartice.");
+            throw new Exception("Sistem nije mogao da obriše člansku kartu (neispravan ID).");
         }
     }
 

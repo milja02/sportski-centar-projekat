@@ -31,7 +31,7 @@ public class UbaciLicencuSO extends ApstraktnaGenerickaOperacija {
             throw new Exception("Sistem ne može da zapamti licencu (neispravan instruktor ili licenca).");
         }
         if (il.getDatumIsteka() != null && !il.getDatumIsteka().after(il.getDatumIzdavanja())) {
-            throw new Exception("Datum isteka mora biti posle datuma izdavanja.");
+            throw new Exception("Sistem ne može da zapamti licencu (datum isteka mora biti posle datuma izdavanja).");
         }
     }
 

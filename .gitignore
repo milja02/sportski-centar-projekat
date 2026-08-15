@@ -6,7 +6,6 @@ target/
 *.ear
 hs_err_pid*
 
-# Eclipse / IDE
 .project
 .classpath
 .settings/
@@ -18,15 +17,12 @@ hs_err_pid*
 nbproject/private/
 .nb-gradle/
 
-# Lokalna konfiguracija (lozinke, portovi)
 sc-server/config/dbconfig.properties
 
-# OS
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# Logovi i privremeni fajlovi
 *.log
 *.tmp
 *.bak

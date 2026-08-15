@@ -22,12 +22,12 @@ public class PrijaviInstruktoraSO extends ApstraktnaGenerickaOperacija {
     @Override
     protected void preduslovi(Object param) throws Exception {
         if (param == null || !(param instanceof Instruktor)) {
-            throw new Exception("Korisničko ime i šifra nisu ispravni.");
+            throw new Exception("Sistem ne može da prijavi instruktora. Korisničko ime i šifra nisu ispravni.");
         }
         Instruktor i = (Instruktor) param;
         if (i.getKorisnickoIme() == null || i.getKorisnickoIme().trim().isEmpty()
                 || i.getSifra() == null || i.getSifra().trim().isEmpty()) {
-            throw new Exception("Korisničko ime i šifra nisu ispravni.");
+            throw new Exception("Sistem ne može da prijavi instruktora. Korisničko ime i šifra nisu ispravni.");
         }
     }
 
@@ -48,7 +48,7 @@ public class PrijaviInstruktoraSO extends ApstraktnaGenerickaOperacija {
                 return;
             }
         }
-        throw new Exception("Korisničko ime i šifra nisu ispravni.");
+        throw new Exception("Sistem ne može da prijavi instruktora. Korisničko ime i šifra nisu ispravni.");
     }
 
     /**

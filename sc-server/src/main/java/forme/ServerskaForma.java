@@ -130,8 +130,13 @@ public class ServerskaForma extends javax.swing.JFrame {
     private void jButtonPokreniActionPerformed(java.awt.event.ActionEvent evt) {
         server = new Server();
         server.start();
-        jLabelStatus.setText("Pokrenut");
+        String port = konfiguracija.Konfiguracija.getInstance().getProperty("port");
+        if (port == null || port.equals("n/a") || port.isBlank()) {
+            port = "9000";
+        }
+        jLabelStatus.setText("Pokrenut · port " + port);
         jLabelStatus.setForeground(new Color(30, 140, 70));
+        jLabelSubtitle.setText("Server prima konekcije klijenata");
         jButtonPokreni.setEnabled(false);
         jButtonZaustavi.setEnabled(true);
     }
@@ -140,6 +145,7 @@ public class ServerskaForma extends javax.swing.JFrame {
         server.zaustaviServer();
         jLabelStatus.setText("Zaustavljen");
         jLabelStatus.setForeground(new Color(180, 50, 50));
+        jLabelSubtitle.setText("Serverska konzola");
         jButtonZaustavi.setEnabled(false);
         jButtonPokreni.setEnabled(true);
     }
