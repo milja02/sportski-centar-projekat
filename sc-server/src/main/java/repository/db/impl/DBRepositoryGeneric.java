@@ -23,7 +23,7 @@ public class DBRepositoryGeneric implements DBRepository<ApstraktniDomenskiObjek
 
         System.out.println(upit);
 
-        Statement st = DBConnectionFactory.getInstance().getConnection().createStatement();
+        Statement st = DBConnectionFactory.getInstance().requireConnection().createStatement();
         ResultSet rs = st.executeQuery(upit);
         lista = param.vratiListu(rs);
 
@@ -37,7 +37,7 @@ public class DBRepositoryGeneric implements DBRepository<ApstraktniDomenskiObjek
         String upit = "INSERT INTO " + param.nazivTabele() + "(" + param.koloneZaUbacivanje() + ") VALUES (" + param.vrednostiZaUbacivanje() + ")";
         System.out.println(upit);
 
-        Statement st = DBConnectionFactory.getInstance().getConnection().createStatement();
+        Statement st = DBConnectionFactory.getInstance().requireConnection().createStatement();
         st.executeUpdate(upit);
         st.close();
     }
@@ -47,7 +47,7 @@ public class DBRepositoryGeneric implements DBRepository<ApstraktniDomenskiObjek
         String upit = "INSERT INTO " + param.nazivTabele() + "(" + param.koloneZaUbacivanje() + ") VALUES (" + param.vrednostiZaUbacivanje() + ")";
         System.out.println(upit);
 
-        Statement st = DBConnectionFactory.getInstance().getConnection().createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+        Statement st = DBConnectionFactory.getInstance().requireConnection().createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
         st.executeUpdate(upit, Statement.RETURN_GENERATED_KEYS);
         ResultSet rs = st.getGeneratedKeys();
         int id = -1;
@@ -64,7 +64,7 @@ public class DBRepositoryGeneric implements DBRepository<ApstraktniDomenskiObjek
         String upit = "UPDATE " + param.nazivTabele() + " SET " + param.vrednostiZaIzmenu() + " WHERE " + param.primarniKljuc();
         System.out.println(upit);
 
-        Statement st = DBConnectionFactory.getInstance().getConnection().createStatement();
+        Statement st = DBConnectionFactory.getInstance().requireConnection().createStatement();
         st.executeUpdate(upit);
         st.close();
     }
@@ -74,7 +74,7 @@ public class DBRepositoryGeneric implements DBRepository<ApstraktniDomenskiObjek
         String upit = "DELETE FROM " + param.nazivTabele() + " WHERE " + param.primarniKljuc();
         System.out.println(upit);
 
-        Statement st = DBConnectionFactory.getInstance().getConnection().createStatement();
+        Statement st = DBConnectionFactory.getInstance().requireConnection().createStatement();
         st.executeUpdate(upit);
         st.close();
     }
