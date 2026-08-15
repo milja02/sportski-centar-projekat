@@ -29,8 +29,10 @@ public class DodajClanskuKartuKontroler {
 
     public DodajClanskuKartuKontroler(DodajClanskuKartuForma forma) {
         this.forma = forma;
+        forma.getjButtonObrisiStavku().setEnabled(false);
         addActionListeners();
         addAutoKalkulacijaListeneri();
+        addStavkeSelectionListener();
     }
 
     public void otvoriFormu(FormaMod mod) {
@@ -52,6 +54,20 @@ public class DodajClanskuKartuKontroler {
                 Koordinator.getInstance().nazadNaGlavnuFormu(null);
             }
         });
+    }
+
+    private void addStavkeSelectionListener() {
+        forma.getjTableStavke().getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                azurirajDugmeObrisiStavku();
+            }
+        });
+    }
+
+    private void azurirajDugmeObrisiStavku() {
+        boolean omogucen = trenutniMod != FormaMod.PREGLED
+                && forma.getjTableStavke().getSelectedRow() != -1;
+        forma.getjButtonObrisiStavku().setEnabled(omogucen);
     }
 
     private void addAutoKalkulacijaListeneri() {
@@ -183,6 +199,7 @@ public class DodajClanskuKartuKontroler {
         model.dodeliRb();
         forma.getjTableStavke().setModel(model);
         osveziUkupanIznos();
+        azurirajDugmeObrisiStavku();
     }
 
     private void pripremiFormu(FormaMod mod) {
@@ -219,6 +236,7 @@ public class DodajClanskuKartuKontroler {
         forma.getjTextFieldIznosStavke().setEditable(false);
         sakrijSvaDugmad();
         prikaziCenuSporta();
+        azurirajDugmeObrisiStavku();
 
         if (mod == FormaMod.PREGLED) {
             postaviRezimPregleda();
@@ -378,6 +396,7 @@ public class DodajClanskuKartuKontroler {
             model.getLista().add(s);
             model.dodeliRb();
             osveziUkupanIznos();
+            azurirajDugmeObrisiStavku();
 
             forma.getjTextFieldBrojTermina().setText("");
             forma.getjTextFieldIznosStavke().setText("");
@@ -389,12 +408,12 @@ public class DodajClanskuKartuKontroler {
     private void obrisiStavku() {
         int red = forma.getjTableStavke().getSelectedRow();
         if (red == -1) {
-            JOptionPane.showMessageDialog(forma, "Selektujte stavku za brisanje.", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
         ModelTabeleStavkaClanskeKarte model = (ModelTabeleStavkaClanskeKarte) forma.getjTableStavke().getModel();
         model.getLista().remove(red);
         model.dodeliRb();
         osveziUkupanIznos();
+        azurirajDugmeObrisiStavku();
     }
 }

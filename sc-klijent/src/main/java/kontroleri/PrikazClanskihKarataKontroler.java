@@ -25,7 +25,9 @@ public class PrikazClanskihKarataKontroler {
     public PrikazClanskihKarataKontroler(PrikazClanskihKarataForma pckf) {
         this.pckf = pckf;
         pckf.getjButtonObrisi().setVisible(false);
+        azurirajDugmadZaSelekciju();
         addActionListener();
+        addSelectionListener();
         addMouseListener();
     }
 
@@ -72,6 +74,7 @@ public class PrikazClanskihKarataKontroler {
             List<ClanskaKarta> clanskeKarte = Komunikacija.getInstance().ucitajClanskeKarte();
             pckf.getjTable1().setModel(new ModelTabeleClanskeKarte(clanskeKarte));
             pckf.getjTable2().setModel(new ModelTabeleStavkaClanskeKarte(new ArrayList<>()));
+            azurirajDugmadZaSelekciju();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(pckf,
                     "Sistem ne može da učita podatke za članske karte.",
@@ -79,10 +82,34 @@ public class PrikazClanskihKarataKontroler {
         }
     }
 
+    private void azurirajDugmadZaSelekciju() {
+        boolean imaSelekciju = pckf.getjTable1().getSelectedRow() != -1;
+        pckf.getjButtonNadji().setEnabled(imaSelekciju);
+        pckf.getjButtonAzuriraj().setEnabled(imaSelekciju);
+        pckf.getjButtonSacuvajJson().setEnabled(imaSelekciju);
+    }
+
+    private void addSelectionListener() {
+        pckf.getjTable1().getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                azurirajDugmadZaSelekciju();
+            }
+        });
+    }
+
     private ClanskaKarta selektovanaKarta() {
         int red = pckf.getjTable1().getSelectedRow();
         if (red == -1) {
             JOptionPane.showMessageDialog(pckf, "Selektujte člansku kartu.", "Greška", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+        ModelTabeleClanskeKarte mtck = (ModelTabeleClanskeKarte) pckf.getjTable1().getModel();
+        return mtck.getLista().get(red);
+    }
+
+    private ClanskaKarta selektovanaKartaBezPoruke() {
+        int red = pckf.getjTable1().getSelectedRow();
+        if (red == -1) {
             return null;
         }
         ModelTabeleClanskeKarte mtck = (ModelTabeleClanskeKarte) pckf.getjTable1().getModel();
@@ -134,6 +161,7 @@ public class PrikazClanskihKarataKontroler {
             }
             pckf.getjTable1().setModel(new ModelTabeleClanskeKarte(rezultat));
             pckf.getjTable2().setModel(new ModelTabeleStavkaClanskeKarte(new ArrayList<>()));
+            azurirajDugmadZaSelekciju();
             JOptionPane.showMessageDialog(pckf,
                     "Sistem je našao članske karte po zadatim kriterijumima.",
                     "Uspeh", JOptionPane.INFORMATION_MESSAGE);
@@ -215,7 +243,7 @@ public class PrikazClanskihKarataKontroler {
         pckf.getjTable1().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                ClanskaKarta ck = selektovanaKarta();
+                ClanskaKarta ck = selektovanaKartaBezPoruke();
                 if (ck != null) {
                     ucitajIPrikaziStavke(ck);
                 }

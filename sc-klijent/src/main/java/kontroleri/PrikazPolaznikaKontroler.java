@@ -17,7 +17,9 @@ public class PrikazPolaznikaKontroler {
     public PrikazPolaznikaKontroler(PrikazPolaznikaForma ppf) {
         this.ppf = ppf;
         ppf.getjButtonObrisi().setVisible(false);
+        azurirajDugmadZaSelekciju();
         addActionListener();
+        addSelectionListener();
     }
 
     public void otvoriFormu() {
@@ -28,6 +30,7 @@ public class PrikazPolaznikaKontroler {
     public void pripremiFormu() {
         ucitajMestaUCombo();
         ucitajPolaznikeUTabelu();
+        azurirajDugmadZaSelekciju();
     }
 
     private void ucitajMestaUCombo() {
@@ -54,11 +57,27 @@ public class PrikazPolaznikaKontroler {
                 polaznici = java.util.Collections.emptyList();
             }
             ppf.getjTablePolaznici().setModel(new ModelTabelePolaznika(polaznici));
+            azurirajDugmadZaSelekciju();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(ppf,
                     "Sistem ne može da učita listu polaznika.",
                     "Greška", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private void azurirajDugmadZaSelekciju() {
+        boolean imaSelekciju = ppf.getjTablePolaznici().getSelectedRow() != -1;
+        ppf.getjButtonNadji().setEnabled(imaSelekciju);
+        ppf.getjButtonIzmeni().setEnabled(imaSelekciju);
+        ppf.getjButtonSacuvajJson().setEnabled(imaSelekciju);
+    }
+
+    private void addSelectionListener() {
+        ppf.getjTablePolaznici().getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                azurirajDugmadZaSelekciju();
+            }
+        });
     }
 
     private Polaznik selektovaniPolaznik() {
@@ -111,9 +130,15 @@ public class PrikazPolaznikaKontroler {
             Mesto izabranoMesto = (Mesto) ppf.getjComboBoxMesto().getSelectedItem();
 
             Polaznik kriterijum = new Polaznik();
-            kriterijum.setIme(ime.isEmpty() ? null : ime);
-            kriterijum.setPrezime(prezime.isEmpty() ? null : prezime);
-            kriterijum.setBrojTelefona(brojTelefona.isEmpty() ? null : brojTelefona);
+            if (!ime.isEmpty()) {
+                kriterijum.setIme(ime);
+            }
+            if (!prezime.isEmpty()) {
+                kriterijum.setPrezime(prezime);
+            }
+            if (!brojTelefona.isEmpty()) {
+                kriterijum.setBrojTelefona(brojTelefona);
+            }
             if (izabranoMesto != null) {
                 kriterijum.setMesto(izabranoMesto);
             }
@@ -126,6 +151,7 @@ public class PrikazPolaznikaKontroler {
                 return;
             }
             ppf.getjTablePolaznici().setModel(new ModelTabelePolaznika(rezultat));
+            azurirajDugmadZaSelekciju();
             JOptionPane.showMessageDialog(ppf,
                     "Sistem je našao polaznike po zadatim kriterijumima.",
                     "Uspeh", JOptionPane.INFORMATION_MESSAGE);

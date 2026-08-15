@@ -129,6 +129,8 @@ public class PrikazClanskihKarataForma extends javax.swing.JFrame {
     public JButton getjButtonDodaj() { return jButtonDodaj; }
     public JButton getjButtonAzuriraj() { return jButtonAzuriraj; }
     public JButton getjButtonObrisi() { return jButtonObrisi; }
+    public JButton getjButtonNadji() { return jButtonNadji; }
+    public JButton getjButtonSacuvajJson() { return jButtonSacuvajJson; }
 
     public JComboBox<Polaznik> getjComboBoxPolaznik() {
         return jComboBoxPolaznik;

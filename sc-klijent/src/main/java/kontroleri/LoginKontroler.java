@@ -29,7 +29,7 @@ public class LoginKontroler {
 
                 if (korisnickoIme.isEmpty() || sifra.isEmpty()) {
                     JOptionPane.showMessageDialog(lf,
-                            "Korisničko ime i šifra nisu ispravni.",
+                            "Sistem ne može da prijavi instruktora. Korisničko ime i šifra nisu ispravni.",
                             "Greška", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
@@ -38,7 +38,7 @@ public class LoginKontroler {
                     Komunikacija.getInstance().konekcija();
                     Instruktor ulogovani = Komunikacija.getInstance().prijaviInstruktora(korisnickoIme, sifra);
                     JOptionPane.showMessageDialog(lf,
-                            "Korisničko ime i šifra su ispravni.",
+                            "Uspešna prijava. Dobrodošli.",
                             "Uspeh", JOptionPane.INFORMATION_MESSAGE);
                     Koordinator.getInstance().setUlogovani(ulogovani);
                     try {
@@ -46,13 +46,13 @@ public class LoginKontroler {
                         lf.dispose();
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(lf,
-                                "Ne može da se otvori glavna forma i meni.",
+                                "Sistem ne može da otvori glavnu formu.",
                                 "Greška", JOptionPane.ERROR_MESSAGE);
                     }
                 } catch (Exception ex) {
                     String poruka = ex.getMessage() != null && !ex.getMessage().isEmpty()
                             ? ex.getMessage()
-                            : "Korisničko ime i šifra nisu ispravni.";
+                            : "Sistem ne može da prijavi instruktora. Korisničko ime i šifra nisu ispravni.";
                     JOptionPane.showMessageDialog(lf, poruka, "Greška", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -60,6 +60,7 @@ public class LoginKontroler {
     }
 
     public void otvoriFormu() {
+        lf.getjTextFieldUsername().requestFocusInWindow();
         lf.setVisible(true);
     }
 }

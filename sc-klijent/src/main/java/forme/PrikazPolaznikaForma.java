@@ -132,6 +132,18 @@ public class PrikazPolaznikaForma extends javax.swing.JFrame {
         return jButtonObrisi;
     }
 
+    public JButton getjButtonNadji() {
+        return jButtonNadji;
+    }
+
+    public JButton getjButtonIzmeni() {
+        return jButtonIzmeni;
+    }
+
+    public JButton getjButtonSacuvajJson() {
+        return jButtonSacuvajJson;
+    }
+
     public void addBtnObrisiActionListener(ActionListener actionListener) {
         jButtonObrisi.addActionListener(actionListener);
     }
