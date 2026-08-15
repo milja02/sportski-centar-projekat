@@ -25,9 +25,15 @@ class DodajPolaznikaSOTest extends SOTestoviHelper {
     }
 
     static Stream<Arguments> neispravniParametri() {
+        Polaznik bezMesta = new Polaznik();
+        bezMesta.setIme("Jovana");
+        bezMesta.setPrezime("Jovic");
+        bezMesta.setBrojTelefona("069000111");
+
         return Stream.of(
                 Arguments.of(null, "null parametar"),
-                Arguments.of("nije polaznik", "pogresan tip"));
+                Arguments.of("nije polaznik", "pogresan tip"),
+                Arguments.of(bezMesta, "nema mesto"));
     }
 
     @Test

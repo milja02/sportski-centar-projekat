@@ -29,6 +29,9 @@ public class DodajPolaznikaSO extends ApstraktnaGenerickaOperacija {
         if (p.getBrojTelefona() == null || p.getBrojTelefona().isEmpty()) {
             throw new Exception("Sistem nije mogao da kreira polaznika");
         }
+        if (p.getMesto() == null || p.getMesto().getIdMesto() <= 0) {
+            throw new Exception("Sistem nije mogao da kreira polaznika");
+        }
     }
 
     /**
