@@ -36,13 +36,11 @@ jobs:
           java-version: "17"
           cache: maven
 
-      - name: Install MySQL client
-        run: sudo apt-get update && sudo apt-get install -y mysql-client
-
       - name: Initialize database schema and seed
         env:
           MYSQL_PWD: root
         run: |
+          mysql --version
           mysql -h 127.0.0.1 -P 3306 -u root sportskicentar < db/schema.sql
           mysql -h 127.0.0.1 -P 3306 -u root sportskicentar < db/data.sql
 
