@@ -1,5 +1,6 @@
 package kontroleri;
 
+import domen.Instruktor;
 import domen.Licenca;
 import forme.PrikazLicenciForma;
 import java.util.List;
@@ -25,7 +26,8 @@ public class PrikazLicenciKontroler {
 
     public void pripremiFormu() {
         try {
-            List<Licenca> licence = Komunikacija.getInstance().ucitajLicence();
+            Instruktor ulogovani = Koordinator.getInstance().getUlogovani();
+            List<Licenca> licence = Komunikacija.getInstance().ucitajLicenceInstruktora(ulogovani);
             forma.getjTableLicence().setModel(new ModelTabeleLicence(licence));
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(forma,
@@ -36,5 +38,18 @@ public class PrikazLicenciKontroler {
 
     public void osveziFormu() {
         pripremiFormu();
+    }
+
+    public void zatvoriFormu() {
+        forma.dispose();
+    }
+
+    public void sakrijFormu() {
+        forma.setVisible(false);
+    }
+
+    public void prikaziFormu() {
+        forma.setVisible(true);
+        osveziFormu();
     }
 }

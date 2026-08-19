@@ -19,12 +19,12 @@ public class DodajPolaznikaKontroler {
     public DodajPolaznikaKontroler(DodajPolaznikaForma dpf) {
         this.dpf = dpf;
         addActionListener();
-        dpf.nazadAddActionListener(e -> {
-            dpf.dispose();
-            if (trenutniMod != FormaMod.PREGLED) {
-                Koordinator.getInstance().nazadNaGlavnuFormu(null);
-            }
-        });
+        dpf.nazadAddActionListener(e ->
+                Koordinator.getInstance().nazadSaFormePolaznika(dpf, trenutniMod));
+    }
+
+    public void zatvoriFormu() {
+        dpf.dispose();
     }
 
     public void otvoriFormu(FormaMod mod) {

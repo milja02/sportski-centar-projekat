@@ -20,5 +20,6 @@ public enum Operacija implements Serializable {
     UBACI_LICENCU,
     UCITAJ_SPORTOVE,
     UCITAJ_LICENCE,
+    UCITAJ_LICENCE_INSTRUKTORA,
     UCITAJ_INSTRUKTORE,
 }

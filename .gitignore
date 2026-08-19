@@ -1,3 +1,6 @@
+# Parent POM nema kod; prazni src folderi su samo radi Eclipse-a
+/src/
+
 # Maven
 target/
 *.class

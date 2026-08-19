@@ -239,6 +239,19 @@ public class PrikazClanskihKarataKontroler {
         pripremiFormu();
     }
 
+    public void zatvoriFormu() {
+        pckf.dispose();
+    }
+
+    public void sakrijFormu() {
+        pckf.setVisible(false);
+    }
+
+    public void prikaziFormu() {
+        pckf.setVisible(true);
+        osveziFormu();
+    }
+
     private void addMouseListener() {
         pckf.getjTable1().addMouseListener(new MouseAdapter() {
             @Override

@@ -178,6 +178,16 @@ public class ObradaZahteva extends Thread {
                         List<Licenca> licence = Kontroler.getInstance().ucitajLicence();
                         odgovor.setOdgovor(licence);
                         break;
+                    case UCITAJ_LICENCE_INSTRUKTORA:
+                        try {
+                            Instruktor instruktorLicence = (Instruktor) zahtev.getParams();
+                            List<Licenca> licenceInstruktora = Kontroler.getInstance()
+                                    .ucitajLicenceInstruktora(instruktorLicence);
+                            odgovor.setOdgovor(licenceInstruktora);
+                        } catch (Exception ex) {
+                            odgovor.setOdgovor(ex);
+                        }
+                        break;
                     case UCITAJ_INSTRUKTORE:
                         List<Instruktor> instruktori = Kontroler.getInstance().ucitajInstruktore();
                         odgovor.setOdgovor(instruktori);

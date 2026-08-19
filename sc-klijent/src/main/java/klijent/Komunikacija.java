@@ -159,11 +159,33 @@ public class Komunikacija {
 
     public List<Licenca> ucitajLicence() throws Exception {
         Odgovor odg = posaljiZahtev(new Zahtev(Operacija.UCITAJ_LICENCE, null));
+        proveriGresku(odg);
+        return (List<Licenca>) odg.getOdgovor();
+    }
+
+    public List<Licenca> ucitajLicenceInstruktora(Instruktor instruktor) throws Exception {
+        Odgovor odg = posaljiZahtev(new Zahtev(Operacija.UCITAJ_LICENCE_INSTRUKTORA, instruktor));
+        proveriGresku(odg);
         return (List<Licenca>) odg.getOdgovor();
     }
 
     public List<Instruktor> ucitajInstruktore() throws Exception {
         Odgovor odg = posaljiZahtev(new Zahtev(Operacija.UCITAJ_INSTRUKTORE, null));
+        proveriGresku(odg);
         return (List<Instruktor>) odg.getOdgovor();
+    }
+
+    public void prekiniKonekciju() {
+        try {
+            if (socket != null && !socket.isClosed()) {
+                socket.close();
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Komunikacija.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            socket = null;
+            posiljalac = null;
+            primalac = null;
+        }
     }
 }

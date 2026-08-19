@@ -24,7 +24,11 @@ public class UbaciLicencuKontroler {
         pripremiFormu();
         forma.addUbaciActionListener(e -> ubaci());
         forma.uveziJsonAddActionListener(e -> uveziJson());
-        forma.addNazadActionListener(e -> Koordinator.getInstance().nazadNaGlavnuFormu(forma));
+        forma.addNazadActionListener(e -> Koordinator.getInstance().nazadSaUbaciLicencuForme(forma));
+    }
+
+    public void zatvoriFormu() {
+        forma.dispose();
     }
 
     private void uveziJson() {
@@ -115,13 +119,14 @@ public class UbaciLicencuKontroler {
 
     private void pripremiFormu() {
         try {
-            List<Instruktor> instruktori = Komunikacija.getInstance().ucitajInstruktore();
+            Instruktor ulogovani = Koordinator.getInstance().getUlogovani();
             forma.getjComboBoxInstruktor().removeAllItems();
-            if (instruktori != null) {
-                for (Instruktor i : instruktori) {
-                    forma.getjComboBoxInstruktor().addItem(i);
-                }
+            if (ulogovani != null) {
+                forma.getjComboBoxInstruktor().addItem(ulogovani);
+                forma.getjComboBoxInstruktor().setSelectedIndex(0);
             }
+            forma.getjComboBoxInstruktor().setEnabled(false);
+
             List<Licenca> licence = Komunikacija.getInstance().ucitajLicence();
             forma.getjComboBoxLicenca().removeAllItems();
             if (licence != null) {

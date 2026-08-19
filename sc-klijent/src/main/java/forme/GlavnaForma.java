@@ -22,16 +22,7 @@ public class GlavnaForma extends javax.swing.JFrame {
     private void initComponents() {
         jLabelPozdrav = new JLabel();
         jLabelUlogovani = new JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        jButtonLogout = new JButton("Odjavi se");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sportski centar");
@@ -42,37 +33,7 @@ public class GlavnaForma extends javax.swing.JFrame {
         jLabelUlogovani.setFont(new Font("Arial", Font.BOLD, 16));
         jLabelUlogovani.setText("-");
 
-        jMenu1.setText("Polaznici");
-        jMenuItem2.setText("Pregled svih polaznika");
-        jMenuItem2.addActionListener(e -> otvoriPrikazPolaznika());
-        jMenu1.add(jMenuItem2);
-        jMenu1.addSeparator();
-        jMenuItem1.setText("Novi polaznik");
-        jMenuItem1.addActionListener(e -> otvoriDodajPolaznika());
-        jMenu1.add(jMenuItem1);
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("\u010clanske karte");
-        jMenuItem4.setText("Pregled svih karata");
-        jMenuItem4.addActionListener(e -> otvoriPrikazClanskihKarata());
-        jMenu2.add(jMenuItem4);
-        jMenu2.addSeparator();
-        jMenuItem3.setText("Nova \u010dlanska karta");
-        jMenuItem3.addActionListener(e -> otvoriDodajClanskuKartu());
-        jMenu2.add(jMenuItem3);
-        jMenuBar1.add(jMenu2);
-
-        jMenu3.setText("Licence");
-        jMenuItem6.setText("Pregled licenci");
-        jMenuItem6.addActionListener(e -> otvoriPrikazLicenci());
-        jMenu3.add(jMenuItem6);
-        jMenu3.addSeparator();
-        jMenuItem5.setText("Ubaci licencu");
-        jMenuItem5.addActionListener(e -> otvoriUbaciLicencu());
-        jMenu3.add(jMenuItem5);
-        jMenuBar1.add(jMenu3);
-
-        setJMenuBar(jMenuBar1);
+        jButtonLogout.addActionListener(e -> odjaviSe());
 
         JPanel header = new JPanel();
         header.setLayout(new BoxLayout(header, BoxLayout.X_AXIS));
@@ -81,6 +42,7 @@ public class GlavnaForma extends javax.swing.JFrame {
         header.add(Box.createHorizontalStrut(6));
         header.add(jLabelUlogovani);
         header.add(Box.createHorizontalGlue());
+        header.add(jButtonLogout);
 
         JLabel naslov = new JLabel("Po\u010detna");
         naslov.setFont(new Font("Arial", Font.BOLD, 20));
@@ -186,6 +148,10 @@ public class GlavnaForma extends javax.swing.JFrame {
         koordinator.Koordinator.getInstance().otvoriPrikazLicenciFormu();
     }
 
+    private void odjaviSe() {
+        koordinator.Koordinator.getInstance().odjaviSe();
+    }
+
     public JLabel getjLabelUlogovani() {
         return jLabelUlogovani;
     }
@@ -196,14 +162,5 @@ public class GlavnaForma extends javax.swing.JFrame {
 
     private JLabel jLabelPozdrav;
     private JLabel jLabelUlogovani;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
+    private JButton jButtonLogout;
 }

@@ -199,4 +199,17 @@ public class PrikazPolaznikaKontroler {
     public void osveziFormu() {
         pripremiFormu();
     }
+
+    public void zatvoriFormu() {
+        ppf.dispose();
+    }
+
+    public void sakrijFormu() {
+        ppf.setVisible(false);
+    }
+
+    public void prikaziFormu() {
+        ppf.setVisible(true);
+        osveziFormu();
+    }
 }

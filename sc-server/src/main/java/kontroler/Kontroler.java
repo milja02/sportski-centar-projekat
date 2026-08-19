@@ -17,6 +17,7 @@ import operacije.clanskekarte.ZapamtiClanskuKartuSO;
 import operacije.instruktori.PrijaviInstruktoraSO;
 import operacije.instruktori.UcitajInstruktoreSO;
 import operacije.licence.UbaciLicencuSO;
+import operacije.licence.UcitajLicenceInstruktoraSO;
 import operacije.licence.UcitajLicenceSO;
 import operacije.mesta.UcitajMestaSO;
 import operacije.polaznici.KreirajPolaznikaSO;
@@ -135,6 +136,12 @@ public class Kontroler {
     public List<Licenca> ucitajLicence() throws Exception {
         UcitajLicenceSO operacija = new UcitajLicenceSO();
         operacija.izvrsi(null, null);
+        return operacija.getLicence();
+    }
+
+    public List<Licenca> ucitajLicenceInstruktora(Instruktor instruktor) throws Exception {
+        UcitajLicenceInstruktoraSO operacija = new UcitajLicenceInstruktoraSO();
+        operacija.izvrsi(instruktor, null);
         return operacija.getLicence();
     }
 
