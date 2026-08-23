@@ -45,4 +45,14 @@ class PretraziPolaznikeSOTest extends SOTestoviHelper {
                 .orElseThrow()
                 .getIme());
     }
+
+    @Test
+    void izvrsiVracaPraznuListuKadNemaPoklapanja() throws Exception {
+        PretraziPolaznikeSO so = new PretraziPolaznikeSO();
+        Polaznik kriterijum = new Polaznik();
+        kriterijum.setIme("NepostojeciImeXYZ" + System.currentTimeMillis());
+        so.izvrsi(kriterijum, null);
+
+        assertTrue(so.getPolaznici().isEmpty());
+    }
 }

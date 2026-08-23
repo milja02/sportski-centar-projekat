@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import domen.ClanskaKarta;
+import domen.Polaznik;
 import java.util.stream.Stream;
 import operacije.integracija.SOTestoviHelper;
 import org.junit.jupiter.api.Test;
@@ -38,5 +39,18 @@ class PretraziClanskeKarteSOTest extends SOTestoviHelper {
 
         assertTrue(so.getClanskeKarte().stream()
                 .anyMatch(k -> k.getIdClanskaKarta() == karta.getIdClanskaKarta()));
+    }
+
+    @Test
+    void izvrsiVracaPraznuListuKadNemaPoklapanja() throws Exception {
+        Polaznik nepostojeci = minimalanPolaznik(9_999_999);
+
+        ClanskaKarta kriterijum = new ClanskaKarta();
+        kriterijum.setPolaznik(nepostojeci);
+
+        PretraziClanskeKarteSO so = new PretraziClanskeKarteSO();
+        so.izvrsi(kriterijum, null);
+
+        assertTrue(so.getClanskeKarte().isEmpty());
     }
 }

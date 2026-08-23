@@ -14,7 +14,6 @@ import operacije.integracija.SOTestoviHelper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class DodajClanskuKartuSOTest extends SOTestoviHelper {
@@ -45,6 +44,42 @@ class DodajClanskuKartuSOTest extends SOTestoviHelper {
 
         Exception ex = assertThrows(Exception.class, () -> new DodajClanskuKartuSO().izvrsi(karta, null));
         assertTrue(ex.getMessage().contains("sport ne postoji"));
+    }
+
+    @Test
+    void izvrsiOdbijaKadJeBrojTerminaNeispravan() throws Exception {
+        Polaznik polaznik = unesiTestPolaznikaZaCiscenje("Termini", "Test");
+        Sport sport = prviSport();
+        ClanskaKarta karta = napraviValidnuKartu(polaznik, prviInstruktor(), sport, 3);
+        postaviPolje(karta.getStavke().get(0), "brojTermina", 0);
+        postaviPolje(karta.getStavke().get(0), "iznosStavke", 0);
+        postaviPolje(karta, "ukupanIznos", 0);
+
+        Exception ex = assertThrows(Exception.class, () -> new DodajClanskuKartuSO().izvrsi(karta, null));
+        assertTrue(ex.getMessage().contains("broj termina"));
+    }
+
+    @Test
+    void izvrsiOdbijaKadIznosStavkeNijeIspravan() throws Exception {
+        Polaznik polaznik = unesiTestPolaznikaZaCiscenje("Iznos", "Test");
+        Sport sport = prviSport();
+        ClanskaKarta karta = napraviValidnuKartu(polaznik, prviInstruktor(), sport, 3);
+        postaviPolje(karta.getStavke().get(0), "iznosStavke", 1);
+        postaviPolje(karta, "ukupanIznos", 1);
+
+        Exception ex = assertThrows(Exception.class, () -> new DodajClanskuKartuSO().izvrsi(karta, null));
+        assertTrue(ex.getMessage().contains("iznos stavke"));
+    }
+
+    @Test
+    void izvrsiOdbijaKadUkupanIznosNijeZbirStavki() throws Exception {
+        Polaznik polaznik = unesiTestPolaznikaZaCiscenje("Ukupan", "Test");
+        Sport sport = prviSport();
+        ClanskaKarta karta = napraviValidnuKartu(polaznik, prviInstruktor(), sport, 3);
+        postaviPolje(karta, "ukupanIznos", karta.getUkupanIznos() + 100);
+
+        Exception ex = assertThrows(Exception.class, () -> new DodajClanskuKartuSO().izvrsi(karta, null));
+        assertTrue(ex.getMessage().contains("ukupan iznos"));
     }
 
     @Test

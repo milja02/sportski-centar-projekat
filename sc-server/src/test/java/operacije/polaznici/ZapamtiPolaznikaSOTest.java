@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import domen.Mesto;
 import domen.Polaznik;
 import java.util.stream.Stream;
 import operacije.integracija.SOTestoviHelper;
@@ -32,12 +33,34 @@ class ZapamtiPolaznikaSOTest extends SOTestoviHelper {
         bezId.setIme("Pera");
         bezId.setPrezime("Peric");
         bezId.setBrojTelefona("061");
+        bezId.setMesto(new Mesto(1, "Beograd", 11000));
+
+        Polaznik bezImena = new Polaznik();
+        bezImena.setIdPolaznik(1);
+        bezImena.setPrezime("Peric");
+        bezImena.setBrojTelefona("061");
+        bezImena.setMesto(new Mesto(1, "Beograd", 11000));
+
+        Polaznik bezPrezimena = new Polaznik();
+        bezPrezimena.setIdPolaznik(1);
+        bezPrezimena.setIme("Pera");
+        bezPrezimena.setBrojTelefona("061");
+        bezPrezimena.setMesto(new Mesto(1, "Beograd", 11000));
+
+        Polaznik bezTelefona = new Polaznik();
+        bezTelefona.setIdPolaznik(1);
+        bezTelefona.setIme("Pera");
+        bezTelefona.setPrezime("Peric");
+        bezTelefona.setMesto(new Mesto(1, "Beograd", 11000));
 
         return Stream.of(
                 Arguments.of(null, "null parametar"),
                 Arguments.of("nije polaznik", "pogresan tip"),
                 Arguments.of(bezId, "nema ID"),
-                Arguments.of(bezMesta, "nema mesto"));
+                Arguments.of(bezMesta, "nema mesto"),
+                Arguments.of(bezImena, "nema ime"),
+                Arguments.of(bezPrezimena, "nema prezime"),
+                Arguments.of(bezTelefona, "nema telefon"));
     }
 
     @Test

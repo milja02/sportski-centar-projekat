@@ -30,10 +30,28 @@ class DodajPolaznikaSOTest extends SOTestoviHelper {
         bezMesta.setPrezime("Jovic");
         bezMesta.setBrojTelefona("069000111");
 
+        Polaznik bezImena = new Polaznik();
+        bezImena.setPrezime("Jovic");
+        bezImena.setBrojTelefona("069000111");
+        bezImena.setMesto(new Mesto(1, "Beograd", 11000));
+
+        Polaznik bezPrezimena = new Polaznik();
+        bezPrezimena.setIme("Jovana");
+        bezPrezimena.setBrojTelefona("069000111");
+        bezPrezimena.setMesto(new Mesto(1, "Beograd", 11000));
+
+        Polaznik bezTelefona = new Polaznik();
+        bezTelefona.setIme("Jovana");
+        bezTelefona.setPrezime("Jovic");
+        bezTelefona.setMesto(new Mesto(1, "Beograd", 11000));
+
         return Stream.of(
                 Arguments.of(null, "null parametar"),
                 Arguments.of("nije polaznik", "pogresan tip"),
-                Arguments.of(bezMesta, "nema mesto"));
+                Arguments.of(bezMesta, "nema mesto"),
+                Arguments.of(bezImena, "nema ime"),
+                Arguments.of(bezPrezimena, "nema prezime"),
+                Arguments.of(bezTelefona, "nema telefon"));
     }
 
     @Test

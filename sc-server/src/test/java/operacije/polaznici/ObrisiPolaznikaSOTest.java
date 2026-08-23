@@ -3,6 +3,7 @@ package operacije.polaznici;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import domen.ClanskaKarta;
 import domen.Polaznik;
 import java.util.stream.Stream;
 import operacije.integracija.SOTestoviHelper;
@@ -35,5 +36,13 @@ class ObrisiPolaznikaSOTest extends SOTestoviHelper {
         Polaznik kriterijum = new Polaznik();
         kriterijum.setIdPolaznik(polaznik.getIdPolaznik());
         assertThrows(Exception.class, () -> new NadjiPolaznikaSO().izvrsi(kriterijum, null));
+    }
+
+    @Test
+    void izvrsiBacaKadPolaznikImaClanskuKartu() throws Exception {
+        ClanskaKarta karta = unesiTestKartuZaCiscenje(2);
+        Polaznik polaznik = karta.getPolaznik();
+
+        assertThrows(Exception.class, () -> new ObrisiPolaznikaSO().izvrsi(polaznik, null));
     }
 }

@@ -23,9 +23,17 @@ class PrijaviInstruktoraSOTest extends SOTestoviHelper {
     }
 
     static Stream<Arguments> neispravniParametri() {
+        Instruktor bezKorisnickogImena = new Instruktor();
+        bezKorisnickogImena.setSifra("lozinka");
+
+        Instruktor bezSifre = new Instruktor();
+        bezSifre.setKorisnickoIme("korisnik");
+
         return Stream.of(
                 Arguments.of(null, "null parametar"),
-                Arguments.of("nije instruktor", "pogresan tip"));
+                Arguments.of("nije instruktor", "pogresan tip"),
+                Arguments.of(bezKorisnickogImena, "nema korisnicko ime"),
+                Arguments.of(bezSifre, "nema sifru"));
     }
 
     @Test
@@ -51,6 +59,16 @@ class PrijaviInstruktoraSOTest extends SOTestoviHelper {
         Instruktor prijava = new Instruktor();
         prijava.setKorisnickoIme(izBaze.getKorisnickoIme());
         prijava.setSifra("pogresna-sifra");
+
+        Exception ex = assertThrows(Exception.class, () -> new PrijaviInstruktoraSO().izvrsi(prijava, null));
+        assertTrue(ex.getMessage().contains("nisu ispravni"));
+    }
+
+    @Test
+    void izvrsiBacaZaNepostojeceKorisnickoIme() {
+        Instruktor prijava = new Instruktor();
+        prijava.setKorisnickoIme("nepostojeci-korisnik-" + System.currentTimeMillis());
+        prijava.setSifra("bilo-sta");
 
         Exception ex = assertThrows(Exception.class, () -> new PrijaviInstruktoraSO().izvrsi(prijava, null));
         assertTrue(ex.getMessage().contains("nisu ispravni"));

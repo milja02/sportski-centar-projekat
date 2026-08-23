@@ -136,7 +136,6 @@ public class ServerskaForma extends javax.swing.JFrame {
         }
         jLabelStatus.setText("Pokrenut · port " + port);
         jLabelStatus.setForeground(new Color(30, 140, 70));
-        jLabelSubtitle.setText("Server prima konekcije klijenata");
         jButtonPokreni.setEnabled(false);
         jButtonZaustavi.setEnabled(true);
     }
@@ -145,7 +144,6 @@ public class ServerskaForma extends javax.swing.JFrame {
         server.zaustaviServer();
         jLabelStatus.setText("Zaustavljen");
         jLabelStatus.setForeground(new Color(180, 50, 50));
-        jLabelSubtitle.setText("Serverska konzola");
         jButtonZaustavi.setEnabled(false);
         jButtonPokreni.setEnabled(true);
     }

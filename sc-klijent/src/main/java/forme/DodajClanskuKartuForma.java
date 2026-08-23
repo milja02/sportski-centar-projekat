@@ -77,9 +77,16 @@ public class DodajClanskuKartuForma extends javax.swing.JFrame {
         jComboBoxSport = new JComboBox<>();
         jLabelCenaSporta = new JLabel("Cena po terminu: -");
         jLabelBrojTermina = new JLabel("Broj termina");
-        jTextFieldBrojTermina = new JTextField(5);
+        jTextFieldBrojTermina = new JTextField(8);
+        jTextFieldBrojTermina.setPreferredSize(new Dimension(90, 30));
+        jTextFieldBrojTermina.setMinimumSize(new Dimension(70, 30));
+        jTextFieldBrojTermina.setForeground(java.awt.Color.BLACK);
+        jTextFieldBrojTermina.setCaretColor(java.awt.Color.BLACK);
+        jTextFieldBrojTermina.setOpaque(true);
         jLabelIznosStavke = new JLabel("Iznos stavke");
-        jTextFieldIznosStavke = new JTextField(8);
+        jTextFieldIznosStavke = new JTextField(10);
+        jTextFieldIznosStavke.setPreferredSize(new Dimension(110, 30));
+        jTextFieldIznosStavke.setMinimumSize(new Dimension(90, 30));
         jTextFieldIznosStavke.setEditable(false);
 
         jButtonDodajStavku = new JButton("Dodaj stavku");
@@ -112,6 +119,7 @@ public class DodajClanskuKartuForma extends javax.swing.JFrame {
         GridBagConstraints s = new GridBagConstraints();
         s.insets = new Insets(4, 4, 4, 4);
         s.anchor = GridBagConstraints.WEST;
+        s.fill = GridBagConstraints.NONE;
         s.gridy = 0;
         s.gridx = 0; panelUnosStavke.add(jLabelSport, s);
         s.gridx = 1; panelUnosStavke.add(jComboBoxSport, s);

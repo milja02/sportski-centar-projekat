@@ -61,4 +61,24 @@ class ZapamtiClanskuKartuSOTest extends SOTestoviHelper {
         assertEquals(1, sacuvana.getStavke().size());
         assertEquals(noviBrojTermina, sacuvana.getStavke().get(0).getBrojTermina());
     }
+
+    @Test
+    void izvrsiOdbijaKadJeBrojTerminaNeispravan() throws Exception {
+        ClanskaKarta karta = unesiTestKartuZaCiscenje(2);
+        postaviPolje(karta.getStavke().get(0), "brojTermina", -1);
+        postaviPolje(karta.getStavke().get(0), "iznosStavke", -1);
+        postaviPolje(karta, "ukupanIznos", -1);
+
+        Exception ex = assertThrows(Exception.class, () -> new ZapamtiClanskuKartuSO().izvrsi(karta, null));
+        assertTrue(ex.getMessage().contains("broj termina"));
+    }
+
+    @Test
+    void izvrsiOdbijaKadUkupanIznosNijeZbirStavki() throws Exception {
+        ClanskaKarta karta = unesiTestKartuZaCiscenje(2);
+        postaviPolje(karta, "ukupanIznos", karta.getUkupanIznos() + 50);
+
+        Exception ex = assertThrows(Exception.class, () -> new ZapamtiClanskuKartuSO().izvrsi(karta, null));
+        assertTrue(ex.getMessage().contains("ukupan iznos"));
+    }
 }

@@ -209,6 +209,12 @@ public abstract class SOTestoviHelper {
         licenceZaBrisanje.add(il);
     }
 
+    protected void postaviPolje(Object cilj, String nazivPolja, Object vrednost) throws Exception {
+        java.lang.reflect.Field polje = cilj.getClass().getDeclaredField(nazivPolja);
+        polje.setAccessible(true);
+        polje.set(cilj, vrednost);
+    }
+
     private void obrisiDodeluLicence(InstruktorLicenca il) throws Exception {
         DBRepositoryGeneric repo = new DBRepositoryGeneric();
         repo.connect();
