@@ -2,6 +2,8 @@ package modeli;
 
 import domen.ClanskaKarta;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -11,7 +13,8 @@ public class ModelTabeleClanskeKarte extends AbstractTableModel {
     String[] kolone = {"ID", "Datum", "Ukupan iznos", "Instruktor", "Polaznik"};
 
     public ModelTabeleClanskeKarte(List<ClanskaKarta> lista) {
-        this.lista = lista;
+        this.lista = new ArrayList<>(lista != null ? lista : List.of());
+        this.lista.sort(Comparator.comparingInt(ClanskaKarta::getIdClanskaKarta));
     }
 
     @Override

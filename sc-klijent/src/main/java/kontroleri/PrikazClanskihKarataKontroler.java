@@ -24,6 +24,8 @@ public class PrikazClanskihKarataKontroler {
 
     public PrikazClanskihKarataKontroler(PrikazClanskihKarataForma pckf) {
         this.pckf = pckf;
+        pckf.getjTable1().setAutoCreateRowSorter(false);
+        pckf.getjTable1().setRowSorter(null);
         pckf.getjButtonObrisi().setVisible(false);
         azurirajDugmadZaSelekciju();
         addActionListener();
@@ -103,6 +105,7 @@ public class PrikazClanskihKarataKontroler {
             JOptionPane.showMessageDialog(pckf, "Selektujte člansku kartu.", "Greška", JOptionPane.ERROR_MESSAGE);
             return null;
         }
+        red = pckf.getjTable1().convertRowIndexToModel(red);
         ModelTabeleClanskeKarte mtck = (ModelTabeleClanskeKarte) pckf.getjTable1().getModel();
         return mtck.getLista().get(red);
     }
@@ -112,6 +115,7 @@ public class PrikazClanskihKarataKontroler {
         if (red == -1) {
             return null;
         }
+        red = pckf.getjTable1().convertRowIndexToModel(red);
         ModelTabeleClanskeKarte mtck = (ModelTabeleClanskeKarte) pckf.getjTable1().getModel();
         return mtck.getLista().get(red);
     }

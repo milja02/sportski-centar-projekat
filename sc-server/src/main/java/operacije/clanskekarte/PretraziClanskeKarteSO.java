@@ -85,6 +85,8 @@ public class PretraziClanskeKarteSO extends ApstraktnaGenerickaOperacija {
             }
         }
 
+        uslov.append(" ORDER BY ck.idClanskaKarta ASC");
+
         clanskeKarte = (List<ClanskaKarta>) (List<?>) broker.getAll(new ClanskaKarta(), uslov.toString());
 
         for (ClanskaKarta ck : clanskeKarte) {

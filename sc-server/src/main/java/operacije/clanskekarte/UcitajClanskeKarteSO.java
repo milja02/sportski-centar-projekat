@@ -27,7 +27,7 @@ public class UcitajClanskeKarteSO extends ApstraktnaGenerickaOperacija {
      */
     @Override
     protected void izvrsiOperaciju(Object param, String kljuc) throws Exception {
-        clanskeKarte = broker.getAll(new ClanskaKarta(), null);
+        clanskeKarte = broker.getAll(new ClanskaKarta(), " ORDER BY ck.idClanskaKarta ASC");
         for (ClanskaKarta ck : clanskeKarte) {
             String uslov = " WHERE clanskakarta=" + ck.getIdClanskaKarta();
             List<StavkaClanskeKarte> stavke = (List<StavkaClanskeKarte>) (List<?>) broker.getAll(new StavkaClanskeKarte(), uslov);

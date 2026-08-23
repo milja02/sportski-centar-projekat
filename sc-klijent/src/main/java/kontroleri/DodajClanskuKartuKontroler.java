@@ -48,12 +48,8 @@ public class DodajClanskuKartuKontroler {
         forma.dodajStavkuAddActionListener(e -> dodajStavku());
         forma.obrisiStavkuAddActionListener(e -> obrisiStavku());
         forma.uveziJsonAddActionListener(e -> uveziJson());
-        forma.nazadAddActionListener(e -> {
-            forma.dispose();
-            if (trenutniMod != FormaMod.PREGLED) {
-                Koordinator.getInstance().nazadNaGlavnuFormu(null);
-            }
-        });
+        forma.nazadAddActionListener(e ->
+                Koordinator.getInstance().nazadSaFormeClanskeKarte(forma));
     }
 
     private void addStavkeSelectionListener() {
@@ -322,18 +318,30 @@ public class DodajClanskuKartuKontroler {
         try {
             ClanskaKarta ck = napraviClanskuKartuIzForme();
             if (ck == null) return;
-            int id = Integer.parseInt(forma.getjTextFieldId().getText().trim());
-            ck.setIdClanskaKarta(id);
             Komunikacija.getInstance().zapamtiClanskuKartu(ck);
             JOptionPane.showMessageDialog(forma, "Sistem je zapamtio člansku kartu.", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
             forma.dispose();
             Koordinator.getInstance().osveziFormuClanskeKarte();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(forma, "Sistem ne može da zapamti člansku kartu.", "Greška", JOptionPane.ERROR_MESSAGE);
+            String poruka = ex.getMessage() != null ? ex.getMessage() : "Sistem ne može da zapamti člansku kartu.";
+            JOptionPane.showMessageDialog(forma, poruka, "Greška", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private ClanskaKarta napraviClanskuKartuIzForme() {
+        String idStr = forma.getjTextFieldId().getText().trim();
+        if (idStr.isEmpty()) {
+            JOptionPane.showMessageDialog(forma, "Nedostaje ID članske karte.", "Greška", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+        int id;
+        try {
+            id = Integer.parseInt(idStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(forma, "ID članske karte nije ispravan.", "Greška", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+
         String datumStr = forma.getjTextFieldDatum().getText().trim();
         if (datumStr.isEmpty()) {
             JOptionPane.showMessageDialog(forma, "Unesite datum učlanjenja.", "Greška", JOptionPane.ERROR_MESSAGE);
@@ -359,11 +367,15 @@ public class DodajClanskuKartuKontroler {
             return null;
         }
         ModelTabeleStavkaClanskeKarte model = (ModelTabeleStavkaClanskeKarte) forma.getjTableStavke().getModel();
+        if (model.getLista() == null || model.getLista().isEmpty()) {
+            JOptionPane.showMessageDialog(forma, "Dodajte bar jednu stavku.", "Greška", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
         int ukupanIznos = 0;
         for (StavkaClanskeKarte s : model.getLista()) {
             ukupanIznos += s.getIznosStavke();
         }
-        ClanskaKarta ck = new ClanskaKarta(-1, datum, ukupanIznos, instruktor, polaznik);
+        ClanskaKarta ck = new ClanskaKarta(id, datum, ukupanIznos, instruktor, polaznik);
         ck.setStavke(new ArrayList<>(model.getLista()));
         return ck;
     }

@@ -207,7 +207,7 @@ public class Koordinator {
             forma.dispose();
         }
         dpKontroler = null;
-        if (mod == FormaMod.PREGLED && ppKontroler != null) {
+        if (ppKontroler != null) {
             ppKontroler.prikaziFormu();
             return;
         }
@@ -216,8 +216,10 @@ public class Koordinator {
 
     public void osveziFormu() {
         if (ppKontroler != null) {
-            ppKontroler.osveziFormu();
+            ppKontroler.prikaziFormu();
+            return;
         }
+        otvoriGlavnuFormu();
     }
 
     public void otvoriDodajClanskuKartuFormu() {
@@ -258,10 +260,23 @@ public class Koordinator {
         dckKontroler.otvoriFormu(FormaMod.PREGLED);
     }
 
+    public void nazadSaFormeClanskeKarte(java.awt.Window forma) {
+        if (forma != null) {
+            forma.dispose();
+        }
+        if (pckKontroler != null) {
+            pckKontroler.prikaziFormu();
+            return;
+        }
+        otvoriGlavnuFormu();
+    }
+
     public void osveziFormuClanskeKarte() {
         if (pckKontroler != null) {
-            pckKontroler.osveziFormu();
+            pckKontroler.prikaziFormu();
+            return;
         }
+        otvoriGlavnuFormu();
     }
 
     public void otvoriUbaciLicencuFormu() {
